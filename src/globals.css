@@ -1,1 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Work+Sans:wght@300;400;500&family=Space+Mono&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --color-paper: #EEF1E7;
+  --color-ink: #182420;
+  --color-teal: #275C55;
+  --color-teal-soft: #DCEAE7;
+  --color-gold: #E0A83E;
+  --color-gold-soft: #F7E9CB;
+  --color-coral: #E85B4F;
+  --color-coral-soft: #F7DAD6;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Work Sans", system-ui, sans-serif;
+  --font-data: "Space Mono", monospace;
+}
+
+@layer base {
+  body {
+    background-color: theme(--color-paper);
+    color: theme(--color-ink);
+    font-family: theme(--font-body);
+  }
+}
