@@ -13,7 +13,7 @@ export default function LoginForm() {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const from = (location.state as { from?: string })?.from ?? "/"
+  const from = (location.state as { from?: string })?.from ?? "/home"
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()

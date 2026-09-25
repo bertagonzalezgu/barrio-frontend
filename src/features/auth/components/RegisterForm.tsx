@@ -32,7 +32,7 @@ export default function RegisterForm() {
 
     try {
       await registerWithEmail(email, password)
-      navigate("/", { state: { justRegistered: true } })
+      navigate("/home", { state: { justRegistered: true } })
     } catch (err) {
       setError(getAuthErrorMessage(err))
     }
