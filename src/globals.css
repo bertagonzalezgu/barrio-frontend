@@ -5,11 +5,13 @@
   --color-paper: #EEF1E7;
   --color-ink: #182420;
   --color-teal: #275C55;
+  --color-teal-mid: #3E7A64;
   --color-teal-soft: #DCEAE7;
   --color-gold: #E0A83E;
   --color-gold-soft: #F7E9CB;
   --color-coral: #E85B4F;
   --color-coral-soft: #F7DAD6;
+  --gradient:
 
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Work Sans", system-ui, sans-serif;
@@ -21,5 +23,24 @@
     background-color: theme(--color-paper);
     color: theme(--color-ink);
     font-family: theme(--font-body);
+  }
+}
+
+@layer utilities {
+  .bg-onboarding {
+    background: linear-gradient(to top right, #275C55 10%, #3D8B7A 55%, #E0A83E 90%);
+  }
+  .bg-auth {
+    background: linear-gradient(to top right, (--color-gold-soft) 10%, #91e5d2 55%, #ffe8bd 90%);
+  }
+
+  .font-display {
+    font-family: "Fraunces", Georgia, serif;
+  }
+  .font-body {
+    font-family: "Work Sans", system-ui, sans-serif;
+  }
+  .font-data {
+    font-family: "Space Mono", monospace;
   }
 }
