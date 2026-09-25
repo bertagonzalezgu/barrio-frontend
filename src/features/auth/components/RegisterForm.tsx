@@ -32,6 +32,7 @@ export default function RegisterForm() {
 
     try {
       await registerWithEmail(email, password)
+      localStorage.setItem('onboarding_seen', 'true')
       navigate("/home", { state: { justRegistered: true } })
     } catch (err) {
       setError(getAuthErrorMessage(err))

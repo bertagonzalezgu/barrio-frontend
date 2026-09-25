@@ -26,6 +26,7 @@ export default function LoginForm() {
 
     try {
       await loginWithEmail(email, password)
+      localStorage.setItem('onboarding_seen', 'true')
       navigate(from, { replace: true })
     } catch (err) {
       setError(getAuthErrorMessage(err))
