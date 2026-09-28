@@ -5,8 +5,11 @@ import { registerWithEmail } from "../services/auth.service"
 import { validateEmail } from "../utils/validateEmail"
 import { validatePassword } from "../utils/validatePassword"
 import { getAuthErrorMessage } from "../utils/authErrors"
+import { useUserStore } from "../../auth/store/userStore"
 
 export default function RegisterForm() {
+  const [name, setName] = useState("")
+  const setUserName = useUserStore(s => s.setName)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -31,8 +34,9 @@ export default function RegisterForm() {
     }
 
     try {
-      await registerWithEmail(email, password)
+      await registerWithEmail(email, password, name)
       localStorage.setItem('onboarding_seen', 'true')
+      setUserName(name)
       navigate("/home", { state: { justRegistered: true } })
     } catch (err) {
       setError(getAuthErrorMessage(err))
@@ -41,6 +45,21 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="name" className="text-sm font-body font-medium text-ink">
+          Tu nombre
+        </label>
+        <input
+          id="name"
+          type="text"
+          autoComplete="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nombre de usuario"
+          className="w-full border border-teal-soft rounded-xl px-4 py-3 bg-white text-ink placeholder:text-ink/30 focus:outline-none focus:ring-2 focus:ring-teal font-body text-sm"
+        />
+      </div>
 
       <div className="flex flex-col gap-1">
         <label htmlFor="email" className="text-sm font-body font-medium text-ink">

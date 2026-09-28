@@ -1,12 +1,10 @@
-import { Link } from "react-router-dom"
+import WalletBalance from "../features/wallet/components/WalletBalance"
 
 export default function HomePage(){
   return (
     <>
-    <Link to='/test'>
-        <h1 className="text-red-500">HomePage</h1>
-    </Link>
+        <h1>Home</h1>
+        <WalletBalance/>
     </>
-    
   )
 }
