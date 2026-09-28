@@ -22,6 +22,10 @@ export default function RegisterForm() {
     e.preventDefault()
     setError(null)
 
+    if(name == ''){
+      setError("Añade un nombre de usuario")
+      return
+    }
     const emailError = validateEmail(email)
     if (emailError) { setError(emailError); return }
 

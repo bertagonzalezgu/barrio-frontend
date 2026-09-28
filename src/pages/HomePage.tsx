@@ -1,10 +1,48 @@
+import { useUserStore } from "../features/auth/store/userStore"
 import WalletBalance from "../features/wallet/components/WalletBalance"
 
-export default function HomePage(){
+export default function HomePage() {
+  const name = useUserStore(s => s.name)
+
   return (
-    <>
-        <h1>Home</h1>
-        <WalletBalance/>
-    </>
+    <main className="flex flex-col gap-6 px-4 pt-6 pb-24">
+
+      <section>
+        <h1 className="text-2xl font-display font-bold text-ink">
+          Hola, {name.charAt(0).toUpperCase() + name.slice(1)}
+        </h1>
+        <p className="text-sm font-body text-ink/60 mt-1">Banca de Tiempo</p>
+      </section>
+
+      <section className="bg-paper-alt rounded-2xl p-4 flex flex-col gap-1">
+        <p className="text-xs font-body text-ink/50 uppercase tracking-wide">
+          Tus horas disponibles
+        </p>
+        <WalletBalance />
+        <p className="text-xs font-body text-ink/50 mt-1">
+          Úsalas para pedir ayuda en tu barrio
+        </p>
+      </section>
+
+      <div className="grid grid-cols-2 gap-3">
+        <button className="bg-teal text-paper font-body font-medium py-3 rounded-xl text-sm">
+          Buscar ayuda
+        </button>
+        <button className="border border-teal text-teal font-body font-medium py-3 rounded-xl text-sm">
+          Ofrecer mi tiempo
+        </button>
+      </div>
+
+      <section>
+        <p className="text-xs font-body text-ink/40 text-center">
+          Categorías · próximamente
+        </p>
+      </section>
+
+      <button className="fixed bottom-20 right-4 bg-ink text-paper font-body font-medium px-4 py-3 rounded-full shadow-lg text-sm">
+        + Crear tarjeta
+      </button>
+
+    </main>
   )
 }
