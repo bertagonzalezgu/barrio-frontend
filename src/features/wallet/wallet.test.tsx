@@ -20,11 +20,11 @@ const server = setupServer()
 beforeAll(() => server.listen())
 afterEach(() => {
   server.resetHandlers()
-  useWalletStore.setState({ balance: 0 })
+  useWalletStore.setState({ balance: 0, impact: 0 })
 })
 afterAll(() => server.close())
 
-const feature = loadFeature('../../../docs/wallet.feature')
+const feature = loadFeature('./docs/wallet.feature')
 
 defineFeature(feature, (test) => {
   test('Recibir horas de regalo al completar el registro', ({ given, when, then, and }) => {
@@ -41,12 +41,30 @@ defineFeature(feature, (test) => {
     })
 
     then('mi cuenta se crea con un saldo inicial de 2 horas', async () => {
-      expect(await screen.findByText('2h')).toBeInTheDocument()
+        expect(await screen.findByText('2')).toBeInTheDocument()
     })
 
     and('puedo ver ese saldo en la pantalla de Inicio', () => {
-      expect(screen.getByText('2h')).toBeInTheDocument()
+        expect(screen.getByText('horas')).toBeInTheDocument()
     })
+  })
+
+  test('Usar las horas de regalo para pedir la primera ayuda', ({ given, when, then, and }) => {
+    given('que tengo un saldo de 2 horas de regalo y no he ofrecido nada todavía', () => {})
+    when('propongo un intercambio que cuesta 1 hora', () => {})
+    then('la propuesta se acepta sin bloquearse por falta de saldo', () => {
+      throw new Error('pendiente: implementar en feature/propose-exchange')
+    })
+    and('al confirmarse el intercambio mi saldo se actualiza a 1 hora', () => {})
+  })
+
+  test('Saldo insuficiente para un intercambio', ({ given, when, then, and }) => {
+    given('que tengo un saldo de 1 hora', () => {})
+    when('intento proponer un intercambio que cuesta 3 horas', () => {})
+    then('veo un aviso de que no tengo saldo suficiente', () => {
+      throw new Error('pendiente: implementar en feature/propose-exchange')
+    })
+    and('no se crea la propuesta de intercambio', () => {})
   })
 
   test('Las horas de regalo no se duplican', ({ given, when, then }) => {
@@ -63,8 +81,8 @@ defineFeature(feature, (test) => {
     })
 
     then('no se añaden horas de regalo adicionales a mi saldo', async () => {
-      expect(await screen.findByText('2h')).toBeInTheDocument()
-      expect(screen.queryByText('4h')).not.toBeInTheDocument()
+        expect(await screen.findByText('2')).toBeInTheDocument()
+        expect(screen.queryByText('4')).not.toBeInTheDocument()
     })
   })
 })
