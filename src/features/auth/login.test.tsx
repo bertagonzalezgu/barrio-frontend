@@ -19,7 +19,6 @@ vi.mock('../../hooks/useAuth', () => ({
 
 import { loginWithEmail, registerWithEmail } from './services/auth.service'
 import { useAuth } from '../../hooks/useAuth'
-import type { UserCredential } from 'firebase/auth'
 
 const feature = loadFeature('./docs/login.feature')
 
