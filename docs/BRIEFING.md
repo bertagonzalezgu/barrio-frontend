@@ -3,11 +3,13 @@
 **IT Academy Barcelona Activa · Bootcamp Frontend**
 Este briefing es el resultado de **unificar dos enunciados oficiales** — el Proyecto 4 (INPROCODE: Dashboards y Data Visualization) y el Proyecto Final — en un solo proyecto, siguiendo la indicación de la mentora de plantearlo así desde el principio en vez de hacerlos por separado y fusionarlos después.
 
+Plazo: ~1 mes. Equipo: 1 persona. Punto de partida: conocimientos sólidos de React/TS del bootcamp.
+
 ---
 
 ## 1. Qué es barrio.
 
-Un banco de tiempo de barrio: la gente intercambia ayuda (clases, reparaciones, mudanzas, cuidado de mascotas y plantas, etc) pagando en **horas**, no en dinero. Cada persona puede **buscar** ayuda o **ofrecerla**, dentro de las mismas categorías: Hogar, Cuidados, Digital, Comunidad, Aprendizaje.
+Un banco de tiempo de barrio: la gente intercambia ayuda (clases, reparaciones, mudanzas, cuidado de mascotas y plantas) pagando en **horas**, no en dinero. Cada persona puede **buscar** ayuda o **ofrecerla**, dentro de las mismas categorías: Hogar, Cuidados, Digital, Comunidad.
 
 Esta idea es el "dominio" sobre el que se implementan los dos enunciados a la vez: las tarjetas de busco/ofrezco son el dato que el Proyecto 4 pide visualizar en mapa, calendario y panel de estadísticas, y también son las "features de negocio" que pide el Proyecto Final.
 
@@ -64,8 +66,8 @@ Los dos enunciados ya vienen organizados por niveles de valor progresivo. En vez
 - Animaciones y microinteracciones (Framer Motion), transiciones fluidas, modo oscuro con paleta invertida
 - El gesto de swipe en la vista Buscar es una de estas microinteracciones, no solo un botón
 
-### Extra opcional — Panel de administración
-Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas para que sirva también de **panel de administración** (roles admin/usuaria, gestión de tarjetas denunciadas, tablas con filtros). No es obligatorio, pero como el panel de estadísticas ya existe por el Nivel 1, ampliarlo a panel admin es una extensión natural con poco coste añadido si sobra tiempo en la semana 4.
+### Panel de administración (ajuste tras feedback de la mentora: ya no es opcional)
+Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas para que sirva también de **panel de administración** (roles admin/usuaria, gestión de tarjetas denunciadas, tablas con filtros). La mentora señaló que, dado que el proyecto ya implementa denuncias, doble moderación y suspensión de cuentas, esas herramientas necesitan una interfaz real desde la que actuar — si no, la moderación "existe" en la base de datos pero nadie puede operarla. Pasa de ser un extra de la semana 4 a formar parte del Nivel 1-2: vista de tickets denunciados con acción de revisar/suspender, y vista de usuarios con su estado de verificación.
 
 ---
 
@@ -92,7 +94,7 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 | Pieza | Elección | Por qué |
 |---|---|---|
 | Frontend | React + TypeScript + Vite + Tailwind | Pedido explícitamente por ambos enunciados |
-| Backend | Node.js + Express + MongoDB (Atlas, capa gratis) | Los dos enunciados piden "API pròpia" de verdad — Mongo + Express da persistencia real y un único origen de datos para sincronizar mapa/calendario/estadísticas, que es justo el requisito central del Proyecto 4 |
+| Backend | Node.js + Express + **PostgreSQL (Neon, capa gratis) vía Prisma** | Los dos enunciados piden "API pròpia" de verdad. Cambio tras feedback de la mentora (ajuste posterior a la decisión inicial de Mongo): el dominio real tiene relaciones y una máquina de estados (`Exchange`) con integridad referencial y transacciones multi-tabla (mover horas de "reservado" a "transferido" sin dejar datos inconsistentes) — es justo el caso donde una base relacional con transacciones ACID nativas encaja mejor que un modelo de documentos. Prisma da migraciones versionadas y tipado TypeScript generado automáticamente a partir del esquema |
 | Auth | Firebase Authentication (solo Auth) | Cumple el requisito literal sin forzar Firestore a hacer de base de datos principal |
 | Mapa | Leaflet + OpenStreetMap | Gratis, sin clave de facturación, suficiente para el alcance |
 | Calendario | react-big-calendar | Más simple de personalizar con Tailwind que FullCalendar |
@@ -107,7 +109,7 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 
 ## 6. Privacidad y seguridad (se implementa dentro del Nivel 1-2, no es un "extra")
 
-- Moderación de contenido antes de publicar (vía clasificación con la API de Claude, dado que no hay cuenta de OpenAI)
+- **Doble punto de moderación** (ajuste tras feedback de la mentora): (1) al generar la tarjeta con IA, la propia respuesta de Claude ya viene clasificada; (2) **justo antes de guardar/publicar**, un segundo paso de moderación revisa el texto final — porque la usuaria puede editar lo que la IA generó, y ese texto editado nunca ha pasado por el filtro. Sin este segundo paso, alguien podría generar una tarjeta limpia y luego editarla para meter contenido no permitido.
 - Verificación de identidad real (Stripe Identity, modo test) obligatoria para tickets de categoría Cuidados
 - Encuentro presencial sugerido en zona pública la primera vez
 - Registro solo para mayores de edad
@@ -116,13 +118,27 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 
 ---
 
-## 7. Modelo de datos (punto de partida)
+## 7. Modelo de datos (actualizado tras feedback de la mentora — ahora relacional, PostgreSQL vía Prisma)
 
-- **User**: id, nombre, email, avatar, verificado (bool), rating, créditos (horas), fecha de registro
-- **Ticket**: id, autorId, tipo (busco/ofrezco), título, descripción, categoría, horas, icono, lat, lng, fecha, estado (activo/completado/denunciado)
-- **Transaction**: id, ticketId, deUserId, aUserId, horas, fecha
-- **Report**: id, ticketId o userId denunciado, motivo, estado (pendiente/revisado)
-- **Message**: id, conversationId, deUserId, texto, fecha
+> La mentora señaló que "aceptar un intercambio" y "transferir horas" no pueden ser el mismo paso: hace falta una entidad propia para la propuesta de intercambio, con su ciclo de estados, y las horas deben **reservarse** al aceptar y **transferirse de verdad** solo cuando ambas partes confirman que el servicio se realizó. El saldo de créditos ya no es un campo que se suma/resta directamente: se calcula a partir de un historial de movimientos. Precisamente por esto —relaciones claras entre tablas y una transacción que debe tocar varias filas a la vez sin dejar datos a medias— se decidió pasar de MongoDB a **PostgreSQL**, con integridad referencial (claves foráneas) resuelta por la propia base de datos en vez de a mano en el código.
+
+Tablas (con sus relaciones — así se traducen directamente a `schema.prisma`):
+
+- **User**: id, nombre, email, avatar, verificado (bool), rating, fecha de registro. *(Sin campo de créditos: el saldo es una consulta agregada sobre `TimeTransaction`, no una columna.)*
+- **Ticket**: id, autorId → `User.id`, tipo (busco/ofrezco), título, descripción, categoría, horas, icono, lat, lng, fecha, estado (activo/completado/denunciado)
+- **Exchange** *(nueva)*: id, ticketId → `Ticket.id`, proponenteId → `User.id`, receptorId → `User.id`, horas, estado (enum), fechas de cada cambio de estado. Ciclo de estados:
+  1. `propuesta` — el proponente pide el intercambio sobre un ticket
+  2. `pendiente` — esperando respuesta del receptor
+  3. `aceptada` — el receptor acepta → **se reservan/bloquean las horas** del proponente (no se transfieren)
+  4. `realizada` — alguna de las partes marca que el servicio ya se hizo
+  5. `confirmada` — **ambas partes** confirman → aquí se dispara la transferencia real de horas (se crea el `TimeTransaction`) y el ticket pasa a completado
+  6. `valorada` — tras la valoración obligatoria, se cierra el ciclo
+  - Estado alternativo `cancelada` / `rechazada` en cualquier punto antes de `confirmada` → libera las horas reservadas sin transferir nada
+- **TimeTransaction** *(sustituye a `Transaction`, ahora es el historial del que se deriva el saldo, no una columna que se modifica directamente)*: id, exchangeId → `Exchange.id` (nullable, el regalo de bienvenida no viene de un exchange), deUserId → `User.id` (nullable), aUserId → `User.id`, horas, tipo (enum: `reserva` / `transferencia` / `liberación`), fecha
+- **Report**: id, ticketId → `Ticket.id` (nullable) o userId denunciado → `User.id` (nullable, uno de los dos), motivo, estado (pendiente/revisado)
+- **Message**: id, conversationId (o exchangeId → `Exchange.id`, ya que cada intercambio tiene su propio chat), deUserId → `User.id`, texto, fecha
+
+**Regla de negocio clave (backend):** el saldo de horas de un usuario = `SUM(horas)` de sus `TimeTransaction` de tipo `transferencia` (entradas menos salidas). Las horas "reservadas" se calculan aparte (suma de `Exchange` en estado `aceptada`/`realizada`) y se muestran en el wallet como "disponible" vs "comprometido", para que la usuaria nunca vea un saldo que no puede gastar porque ya está comprometido en un intercambio en curso. Esta operación (mover de reserva a transferencia real) debe hacerse dentro de una **transacción de Postgres** (`prisma.$transaction([...])`) porque toca dos filas (`Exchange` + nueva fila en `TimeTransaction`) a la vez y no puede quedar a medias.
 
 ---
 

@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import { auth } from '../../../services/firebase'
-import { useWalletStore } from "../store/walletStore";
+import { useUserStore } from "../store/userStore";
 import { onAuthStateChanged } from "firebase/auth";
 
-export function useWallet(){
+export function useUser(){
 
-    const setBalance = useWalletStore(s => s.setBalance)
+    const setName = useUserStore(s => s.setName)
 
     useEffect(() => {
 
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-        async function fetchBalance(){
+        async function fetchName(){
             if(!user) return
             const token = await user.getIdToken()
 
-            const res = await fetch('http://localhost:3001/api/wallet/balance', {
+            const res = await fetch('http://localhost:3001/api/users/me', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -23,11 +23,11 @@ export function useWallet(){
         if (!res.ok) return
 
             const data = await res.json()
-            setBalance(data.available)
+            setName(data.name)
         }
-        fetchBalance()        
+        fetchName()        
         })
         return unsubscribe
-    }, [setBalance])
+    }, [setName])
 
 }
