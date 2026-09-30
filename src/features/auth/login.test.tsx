@@ -38,24 +38,21 @@ defineFeature(feature, (test) => {
     })
 
     when('me registro con un email y contraseña válidos', async () => {
-      vi.mocked(registerWithEmail).mockResolvedValueOnce({} as UserCredential)
+    vi.mocked(registerWithEmail).mockResolvedValueOnce(undefined)
 
-      const emailInput = screen.getByLabelText(/correo electrónico/i)
-      const passwordInputs = screen.getAllByPlaceholderText(/••••••••••••|Mín./i)
+    fireEvent.change(screen.getByLabelText(/tu nombre/i), { target: { value: 'Vecina' } })
+    fireEvent.change(screen.getByLabelText(/tu correo electrónico/i), { target: { value: 'nuevo@vecina.com' } })
+    fireEvent.change(screen.getByPlaceholderText(/mín\. 8 caracteres/i), { target: { value: 'Password123!' } })
+    fireEvent.change(screen.getByPlaceholderText(/••••••••••••/i), { target: { value: 'Password123!' } })
 
-      fireEvent.change(emailInput, { target: { value: 'nuevo@vecina.com' } })
-      fireEvent.change(passwordInputs[0], { target: { value: 'Password123!' } })
-      fireEvent.change(passwordInputs[1], { target: { value: 'Password123!' } })
-
-      const submitBtn = screen.getByRole('button', { name: /crear cuenta/i })
-      fireEvent.click(submitBtn)
-    })
+    fireEvent.click(screen.getByRole('button', { name: /crear cuenta/i }))
+  })
 
     then('mi cuenta se crea y accedo directamente a la pantalla de Inicio', async () => {
-      await waitFor(() => {
-        expect(registerWithEmail).toHaveBeenCalledWith('nuevo@vecina.com', 'Password123!')
-      })
+    await waitFor(() => {
+      expect(registerWithEmail).toHaveBeenCalledWith('nuevo@vecina.com', 'Password123!', 'Vecina')
     })
+  })
   })
 
 test('Login con credenciales incorrectas', ({ given, when, then }) => {
