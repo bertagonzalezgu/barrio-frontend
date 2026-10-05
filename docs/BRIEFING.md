@@ -67,7 +67,7 @@ Los dos enunciados ya vienen organizados por niveles de valor progresivo. En vez
 - El gesto de swipe en la vista Buscar es una de estas microinteracciones, no solo un botón
 
 ### Panel de administración (ajuste tras feedback de la mentora: ya no es opcional)
-Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas para que sirva también de **panel de administración** (roles admin/usuaria, gestión de tarjetas denunciadas, tablas con filtros). La mentora señaló que, dado que el proyecto ya implementa denuncias, doble moderación y suspensión de cuentas, esas herramientas necesitan una interfaz real desde la que actuar — si no, la moderación "existe" en la base de datos pero nadie puede operarla. Pasa de ser un extra de la semana 4 a formar parte del Nivel 1-2: vista de tickets denunciados con acción de revisar/suspender, y vista de usuarios con su estado de verificación.
+Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas para que sirva también de **panel de administración** (roles admin/usuaria, gestión de tarjetas denunciadas, tablas con filtros). La mentora señaló que, dado que el proyecto ya implementa denuncias, doble moderación y suspensión de cuentas, esas herramientas necesitan una interfaz real desde la que actuar — si no, la moderación "existe" en la base de datos pero nadie puede operarla. Pasa de ser un extra de la semana 4 a formar parte del Nivel 1-2: vista de tarjetas denunciadas con acción de revisar/suspender, y vista de usuarios con su estado de verificación.
 
 ---
 
@@ -110,7 +110,7 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 ## 6. Privacidad y seguridad (se implementa dentro del Nivel 1-2, no es un "extra")
 
 - **Doble punto de moderación** (ajuste tras feedback de la mentora): (1) al generar la tarjeta con IA, la propia respuesta de Claude ya viene clasificada; (2) **justo antes de guardar/publicar**, un segundo paso de moderación revisa el texto final — porque la usuaria puede editar lo que la IA generó, y ese texto editado nunca ha pasado por el filtro. Sin este segundo paso, alguien podría generar una tarjeta limpia y luego editarla para meter contenido no permitido.
-- Verificación de identidad real (Stripe Identity, modo test) obligatoria para tickets de categoría Cuidados
+- Verificación de identidad real (Stripe Identity, modo test) obligatoria para tarjetas de categoría Cuidados
 - Encuentro presencial sugerido en zona pública la primera vez
 - Registro solo para mayores de edad
 - Valoraciones obligatorias tras cada intercambio, denuncia siempre visible, 3 denuncias verificadas suspenden la cuenta
@@ -125,17 +125,17 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 Tablas (con sus relaciones — así se traducen directamente a `schema.prisma`):
 
 - **User**: id, nombre, email, avatar, verificado (bool), rating, fecha de registro. *(Sin campo de créditos: el saldo es una consulta agregada sobre `TimeTransaction`, no una columna.)*
-- **Ticket**: id, autorId → `User.id`, tipo (busco/ofrezco), título, descripción, categoría, horas, icono, lat, lng, fecha, estado (activo/completado/denunciado)
-- **Exchange** *(nueva)*: id, ticketId → `Ticket.id`, proponenteId → `User.id`, receptorId → `User.id`, horas, estado (enum), fechas de cada cambio de estado. Ciclo de estados:
-  1. `propuesta` — el proponente pide el intercambio sobre un ticket
+- **Card**: id, autorId → `User.id`, tipo (busco/ofrezco), título, descripción, categoría, horas, icono, lat, lng, fechaInicio, fechaFin, estado (activo/completado/denunciado)
+- **Exchange** *(nueva)*: id, cardId → `Card.id`, proponenteId → `User.id`, receptorId → `User.id`, horas, estado (enum), fechas de cada cambio de estado. Ciclo de estados:
+  1. `propuesta` — el proponente pide el intercambio sobre una tarjeta
   2. `pendiente` — esperando respuesta del receptor
   3. `aceptada` — el receptor acepta → **se reservan/bloquean las horas** del proponente (no se transfieren)
   4. `realizada` — alguna de las partes marca que el servicio ya se hizo
-  5. `confirmada` — **ambas partes** confirman → aquí se dispara la transferencia real de horas (se crea el `TimeTransaction`) y el ticket pasa a completado
+  5. `confirmada` — **ambas partes** confirman → aquí se dispara la transferencia real de horas (se crea el `TimeTransaction`) y la tarjeta pasa a completado
   6. `valorada` — tras la valoración obligatoria, se cierra el ciclo
   - Estado alternativo `cancelada` / `rechazada` en cualquier punto antes de `confirmada` → libera las horas reservadas sin transferir nada
 - **TimeTransaction** *(sustituye a `Transaction`, ahora es el historial del que se deriva el saldo, no una columna que se modifica directamente)*: id, exchangeId → `Exchange.id` (nullable, el regalo de bienvenida no viene de un exchange), deUserId → `User.id` (nullable), aUserId → `User.id`, horas, tipo (enum: `reserva` / `transferencia` / `liberación`), fecha
-- **Report**: id, ticketId → `Ticket.id` (nullable) o userId denunciado → `User.id` (nullable, uno de los dos), motivo, estado (pendiente/revisado)
+- **Report**: id, cardId → `Card.id` (nullable) o userId denunciado → `User.id` (nullable, uno de los dos), motivo, estado (pendiente/revisado)
 - **Message**: id, conversationId (o exchangeId → `Exchange.id`, ya que cada intercambio tiene su propio chat), deUserId → `User.id`, texto, fecha
 
 **Regla de negocio clave (backend):** el saldo de horas de un usuario = `SUM(horas)` de sus `TimeTransaction` de tipo `transferencia` (entradas menos salidas). Las horas "reservadas" se calculan aparte (suma de `Exchange` en estado `aceptada`/`realizada`) y se muestran en el wallet como "disponible" vs "comprometido", para que la usuaria nunca vea un saldo que no puede gastar porque ya está comprometido en un intercambio en curso. Esta operación (mover de reserva a transferencia real) debe hacerse dentro de una **transacción de Postgres** (`prisma.$transaction([...])`) porque toca dos filas (`Exchange` + nueva fila en `TimeTransaction`) a la vez y no puede quedar a medias.
