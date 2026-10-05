@@ -1,8 +1,13 @@
 import { apiClient } from '../../../services/apiClient'
-import type { CreateCardInput, Card, CardFilters } from '../types/card.types'
+import type { CreateCardInput, Card, CardFilters, CardCategory } from '../types/card.types'
+
+function toBackendCategory(category: CardCategory): string {
+  return category.replace(/-/g, '_')
+}
 
 export async function createCard(data: CreateCardInput): Promise<Card> {
-    const response = await apiClient.post('/api/cards', data)
+    const response = await apiClient.post('/api/cards', {
+    ...data, category: toBackendCategory(data.category)})
     return response.data
 }
 

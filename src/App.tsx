@@ -5,6 +5,7 @@ import RegisterPage from "./features/auth/pages/RegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OnboardingPage from "./pages/OnboardingPage";
 import OnboardingGuard from "./components/OnboardingGuard";
+import CreateCardPage from "./features/cards/pages/CreateCardPage";
 
 export default function App(){
   return (
@@ -17,6 +18,9 @@ export default function App(){
       <Route path="/home" element={<ProtectedRoute>
                                 <HomePage/>
                               </ProtectedRoute>} />
+      <Route path="/cards/crear" element={ <ProtectedRoute>
+                                            <CreateCardPage />
+                                          </ProtectedRoute>} />                        
     </Routes>
   )
 }
