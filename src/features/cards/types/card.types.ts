@@ -23,7 +23,7 @@ export const CARD_CATEGORIES: { value: CardCategory; label: string }[] = [
   { value: 'home-repairs', label: 'Reparaciones' },
   { value: 'cleaning', label: 'Limpieza' },
   { value: 'moving', label: 'Mudanzas' },
-  { value: 'garden', label: 'Jardín' },
+  { value: 'garden', label: 'Plantas' },
   { value: 'peoplecare', label: 'Cuidado de personas' },
   { value: 'petcare', label: 'Animales' },
   { value: 'health-support', label: 'Apoyo sanitario' },
