@@ -85,8 +85,8 @@ export interface CardFilters {
 export interface CreateCardFormProps {
   type: CardType
   setType: (value: CardType) => void
-  category: CardCategory
-  setCategory: (value: CardCategory) => void
+  category: CardCategory | ''
+  setCategory: (value: CardCategory | '') => void
   prompt: string
   setPrompt: (value: string) => void
   title: string
@@ -106,4 +106,16 @@ export interface CreateCardFormProps {
   onSubmit: () => void
   isGenerating: boolean
   isSubmitting: boolean
+}
+
+export interface GenerateCardInput {
+  prompt: string
+  type: CardType
+  category: CardCategory
+}
+
+export interface GenerateCardResult {
+  title: string
+  description: string
+  icon: CardIcon
 }
