@@ -46,7 +46,7 @@ export default function CreateCardPage() {
   function handleSubmit() {
     if (!validate()) return
     createCard(
-      { type, category, title, description, icon, hours },
+      { type, category, title, description, icon: icon as CardIcon, hours },
       { onSuccess: () => navigate('/home') }
     )
   }
