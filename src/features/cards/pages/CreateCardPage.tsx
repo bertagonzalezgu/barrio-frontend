@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CreateCardForm from '../components/CreateCardForm'
 import { useCreateCard } from '../hooks/useCreateCard'
 import type { CardType, CardCategory } from '../types/card.types'
-
-const VALID_ICONS = ['🐈', '🐕', '🪴', '🔧', '🗣️', '🚗', '📦', '🧹']
+import type { CardIcon } from '../types/card-icon.types'
 
 export default function CreateCardPage() {
     const navigate = useNavigate()
@@ -16,7 +15,7 @@ export default function CreateCardPage() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [hours, setHours] = useState(1)
-    const [icon, setIcon] = useState('')
+    const [icon, setIcon] = useState<CardIcon | ''>('')
     const [isGenerating, setIsGenerating] = useState(false)
     const [errors, setErrors] = useState<{
         category?: string
@@ -36,10 +35,9 @@ export default function CreateCardPage() {
   async function handleGenerate() {
     setIsGenerating(true)
     try {
-      // TODO: llamada a POST /api/cards/generate cuando el endpoint esté listo
       setTitle('Título generado por IA')
       setDescription('Descripción generada por IA')
-      setIcon(VALID_ICONS[0])
+      setIcon('')
     } finally {
       setIsGenerating(false)
     }
