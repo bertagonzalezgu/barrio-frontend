@@ -55,8 +55,8 @@ Los dos enunciados ya vienen organizados por niveles de valor progresivo. En vez
 - Crear, modificar y eliminar tarjetas **directamente desde el mapa y desde el calendario** (no solo desde el feed) — el cambio se persiste y se refleja también en el panel gestor
 
 **IA (Proyecto Final — Nivel 2):**
-- Generación de tarjetas con IA: el usuario escribe en bruto lo que necesita/ofrece, la API de Claude devuelve título, descripción e icono
-- Moderación de contenido antes de publicar (clasificación de seguridad vía la propia API de Claude)
+- Generación de tarjetas con IA: el usuario escribe en bruto lo que necesita/ofrece, la API de Google Gemini devuelve título, descripción e icono
+- Moderación de contenido antes de publicar (clasificación de seguridad vía la propia API de Google Gemini)
 
 ### Nivel 3 — Filtrado avanzado + experiencia inmersiva
 **Datos (Proyecto 4 — Épicas 2, 3 y 4):**
@@ -99,7 +99,7 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 | Mapa | Leaflet + OpenStreetMap | Gratis, sin clave de facturación, suficiente para el alcance |
 | Calendario | react-big-calendar | Más simple de personalizar con Tailwind que FullCalendar |
 | Gráficos | Recharts | Se integra de forma nativa con componentes React |
-| IA | API de Anthropic (Claude) | Ya tienes cuenta — pero la suscripción Pro/Max de claude.ai es distinta de la API de desarrollador (console.anthropic.com); hace falta una API key de esa consola aparte |
+| IA | API de Google Gemini (`@google/genai`) | Hace falta una API key de Google AI Studio (aistudio.google.com), en la variable `GEMINI_API_KEY` |
 | Verificación de identidad | Stripe Identity (modo test) | Proveedor real sin coste en modo test |
 | Animaciones | Framer Motion | Estándar en React para el Nivel 3 |
 | Testing | Vitest + Testing Library + Gherkin (jest-cucumber o similar) | Vitest es nativo de Vite |
@@ -109,7 +109,7 @@ Ambos enunciados apuntan a lo mismo aquí: adaptar el panel de estadísticas par
 
 ## 6. Privacidad y seguridad (se implementa dentro del Nivel 1-2, no es un "extra")
 
-- **Doble punto de moderación** (ajuste tras feedback de la mentora): (1) al generar la tarjeta con IA, la propia respuesta de Claude ya viene clasificada; (2) **justo antes de guardar/publicar**, un segundo paso de moderación revisa el texto final — porque la usuaria puede editar lo que la IA generó, y ese texto editado nunca ha pasado por el filtro. Sin este segundo paso, alguien podría generar una tarjeta limpia y luego editarla para meter contenido no permitido.
+- **Doble punto de moderación** (ajuste tras feedback de la mentora): (1) al generar la tarjeta con IA, el texto pasa por la moderación de Gemini antes de generarse; (2) **justo antes de guardar/publicar**, un segundo paso de moderación revisa el texto final — porque la usuaria puede editar lo que la IA generó, y ese texto editado nunca ha pasado por el filtro. Sin este segundo paso, alguien podría generar una tarjeta limpia y luego editarla para meter contenido no permitido.
 - Verificación de identidad real (Stripe Identity, modo test) obligatoria para tarjetas de categoría Cuidados
 - Encuentro presencial sugerido en zona pública la primera vez
 - Registro solo para mayores de edad
