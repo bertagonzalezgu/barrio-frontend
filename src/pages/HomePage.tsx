@@ -14,7 +14,7 @@ export default function HomePage(){
         <h1 className="text-2xl font-display font-bold text-ink">
           Hola, {userName}
         </h1>
-        <p className="text-sm font-body text-ink/60 mt-1">Banca de Tiempo</p>
+        <p className="text-m font-body text-ink/80 mt-1">¿Qué podemos hacer por ti hoy? Cada hora que das vuelve a tu comunidad.</p>
       </section>
 
       <WalletBalance/>
