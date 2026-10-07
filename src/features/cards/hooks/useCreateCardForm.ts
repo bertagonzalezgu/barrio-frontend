@@ -3,22 +3,25 @@ import { useNavigate } from 'react-router-dom'
 import { useCreateCard } from './useCreateCard'
 import type { CardType, CardCategory } from '../types/card.types'
 import type { CardIcon } from '../types/card-icon.types'
+import { useGenerateCard } from './useGenerateCard'
 
 export default function useCreateCardForm() {
-  const navigate = useNavigate()
-  const { mutate: createCard, isPending: isSubmitting } = useCreateCard()
+    const navigate = useNavigate()
+    const { mutate: createCard, isPending: isSubmitting } = useCreateCard()
 
-  const [type, setType] = useState<CardType>('request')
-  const [category, setCategory] = useState<CardCategory | ''>('')
-  const [prompt, setPrompt] = useState('')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [hours, setHours] = useState(1)
-  const [icon, setIcon] = useState<CardIcon | ''>('')
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+    const [type, setType] = useState<CardType>('request')
+    const [category, setCategory] = useState<CardCategory | ''>('')
+    const [prompt, setPrompt] = useState('')
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [hours, setHours] = useState(1)
+    const [icon, setIcon] = useState<CardIcon | ''>('')
+    const [isGenerating, setIsGenerating] = useState(false)
+    const [errors, setErrors] = useState<Record<string, string>>({})
+    const { mutateAsync: generate } = useGenerateCard()
 
-  const hasSuggestion = title !== '' && description !== ''
+
+    const hasSuggestion = title !== '' && description !== ''
 
   function validate() {
     const next: Record<string, string> = {}
@@ -29,17 +32,6 @@ export default function useCreateCardForm() {
     return Object.keys(next).length === 0
   }
 
-  async function onGenerate() {
-    setIsGenerating(true)
-    try {
-      setTitle('Título generado por IA')
-      setDescription('Descripción generada por IA')
-      setIcon('')
-    } finally {
-      setIsGenerating(false)
-    }
-  }
-
   function onSubmit() {
     if (!validate()) return
     createCard(
@@ -47,6 +39,19 @@ export default function useCreateCardForm() {
       { onSuccess: () => navigate('/home') }
     )
   }
+
+  async function onGenerate() {
+  if (!prompt.trim() || !category) return
+  setIsGenerating(true)
+  try {
+    const result = await generate({ prompt, type, category: category as CardCategory })
+    setTitle(result.title)
+    setDescription(result.description)
+    setIcon(result.icon)
+  } finally {
+    setIsGenerating(false)
+  }
+}
 
   return {
     type, setType,

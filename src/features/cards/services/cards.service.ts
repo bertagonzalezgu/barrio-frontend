@@ -18,6 +18,9 @@ export async function getCards(filters?: CardFilters): Promise<Card[]> {
 }
 
 export async function generateCard(data: GenerateCardInput): Promise<GenerateCardResult> {
-  const response = await apiClient.post('/api/cards/generate', data)
+  const response = await apiClient.post('/api/cards/generate', {
+    ...data,
+    category: toBackendCategory(data.category)
+  })
   return response.data
 }
