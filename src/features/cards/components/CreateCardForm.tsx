@@ -1,5 +1,6 @@
 import { CARD_CATEGORIES } from '../types/card.types'
 import type { CreateCardFormProps } from '../types/card.types'
+import CardIcon from './CardIcon'
 
 export default function CreateCardForm({
   type, setType,
@@ -113,7 +114,7 @@ export default function CreateCardForm({
         <div className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3 bg-gray-50">
           <p className="text-xs text-gray-400">Sugerido por IA</p>
           <div className="flex items-center gap-2">
-            <span className="text-2xl">{icon}</span>
+            {icon && <CardIcon name={icon} />}
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
