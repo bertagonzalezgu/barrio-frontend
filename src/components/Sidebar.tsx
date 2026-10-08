@@ -20,7 +20,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+              `flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-sm transition-colors ${
                 isActive
                     ? 'bg-teal text-paper'
                     : 'text-ink hover:bg-teal-soft'

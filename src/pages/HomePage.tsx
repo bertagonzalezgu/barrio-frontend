@@ -1,11 +1,14 @@
 import { useUser } from "../features/auth/hooks/useUser"
 import { useUserStore } from "../features/auth/store/userStore"
 import WalletBalance from "../features/wallet/components/WalletBalance"
+import { useNavigate } from "react-router-dom"
+import CardList from "../features/cards/components/CardList"
 
 export default function HomePage(){
   useUser()
   const name = useUserStore(s => s.name)
   const userName = name.charAt(0).toUpperCase() + name.slice(1)
+  const navigate = useNavigate()
 
   return (
     <main className="flex flex-col gap-6 px-4 pt-6 pb-24">
@@ -35,12 +38,13 @@ export default function HomePage(){
       </section>
 
       <section>
-        <p className="text-xs font-body text-ink/40 text-center">
-          Tarjetas · próximamente
-        </p>
+        <CardList />
       </section>
 
-      <button className="fixed bottom-20 right-4 bg-ink text-paper font-body font-medium px-4 py-3 rounded-full shadow-lg text-sm">
+      <button
+        onClick={() => navigate('/cards/crear')}
+        className="fixed bottom-20 right-4 bg-ink text-paper font-body font-medium px-4 py-3 rounded-full shadow-lg text-sm cursor-pointer"
+      >
         + Crear tarjeta
       </button>
 
