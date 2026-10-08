@@ -7,7 +7,7 @@ export default function CardItem({ card }: { card: Card }) {
 
   return (
     <div className="flex items-center gap-3 bg-paper rounded-2xl p-3 border border-ink/10">
-      <div className="shrink-0 w-12 h-12 rounded-full border border-teal/50 bg-teal-soft flex items-center justify-center">
+      <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-teal-soft flex items-center justify-center p-2">
         {card.icon && <CardIcon name={card.icon} />}
       </div>
       <div className="flex-1 min-w-0">

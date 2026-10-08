@@ -3,23 +3,33 @@ import { CARD_CATEGORIES } from '../types/card.types'
 import CardIcon from './CardIcon'
 
 export default function CardItemDesktop({ card }: { card: Card }) {
-
-    const categoryLabel = CARD_CATEGORIES.find(c => c.value === card.category)?.label ?? card.category
+  const categoryLabel = CARD_CATEGORIES.find(c => c.value === card.category)?.label ?? card.category
+  const isRequest = card.type === 'request'
 
   return (
-    <div className="flex flex-col justify-between bg-paper rounded-2xl p-4 border border-ink/10 min-h-40">
-      <div className="flex items-start justify-between">
-        <div className="w-12 h-12 rounded-full bg-teal-soft flex items-center justify-center border border-teal/50">
-          {card.icon && <CardIcon name={card.icon} />}
+    <div className="relative flex items-stretch bg-paper rounded-2xl overflow-hidden border border-ink/10 hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer isolate min-h-44 w-full">
+      <div className={`w-1.5 shrink-0 ${isRequest ? 'bg-teal' : 'bg-gold'}`} />
+      <div className="flex flex-1 gap-4 p-5">
+
+        {/* Texto izquierda */}
+        <div className="flex flex-col flex-1 gap-2 justify-between">
+          <span className={`self-start text-[9px] font-body font-medium tracking-widest uppercase rounded-md px-2 py-0.5 ${isRequest ? 'bg-teal-soft text-teal' : 'bg-gold-soft text-ink'}`}>
+            {isRequest ? 'Busco' : 'Ofrezco'}
+          </span>
+          <h3 className="font-display font-bold text-ink text-base leading-snug line-clamp-3">{card.title}</h3>
+          <div className="pt-2 border-t border-ink/10">
+            <span className="text-xs font-body text-teal uppercase">{categoryLabel}</span>
+          </div>
+        </div>  
+
+        {/* Icono arriba + horas abajo */}
+        <div className="flex flex-col items-end justify-between shrink-0">
+          <div className={`w-14 h-14 rounded-xl flex items-center justify-center p-2 ${isRequest ? 'bg-teal-soft' : 'bg-gold-soft'}`}>
+            {card.icon && <CardIcon name={card.icon} />}
+          </div>
+          <span className="font-data text-base font-bold text-teal">{card.hours}h</span>
         </div>
-        <span className="text-[9px] font-body font-medium tracking-wide text-teal uppercase bg-teal-soft rounded-2xl px-1.5 py-0.5">
-          {card.type === 'request' ? 'Busco' : 'Ofrezco'}
-        </span>
-      </div>
-      <h3 className="font-display font-bold text-ink text-base mt-3 leading-snug">{card.title}</h3>
-      <div className="flex items-center justify-between mt-4 pt-3 border-t border-ink/10">
-        <span className="text-xs font-body text-ink/40">{categoryLabel}</span>
-        <span className="font-data text-m font-medium text-teal bg-teal-soft rounded-full px-3 py-0.5">{card.hours}h</span>
+
       </div>
     </div>
   )

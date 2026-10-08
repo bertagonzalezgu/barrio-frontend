@@ -7,6 +7,7 @@ import LoginPage from './features/auth/pages/LoginPage'
 import RegisterPage from './features/auth/pages/RegisterPage'
 import HomePage from './pages/HomePage'
 import CreateCardPage from './features/cards/pages/CreateCardPage'
+import SearchPage from './features/search/pages/SearchPage'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
                         <AppLayout />
                       </ProtectedRoute>}>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/buscar" element={<SearchPage />} />
         <Route path="/cards/crear" element={<CreateCardPage />} />
       </Route>
     </Routes>

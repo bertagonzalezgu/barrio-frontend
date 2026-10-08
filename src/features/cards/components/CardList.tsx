@@ -25,7 +25,7 @@ export default function CardList() {
       </div>
 
       {/* Desktop */}
-      <div className="hidden md:grid md:grid-cols-3 gap-3">
+      <div className="hidden md:grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]">
         {cards.map(card => (
           <CardItemDesktop key={card.id} card={card} />
         ))}

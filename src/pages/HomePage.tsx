@@ -23,7 +23,7 @@ export default function HomePage(){
       <WalletBalance/>
 
       <div className="grid grid-cols-2 gap-3">
-        <button className="bg-teal text-paper font-body font-medium py-3 rounded-xl text-sm">
+        <button onClick={() => navigate('/buscar')} className="bg-teal text-paper font-body font-medium py-3 rounded-xl text-sm">
           Buscar ayuda
         </button>
         <button className="border border-teal text-teal font-body font-medium py-3 rounded-xl text-sm">
