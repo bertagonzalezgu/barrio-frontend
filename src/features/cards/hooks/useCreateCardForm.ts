@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateCard } from './useCreateCard'
 import type { CardType, CardCategory } from '../types/card.types'
+import { CARD_CATEGORIES } from '../types/card.types'
 import type { CardIcon } from '../types/card-icon.types'
 import { useGenerateCard } from './useGenerateCard'
 
@@ -10,7 +11,7 @@ export default function useCreateCardForm() {
     const { mutate: createCard, isPending: isSubmitting } = useCreateCard()
 
     const [type, setType] = useState<CardType>('request')
-    const [category, setCategory] = useState<CardCategory | ''>('')
+    const [category, setCategory] = useState<CardCategory | ''>(CARD_CATEGORIES[0].value)
     const [prompt, setPrompt] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
