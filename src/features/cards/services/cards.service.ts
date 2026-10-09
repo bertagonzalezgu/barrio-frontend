@@ -24,3 +24,12 @@ export async function generateCard(data: GenerateCardInput): Promise<GenerateCar
   })
   return response.data
 }
+
+export async function getCard(id: string): Promise<Card> {
+  const response = await apiClient.get(`/api/cards/${id}`)
+  return response.data
+}
+
+export async function deleteCard(id: string): Promise<void> {
+  await apiClient.delete(`/api/cards/${id}`)
+}

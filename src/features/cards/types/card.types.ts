@@ -43,6 +43,7 @@ export interface CardAuthor {
   id: string
   name: string
   email: string
+  firebaseUid: string
 }
 
 export interface Card {
