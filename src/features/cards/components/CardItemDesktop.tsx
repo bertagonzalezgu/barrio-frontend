@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { Card } from '../types/card.types'
 import { CARD_CATEGORIES } from '../types/card.types'
 import CardIcon from './CardIcon'
@@ -7,6 +8,7 @@ export default function CardItemDesktop({ card }: { card: Card }) {
   const isRequest = card.type === 'request'
 
   return (
+    <Link to={`/cards/${card.id}`}>
     <div className="relative flex items-stretch bg-paper rounded-2xl overflow-hidden border border-ink/10 hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer isolate min-h-44 w-full">
       <div className={`w-1.5 shrink-0 ${isRequest ? 'bg-teal' : 'bg-gold'}`} />
       <div className="flex flex-1 gap-4 p-5">
@@ -32,5 +34,7 @@ export default function CardItemDesktop({ card }: { card: Card }) {
 
       </div>
     </div>
+    </Link>
+    
   )
 }
