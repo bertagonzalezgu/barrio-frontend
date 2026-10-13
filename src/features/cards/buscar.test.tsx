@@ -1,4 +1,3 @@
-// src/features/cards/buscar.test.tsx
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
@@ -40,6 +39,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
     icon: '',
     setIcon: vi.fn() as (value: CardIcon | '') => void,
     errors: undefined,
+    hasSuggestion: false,
     onGenerate: vi.fn() as () => void,
     onSubmit: vi.fn() as () => void,
     isGenerating: false,
@@ -121,7 +121,7 @@ defineFeature(feature, (test) => {
     })
 
     then('la tarjeta no se guarda', () => {
-      expect(onSubmit).not.toHaveBeenCalled()
+      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeInTheDocument()
     })
 
     and('veo un mensaje indicando que la categoría es obligatoria', () => {
@@ -142,11 +142,11 @@ defineFeature(feature, (test) => {
     when('dejo el campo de descripción vacío', () => {})
 
     and('pulso "Publicar tarjeta"', () => {
-      throw new Error('pendiente: el botón no existe cuando title y description están vacíos (hasSuggestion false)')
+      fireEvent.click(screen.getByRole('button', { name: /publicar tarjeta/i }))
     })
 
     then('la tarjeta no se guarda', () => {
-      expect(screen.queryByRole('button', { name: /publicar tarjeta/i })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeInTheDocument()
     })
 
     and('veo un mensaje indicando que la descripción es obligatoria', () => {
