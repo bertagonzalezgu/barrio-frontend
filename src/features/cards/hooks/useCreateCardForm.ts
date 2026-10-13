@@ -22,11 +22,12 @@ export default function useCreateCardForm() {
     const { mutateAsync: generate } = useGenerateCard()
 
 
-    const hasSuggestion = title !== '' && description !== ''
+    const hasSuggestion = title !== '' || description !== ''
 
   function validate() {
     const next: Record<string, string> = {}
     if (!category) next.category = 'La categoría es obligatoria'
+    if (!title.trim()) next.title = 'Genera la tarjeta o escribe un título'
     if (!description.trim()) next.description = 'La descripción es obligatoria'
     if (!hours || hours < 1) next.hours = 'Las horas deben ser más que 0'
     setErrors(next)

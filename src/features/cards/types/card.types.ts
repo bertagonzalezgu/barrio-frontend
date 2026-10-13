@@ -75,7 +75,7 @@ export interface CreateCardInput {
   lat?: number
   lng?: number
   startDate?: string
-  endDate?: string
+  durationDays?: number
 }
 
 export interface CardFilters {
@@ -98,15 +98,18 @@ export interface CreateCardFormProps {
   setHours: (value: number) => void
   errors?: {
     category?: string
+    title?: string
     description?: string
     hours?: string
-  }
+    }
   icon: CardIcon | ''
   setIcon: (value: CardIcon | '') => void
   onGenerate: () => void
   onSubmit: () => void
   isGenerating: boolean
   isSubmitting: boolean
+  hasSuggestion: boolean
+
 }
 
 export interface GenerateCardInput {

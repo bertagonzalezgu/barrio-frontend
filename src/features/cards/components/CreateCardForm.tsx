@@ -11,13 +11,12 @@ export default function CreateCardForm({
   hours, setHours,
   icon,
   errors,
+  hasSuggestion,
   onGenerate,
   onSubmit,
   isGenerating,
   isSubmitting,
 }: CreateCardFormProps) {
-  const hasSuggestion = title !== '' || description !== ''
-
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); onSubmit() }}
@@ -26,6 +25,7 @@ export default function CreateCardForm({
       <div className="flex gap-2">
         <button
           type="button"
+          aria-pressed={type === 'request'}
           onClick={() => setType('request')}
           className={`flex-1 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
             type === 'request'
@@ -37,6 +37,7 @@ export default function CreateCardForm({
         </button>
         <button
           type="button"
+          aria-pressed={type === 'offer'}
           onClick={() => setType('offer')}
           className={`flex-1 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
             type === 'offer'
@@ -56,6 +57,7 @@ export default function CreateCardForm({
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value as typeof category)}
+          aria-invalid={Boolean(errors?.category)}
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper"
         >
           {CARD_CATEGORIES.map(({ value, label }) => (
@@ -79,9 +81,6 @@ export default function CreateCardForm({
           rows={4}
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper resize-none"
         />
-        {errors?.description && (
-          <p className="text-sm text-coral">{errors.description}</p>
-        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -94,6 +93,7 @@ export default function CreateCardForm({
           min={1}
           value={hours}
           onChange={(e) => setHours(Number(e.target.value))}
+          aria-invalid={Boolean(errors?.hours)}
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper w-24"
         />
         {errors?.hours && (
@@ -113,32 +113,61 @@ export default function CreateCardForm({
       {hasSuggestion && (
         <div className="border border-ink/10 rounded-xl p-4 flex flex-col gap-3 bg-paper">
           <p className="text-xs font-body text-ink/40">Sugerido por IA</p>
+
           <div className="flex items-center gap-2">
             {icon && <CardIcon name={icon} />}
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="flex-1 font-body font-semibold text-ink bg-transparent border-b border-ink/20 focus:outline-none"
+            <div className="flex flex-col gap-1 flex-1">
+              <label htmlFor="title" className="text-xs font-body text-ink/50">
+                Título
+              </label>
+              <input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                aria-invalid={Boolean(errors?.title)}
+                className="font-body font-semibold text-ink bg-transparent border-b border-ink/20 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="description" className="text-xs font-body text-ink/50">
+              Descripción
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={2}
+              aria-invalid={Boolean(errors?.description)}
+              className="text-sm font-body text-ink/70 bg-transparent border border-ink/10 rounded px-2 py-1 resize-none"
             />
           </div>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={2}
-            className="text-sm font-body text-ink/70 bg-transparent border border-ink/10 rounded px-2 py-1 resize-none"
-          />
         </div>
       )}
 
-      {hasSuggestion && (
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-teal text-paper rounded-xl py-3 font-body font-medium disabled:opacity-50"
-        >
-          {isSubmitting ? 'Publicando...' : 'Publicar tarjeta'}
-        </button>
+      {(errors?.title || errors?.description) && (
+        <div role="alert" className="flex flex-col gap-1">
+          {errors?.title && (
+            <p className="text-sm text-coral">{errors.title}</p>
+          )}
+          {errors?.description && (
+            <p className="text-sm text-coral">{errors.description}</p>
+          )}
+        </div>
       )}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={`w-full rounded-xl py-3 font-body font-medium transition-colors disabled:opacity-50 ${
+          hasSuggestion
+            ? 'bg-teal text-paper'
+            : 'bg-paper text-teal border border-teal'
+        }`}
+      >
+        {isSubmitting ? 'Publicando...' : 'Publicar tarjeta'}
+      </button>
     </form>
   )
 }
