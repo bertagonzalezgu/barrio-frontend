@@ -7,7 +7,7 @@ import type { ComponentProps } from 'react'
 import CreateCardForm from './components/CreateCardForm'
 import { CARD_CATEGORIES } from './types/card.types'
 import type { CardType, CardCategory } from './types/card.types'
-import type { CardIcon } from './types/card-icon.types'
+import type { CardIconType } from './types/card-icon.types'
 
 const server = setupServer(
   http.post('http://localhost:3001/api/cards', () =>
@@ -37,7 +37,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
     hours: 1,
     setHours: vi.fn() as (value: number) => void,
     icon: '',
-    setIcon: vi.fn() as (value: CardIcon | '') => void,
+    setIcon: vi.fn() as (value: CardIconType | '') => void,
     errors: undefined,
     hasSuggestion: false,
     onGenerate: vi.fn() as () => void,

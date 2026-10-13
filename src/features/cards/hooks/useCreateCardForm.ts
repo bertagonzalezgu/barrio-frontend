@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCreateCard } from './useCreateCard'
 import type { CardType, CardCategory } from '../types/card.types'
 import { CARD_CATEGORIES } from '../types/card.types'
-import type { CardIcon } from '../types/card-icon.types'
+import type { CardIconType } from '../types/card-icon.types'
 import { useGenerateCard } from './useGenerateCard'
 
 export default function useCreateCardForm() {
@@ -16,7 +16,7 @@ export default function useCreateCardForm() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [hours, setHours] = useState(1)
-    const [icon, setIcon] = useState<CardIcon | ''>('')
+    const [icon, setIcon] = useState<CardIconType | ''>('')
     const [isGenerating, setIsGenerating] = useState(false)
     const [errors, setErrors] = useState<Record<string, string>>({})
     const { mutateAsync: generate } = useGenerateCard()
@@ -37,7 +37,7 @@ export default function useCreateCardForm() {
   function onSubmit() {
     if (!validate()) return
     createCard(
-      { type, category: category as CardCategory, title, description, icon: icon as CardIcon, hours },
+      { type, category: category as CardCategory, title, description, icon: icon as CardIconType, hours },
       { onSuccess: () => navigate('/home') }
     )
   }

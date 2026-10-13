@@ -67,31 +67,41 @@ export default function HomePage() {
         </p>
       </section>
 
-      <div
-        role="group"
-        aria-label="Cambiar vista"
-        className="flex bg-ink/5 rounded-full p-1 gap-1 self-end"
-      >
+      <div className="flex items-center justify-between">
         <button
           type="button"
-          aria-pressed={mode === 'swipe'}
-          onClick={() => setMode('swipe')}
-          className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-            mode === 'swipe' ? 'bg-ink text-paper' : 'text-ink/50'
-          }`}
+          onClick={() => navigate('/cards/crear')}
+          className="bg-ink text-paper font-body font-medium px-4 py-2 rounded-full text-sm cursor-pointer"
         >
-          Swipe
+          + Crear tarjeta
         </button>
-        <button
-          type="button"
-          aria-pressed={mode === 'list'}
-          onClick={() => setMode('list')}
-          className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-            mode === 'list' ? 'bg-ink text-paper' : 'text-ink/50'
-          }`}
+
+          <div
+          role="group"
+          aria-label="Cambiar vista"
+          className="flex bg-ink/5 rounded-full p-1 gap-1 self-end"
         >
-          Lista
-        </button>
+          <button
+            type="button"
+            aria-pressed={mode === 'swipe'}
+            onClick={() => setMode('swipe')}
+            className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
+              mode === 'swipe' ? 'bg-ink text-paper' : 'text-ink/50'
+            }`}
+          >
+            Swipe
+          </button>
+          <button
+            type="button"
+            aria-pressed={mode === 'list'}
+            onClick={() => setMode('list')}
+            className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
+              mode === 'list' ? 'bg-ink text-paper' : 'text-ink/50'
+            }`}
+          >
+            Lista
+          </button>
+        </div>
       </div>
 
       {mode === 'swipe' &&
@@ -102,14 +112,6 @@ export default function HomePage() {
         ))}
 
       {mode === 'list' && <CardList filters={filters} />}
-
-      <button
-        type="button"
-        onClick={() => navigate('/cards/crear')}
-        className="fixed bottom-20 right-4 bg-ink text-paper font-body font-medium px-4 py-3 rounded-full shadow-lg text-sm cursor-pointer"
-      >
-        + Crear tarjeta
-      </button>
 
     </main>
   )

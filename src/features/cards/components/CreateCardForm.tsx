@@ -1,6 +1,6 @@
 import { CARD_CATEGORIES } from '../types/card.types'
 import type { CreateCardFormProps } from '../types/card.types'
-import CardIcon from './CardIcon'
+import IconPickerTrigger from './IconPickerTrigger';
 
 export default function CreateCardForm({
   type, setType,
@@ -9,7 +9,7 @@ export default function CreateCardForm({
   title, setTitle,
   description, setDescription,
   hours, setHours,
-  icon,
+  icon, setIcon,
   errors,
   hasSuggestion,
   onGenerate,
@@ -115,7 +115,9 @@ export default function CreateCardForm({
           <p className="text-xs font-body text-ink/40">Sugerido por IA</p>
 
           <div className="flex items-center gap-2">
-            {icon && <CardIcon name={icon} />}
+              <div className="w-10 h-10 shrink-0 flex items-center justify-center p-1.5">
+                <IconPickerTrigger value={icon} onChange={setIcon} />
+              </div>
             <div className="flex flex-col gap-1 flex-1">
               <label htmlFor="title" className="text-xs font-body text-ink/50">
                 Título
@@ -125,7 +127,7 @@ export default function CreateCardForm({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 aria-invalid={Boolean(errors?.title)}
-                className="font-body font-semibold text-ink bg-transparent border-b border-ink/20 focus:outline-none"
+                className="font-body font-semibold text-ink bg-transparent focus:outline-none"
               />
             </div>
           </div>

@@ -1,4 +1,4 @@
-import type { CardIcon } from "./card-icon.types"
+import type { CardIconType } from "./card-icon.types"
 
 export type CardType = 'request' | 'offer'
 
@@ -55,7 +55,7 @@ export interface Card {
   description: string
   category: CardCategory
   hours: number
-  icon: CardIcon
+  icon: CardIconType
   lat: number | null
   lng: number | null
   startDate: string | null
@@ -71,7 +71,7 @@ export interface CreateCardInput {
   description: string
   category: CardCategory
   hours: number
-  icon: CardIcon
+  icon: CardIconType
   lat?: number
   lng?: number
   startDate?: string
@@ -102,8 +102,8 @@ export interface CreateCardFormProps {
     description?: string
     hours?: string
     }
-  icon: CardIcon | ''
-  setIcon: (value: CardIcon | '') => void
+  icon: CardIconType | ''
+  setIcon: (value: CardIconType | '') => void
   onGenerate: () => void
   onSubmit: () => void
   isGenerating: boolean
@@ -121,5 +121,5 @@ export interface GenerateCardInput {
 export interface GenerateCardResult {
   title: string
   description: string
-  icon: CardIcon
+  icon: CardIconType
 }
