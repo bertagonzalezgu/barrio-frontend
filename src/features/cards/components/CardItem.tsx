@@ -1,10 +1,10 @@
 import type { Card } from '../types/card.types'
 import CardIcon from './CardIcon'
-import { CARD_CATEGORIES } from '../types/card.types'
+import { getCategoryLabel } from '../utils/getCategoryLabel'
 import { Link } from 'react-router-dom'
 
 export default function CardItem({ card }: { card: Card }) {
-  const categoryLabel = CARD_CATEGORIES.find(c => c.value === card.category)?.label ?? card.category
+  const categoryLabel = getCategoryLabel(card.category)
 
   return (
     <Link to={`/cards/${card.id}`}>

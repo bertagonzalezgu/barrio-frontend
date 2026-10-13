@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import type { Card } from '../types/card.types'
 import type { SwipeDirection } from '../hooks/useSwipe'
-import { CARD_CATEGORIES } from '../types/card.types'
+import { getCategoryLabel } from '../utils/getCategoryLabel'
 import CardIcon from './CardIcon'
 
 interface Props {
@@ -16,7 +16,7 @@ export default function SwipeCard({ card, onSwipe }: Props) {
   const rotate = useTransform(x, [-200, 200], [-15, 15])
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
 
-  const categoryLabel = CARD_CATEGORIES.find(c => c.value === card.category)?.label ?? card.category
+  const categoryLabel = getCategoryLabel(card.category)
   const isRequest = card.type === 'request'
 
   async function handleDragEnd() {
