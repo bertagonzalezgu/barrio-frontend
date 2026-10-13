@@ -1,9 +1,10 @@
 import { useCards } from '../hooks/useCards'
 import CardItem from './CardItem'
 import CardItemDesktop from './CardItemDesktop'
+import type { CardFilters } from '../types/card.types'
 
-export default function CardList() {
-  const { data: cards, isLoading, isError } = useCards()
+export default function CardList({ filters }: { filters?: CardFilters }) {
+  const { data: cards, isLoading, isError } = useCards(filters)
 
   if (isLoading) return (
     <p className="text-xs font-body text-ink/40 text-center">Cargando tarjetas...</p>
