@@ -12,9 +12,11 @@ export async function createCard(data: CreateCardInput): Promise<Card> {
 }
 
 export async function getCards(filters?: CardFilters): Promise<Card[]> {
-    const response = await apiClient.get('/api/cards', { params: filters })
-    return response.data
-
+  const params = filters?.category
+    ? { ...filters, category: toBackendCategory(filters.category) }
+    : filters
+  const response = await apiClient.get('/api/cards', { params })
+  return response.data
 }
 
 export async function generateCard(data: GenerateCardInput): Promise<GenerateCardResult> {
