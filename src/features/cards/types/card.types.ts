@@ -109,7 +109,7 @@ export interface CreateCardFormProps {
   isGenerating: boolean
   isSubmitting: boolean
   hasSuggestion: boolean
-
+  moderationError?: string | null
 }
 
 export interface GenerateCardInput {

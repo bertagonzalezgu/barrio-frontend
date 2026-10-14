@@ -1,6 +1,7 @@
 import { CARD_CATEGORIES } from '../types/card.types'
 import type { CreateCardFormProps } from '../types/card.types'
 import IconPickerTrigger from './IconPickerTrigger';
+import ModerationBanner from '../../../components/ModerationBanner';
 
 export default function CreateCardForm({
   type, setType,
@@ -16,6 +17,7 @@ export default function CreateCardForm({
   onSubmit,
   isGenerating,
   isSubmitting,
+  moderationError
 }: CreateCardFormProps) {
   return (
     <form
@@ -100,6 +102,8 @@ export default function CreateCardForm({
           <p className="text-sm text-coral">{errors.hours}</p>
         )}
       </div>
+
+      {moderationError && <ModerationBanner message={moderationError} />}
 
       <button
         type="button"
