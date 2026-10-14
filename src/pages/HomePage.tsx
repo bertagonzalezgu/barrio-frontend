@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../features/auth/hooks/useUser'
 import { useUserStore } from '../features/auth/store/userStore'
@@ -6,10 +5,9 @@ import WalletBalance from '../features/wallet/components/WalletBalance'
 import CardList from '../features/cards/components/CardList'
 import SwipeView from '../features/cards/components/SwipeView'
 import { useCards } from '../features/cards/hooks/useCards'
-import type { CardType } from '../features/cards/types/card.types'
-
-type ViewMode = 'swipe' | 'list'
-type TypeFilter = CardType | 'all'
+import CategoryPickerTrigger from '../features/cards/components/CategoryPickerTrigger'
+import { useHomeFilters } from '../hooks/useHomeFilters'
+import type { TypeFilter } from '../hooks/useHomeFilters'
 
 const TYPE_FILTERS: { value: TypeFilter; label: string }[] = [
   { value: 'all', label: 'Todas' },
@@ -19,14 +17,13 @@ const TYPE_FILTERS: { value: TypeFilter; label: string }[] = [
 
 export default function HomePage() {
   useUser()
-  const name = useUserStore(s => s.name)
+  const name = useUserStore((s) => s.name)
   const userName = name.charAt(0).toUpperCase() + name.slice(1)
   const navigate = useNavigate()
 
-  const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
-  const [mode, setMode] = useState<ViewMode>('swipe')
+  const { activeType, activeView, activeCategory, filters, setType, setView, setCategory } =
+    useHomeFilters()
 
-  const filters = typeFilter === 'all' ? undefined : { type: typeFilter }
   const { data: cards = [], isLoading } = useCards(filters)
 
   return (
@@ -48,10 +45,10 @@ export default function HomePage() {
           <button
             key={value}
             type="button"
-            aria-pressed={typeFilter === value}
-            onClick={() => setTypeFilter(value)}
+            aria-pressed={activeType === value}
+            onClick={() => setType(value)}
             className={`px-4 py-2 rounded-full text-sm font-body font-medium border transition-colors ${
-              typeFilter === value
+              activeType === value
                 ? 'bg-teal text-paper border-teal'
                 : 'border-teal/30 text-teal'
             }`}
@@ -59,13 +56,8 @@ export default function HomePage() {
             {label}
           </button>
         ))}
-      </div>
-
-      <section>
-        <p className="text-xs font-body text-ink/40 text-center">
-          Categorías · próximamente
-        </p>
-      </section>
+        <CategoryPickerTrigger value={activeCategory} onChange={setCategory} />
+      </div>   
 
       <div className="flex items-center justify-between">
         <button
@@ -76,27 +68,23 @@ export default function HomePage() {
           + Crear tarjeta
         </button>
 
-          <div
-          role="group"
-          aria-label="Cambiar vista"
-          className="flex bg-ink/5 rounded-full p-1 gap-1 self-end"
-        >
+        <div role="group" aria-label="Cambiar vista" className="flex bg-ink/5 rounded-full p-1 gap-1">
           <button
             type="button"
-            aria-pressed={mode === 'swipe'}
-            onClick={() => setMode('swipe')}
+            aria-pressed={activeView === 'swipe'}
+            onClick={() => setView('swipe')}
             className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-              mode === 'swipe' ? 'bg-ink text-paper' : 'text-ink/50'
+              activeView === 'swipe' ? 'bg-ink text-paper' : 'text-ink/50'
             }`}
           >
             Swipe
           </button>
           <button
             type="button"
-            aria-pressed={mode === 'list'}
-            onClick={() => setMode('list')}
+            aria-pressed={activeView === 'list'}
+            onClick={() => setView('list')}
             className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-              mode === 'list' ? 'bg-ink text-paper' : 'text-ink/50'
+              activeView === 'list' ? 'bg-ink text-paper' : 'text-ink/50'
             }`}
           >
             Lista
@@ -104,14 +92,14 @@ export default function HomePage() {
         </div>
       </div>
 
-      {mode === 'swipe' &&
+      {activeView === 'swipe' &&
         (isLoading ? (
           <p className="text-xs font-body text-ink/40 text-center mt-8">Cargando...</p>
         ) : (
-          <SwipeView key={typeFilter} cards={cards} />
+          <SwipeView key={`${activeType}-${activeCategory ?? 'all'}`} cards={cards} />
         ))}
 
-      {mode === 'list' && <CardList filters={filters} />}
+      {activeView === 'list' && <CardList filters={filters} />}
 
     </main>
   )
