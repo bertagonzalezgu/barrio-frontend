@@ -64,6 +64,12 @@ const mockCards: Card[] = [
 ]
 
 const server = setupServer(
+  http.get('http://localhost:3001/api/wallet/balance', () => {
+    return HttpResponse.json({ balance: 0 })
+  }),
+  http.get('http://localhost:3001/api/users/me', () => {
+    return HttpResponse.json({ id: 'u1', name: 'Test', email: 'test@barrio.com' })
+  }),
   http.get('http://localhost:3001/api/cards', ({ request }) => {
     const url = new URL(request.url)
     const category = url.searchParams.get('category')
@@ -93,7 +99,6 @@ function renderHomePage(initialEntry = '/') {
 async function openModalAndSelect(label: string | RegExp) {
   fireEvent.click(screen.getByRole('button', { name: /filtrar por categoría/i }))
   const heading = await screen.findByRole('heading', { name: /filtrar por categoría/i })
-  // h2 → div.flex → div.flex-col (contenido del modal)
   const modalContent = heading.parentElement!.parentElement!
   fireEvent.click(within(modalContent).getByRole('button', { name: label }))
 }
@@ -103,7 +108,7 @@ const feature = loadFeature(path.resolve(__dirname, '../../docs/categorias.featu
 defineFeature(feature, (test) => {
   test('Filtrar el feed por una categoría', ({ given, when, then }) => {
     given('que estoy en el modo "Buscar" con la categoría "Todas" seleccionada', () => {
-      renderHomePage('/?vista=lista')
+      renderHomePage('/?vista=list')
     })
 
     when('selecciono la categoría "Cuidados"', async () => {
@@ -111,7 +116,8 @@ defineFeature(feature, (test) => {
     })
 
     then('la vista muestra solo tarjetas de la categoría "Cuidados"', async () => {
-      expect(await screen.findByText('Cuido personas mayores')).toBeInTheDocument()
+      const [el] = await screen.findAllByText('Cuido personas mayores')
+      expect(el).toBeInTheDocument()
       expect(screen.queryByText('Arreglo grifos')).not.toBeInTheDocument()
       expect(screen.queryByText('Necesito web')).not.toBeInTheDocument()
     })
@@ -127,7 +133,8 @@ defineFeature(feature, (test) => {
     })
 
     then('la lista muestra también solo tarjetas de la categoría "Hogar"', async () => {
-      expect(await screen.findByText('Arreglo grifos')).toBeInTheDocument()
+      const [el] = await screen.findAllByText('Arreglo grifos')
+      expect(el).toBeInTheDocument()
       expect(screen.queryByText('Cuido personas mayores')).not.toBeInTheDocument()
       expect(screen.queryByText('Necesito web')).not.toBeInTheDocument()
     })
@@ -135,7 +142,7 @@ defineFeature(feature, (test) => {
 
   test('Quitar el filtro volviendo a "Todas"', ({ given, when, then }) => {
     given('que tengo activo el filtro de categoría "Digital"', () => {
-      renderHomePage('/?categoria=digital&vista=lista')
+      renderHomePage('/?categoria=digital&vista=list')
     })
 
     when('selecciono el chip "Todas"', async () => {
@@ -143,14 +150,16 @@ defineFeature(feature, (test) => {
     })
 
     then('vuelvo a ver tarjetas de todas las categorías', async () => {
-      expect(await screen.findByText('Cuido personas mayores')).toBeInTheDocument()
-      expect(await screen.findByText('Arreglo grifos')).toBeInTheDocument()
-      expect(await screen.findByText('Necesito web')).toBeInTheDocument()
+      const [el1] = await screen.findAllByText('Cuido personas mayores')
+      const [el2] = await screen.findAllByText('Arreglo grifos')
+      const [el3] = await screen.findAllByText('Necesito web')
+      expect(el1).toBeInTheDocument()
+      expect(el2).toBeInTheDocument()
+      expect(el3).toBeInTheDocument()
     })
   })
 
   test('No hay resultados para una categoría', ({ given, when, then }) => {
-    // "Comunidad" no existe en CARD_CATEGORIES; usamos "Eventos" con MSW devolviendo []
     given('que no existe ninguna tarjeta activa en la categoría "Comunidad"', () => {
       server.use(
         http.get('http://localhost:3001/api/cards', ({ request }) => {
@@ -159,7 +168,7 @@ defineFeature(feature, (test) => {
           return HttpResponse.json(mockCards)
         })
       )
-      renderHomePage('/?vista=lista')
+      renderHomePage('/?vista=list')
     })
 
     when('selecciono la categoría "Comunidad"', async () => {

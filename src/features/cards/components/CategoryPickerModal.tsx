@@ -14,6 +14,8 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-label="Filtrar por categoría"
         className="bg-paper w-full sm:max-w-md max-h-[80vh] rounded-t-2xl sm:rounded-2xl overflow-y-auto p-5 flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
