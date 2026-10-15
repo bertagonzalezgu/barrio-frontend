@@ -65,6 +65,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
     errors: undefined,
     moderationError: null,
     hasSuggestion: false,
+    hasGenerated: false,
     onGenerate: vi.fn() as () => void,
     onSubmit: vi.fn() as () => void,
     isGenerating: false,
@@ -106,6 +107,7 @@ defineFeature(feature, (test) => {
         description: 'Ofrezco clases de guitarra',
         hours: 1,
         hasSuggestion: true,
+        hasGenerated: true,
         onSubmit,
       })
       expect(screen.getByRole('button', { name: 'Ofrezco' })).toHaveAttribute('aria-pressed', 'true')
@@ -204,6 +206,7 @@ defineFeature(feature, (test) => {
             prompt: rawText,
             ...suggestion,
             hasSuggestion: true,
+            hasGenerated: true,
             setTitle,
             setDescription,
           })}

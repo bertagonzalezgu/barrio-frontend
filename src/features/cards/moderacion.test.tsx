@@ -41,6 +41,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
     errors: undefined,
     moderationError: null,
     hasSuggestion: false,
+    hasGenerated: false,
     onGenerate: vi.fn() as () => void,
     onSubmit: vi.fn() as () => void,
     isGenerating: false,
@@ -62,6 +63,8 @@ defineFeature(feature, (test) => {
       renderForm({
         prompt: 'Cuido a tu gato mientras te vas de viaje',
         moderationError: null,
+        hasSuggestion: true,
+        hasGenerated: true,
       })
     })
 
@@ -71,6 +74,8 @@ defineFeature(feature, (test) => {
 
     then('la propuesta se muestra normalmente y puedo publicarla', () => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+      expect(screen.getByText('Sugerido por IA')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeEnabled()
     })
   })
 
