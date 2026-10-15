@@ -7,11 +7,12 @@ import CardIcon from './CardIcon'
 interface Props {
   card: Card
   onSwipe: (direction: SwipeDirection) => void
+  onOpen: () => void
 }
 
 const SWIPE_THRESHOLD = 100
 
-export default function SwipeCard({ card, onSwipe }: Props) {
+export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
   const x = useMotionValue(0)
   const rotate = useTransform(x, [-200, 200], [-15, 15])
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
@@ -30,12 +31,18 @@ export default function SwipeCard({ card, onSwipe }: Props) {
     }
   }
 
+    function handleClick() {
+    if (Math.abs(x.get()) > 5) return
+    onOpen()
+  }
+
   return (
     <motion.div
       style={{ x, rotate, opacity }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       onDragEnd={handleDragEnd}
+      onClick={handleClick}
       className={`absolute inset-0 rounded-3xl border shadow-sm cursor-grab active:cursor-grabbing select-none flex flex-col p-6 ${
         isRequest ? 'bg-teal-soft border-teal/20' : 'bg-gold-soft border-gold/30'
       }`}
@@ -65,7 +72,14 @@ export default function SwipeCard({ card, onSwipe }: Props) {
       <div className="flex flex-col gap-2">
         <h2 className="font-display font-bold text-ink text-2xl leading-tight">{card.title}</h2>
         <p className="font-body text-ink/60 text-sm leading-relaxed line-clamp-3">{card.description}</p>
-        <div className="flex items-center justify-end mt-2 pt-3">
+        <div className="flex items-center justify-between mt-2 pt-3">
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onOpen() }}
+            className="text-xs font-body text-ink/50 underline underline-offset-2"
+          >
+            Ver detalle
+          </button>
           <span className={`font-data font-bold text-xl ${isRequest ? 'text-teal' : 'text-ink'}`}>
             {card.hours}h
           </span>

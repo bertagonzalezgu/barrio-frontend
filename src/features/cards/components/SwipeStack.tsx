@@ -6,9 +6,10 @@ interface Props {
   cards: Card[]
   currentIndex: number
   onSwipe: (direction: SwipeDirection) => void
+  onOpen: (id: string) => void
 }
 
-export default function SwipeStack({ cards, currentIndex, onSwipe }: Props) {
+export default function SwipeStack({ cards, currentIndex, onSwipe, onOpen }: Props) {
   const visible = cards.slice(currentIndex, currentIndex + 3)
 
   if (!visible.length) {
@@ -28,7 +29,7 @@ export default function SwipeStack({ cards, currentIndex, onSwipe }: Props) {
           style={{ transform: `scale(${1 - (visible.length - 1 - i) * 0.04}) translateY(${(visible.length - 1 - i) * -10}px)`, zIndex: i }}
         >
           {i === visible.length - 1 ? (
-            <SwipeCard card={card} onSwipe={onSwipe} />
+            <SwipeCard card={card} onSwipe={onSwipe} onOpen={() => onOpen(card.id)} />
           ) : (
             <div className="absolute inset-0 bg-paper rounded-3xl border border-ink/10 shadow-sm" />
           )}

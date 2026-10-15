@@ -1,14 +1,21 @@
 import useSwipe from '../hooks/useSwipe'
 import SwipeStack from './SwipeStack'
 import type { Card } from '../types/card.types'
+import { useNavigate } from 'react-router-dom'
 
 export default function SwipeView({ cards }: { cards: Card[] }) {
   const { swipe, passed, hasMore } = useSwipe(cards)
+  const navigate = useNavigate()
 
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative w-full max-w-sm h-120">
-        <SwipeStack cards={cards} currentIndex={passed.length} onSwipe={swipe} />
+        <SwipeStack
+          cards={cards}
+          currentIndex={passed.length}
+          onSwipe={swipe}
+          onOpen={(id) => navigate(`/cards/${id}`)}
+        />
       </div>
 
       <div className="flex gap-3">
