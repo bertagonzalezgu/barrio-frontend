@@ -109,6 +109,7 @@ export interface CreateCardFormProps {
   isGenerating: boolean
   isSubmitting: boolean
   hasSuggestion: boolean
+  hasGenerated: boolean
   moderationError?: string | null
 }
 

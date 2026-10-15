@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useCreateCard } from './useCreateCard'
 import type { CardType, CardCategory } from '../types/card.types'
-import { CARD_CATEGORIES } from '../types/card.types'
 import type { CardIconType } from '../types/card-icon.types'
 import { useGenerateCard } from './useGenerateCard'
 
@@ -13,7 +12,7 @@ export default function useCreateCardForm() {
   const { mutateAsync: generate, isPending: isGenerating } = useGenerateCard()
 
   const [type, setType] = useState<CardType>('request')
-  const [category, setCategory] = useState<CardCategory | ''>(CARD_CATEGORIES[0].value)
+  const [category, setCategory] = useState<CardCategory | ''>('')
   const [prompt, setPrompt] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -21,12 +20,14 @@ export default function useCreateCardForm() {
   const [icon, setIcon] = useState<CardIconType | ''>('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [moderationError, setModerationError] = useState<string | null>(null)
+  const [hasGenerated, setHasGenerated] = useState(false)
 
   const hasSuggestion = title !== '' && description !== ''
 
   function validate() {
     const next: Record<string, string> = {}
     if (!category) next.category = 'La categoría es obligatoria'
+    if (!title.trim()) next.title = 'El título no puede estar vacío'
     if (!description.trim()) next.description = 'La descripción es obligatoria'
     if (!hours || hours < 1) next.hours = 'Las horas deben ser más que 0'
     setErrors(next)
@@ -52,7 +53,12 @@ export default function useCreateCardForm() {
   }
 
   async function onGenerate() {
-    if (!prompt.trim() || !category) return
+    if (!prompt.trim()) return
+    if (!category) {
+      setErrors({ category: 'La categoría es obligatoria' })
+      return
+    }
+    setErrors({})
     setModerationError(null)
     await generate(
       { prompt, type, category: category as CardCategory },
@@ -61,6 +67,7 @@ export default function useCreateCardForm() {
           setTitle(result.title)
           setDescription(result.description)
           setIcon(result.icon)
+          setHasGenerated(true)
         },
         onError: (error) => {
           if (axios.isAxiosError(error) && error.response?.status === 422) {
@@ -84,6 +91,7 @@ export default function useCreateCardForm() {
     isGenerating,
     isSubmitting,
     hasSuggestion,
+    hasGenerated,
     errors,
     moderationError,
     onGenerate,

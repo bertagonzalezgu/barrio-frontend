@@ -13,6 +13,7 @@ export default function CreateCardForm({
   icon, setIcon,
   errors,
   hasSuggestion,
+  hasGenerated,
   onGenerate,
   onSubmit,
   isGenerating,
@@ -62,6 +63,7 @@ export default function CreateCardForm({
           aria-invalid={Boolean(errors?.category)}
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper"
         >
+          <option value="">Selecciona una categoría</option>
           {CARD_CATEGORIES.map(({ value, label }) => (
             <option key={value} value={value}>{label}</option>
           ))}
@@ -163,11 +165,18 @@ export default function CreateCardForm({
         </div>
       )}
 
+      {!hasGenerated && (
+        <p id="publish-hint" className="text-xs font-body text-ink/50 text-center">
+          Genera la propuesta con IA para poder publicar
+        </p>
+      )}
+
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={!hasGenerated || isSubmitting}
+        aria-describedby={!hasGenerated ? 'publish-hint' : undefined}
         className={`w-full rounded-xl py-3 font-body font-medium transition-colors disabled:opacity-50 ${
-          hasSuggestion
+          hasGenerated
             ? 'bg-teal text-paper'
             : 'bg-paper text-teal border border-teal'
         }`}

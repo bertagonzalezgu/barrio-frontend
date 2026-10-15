@@ -1,11 +1,14 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, renderHook, act } from '@testing-library/react'
+import type { RenderHookResult } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MemoryRouter } from 'react-router-dom'
 import CreateCardForm from './components/CreateCardForm'
-import { CARD_CATEGORIES } from './types/card.types'
+import useCreateCardForm from './hooks/useCreateCardForm'
 import type { CardType, CardCategory } from './types/card.types'
 import type { CardIconType } from './types/card-icon.types'
 
@@ -26,7 +29,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
   const defaults: FormProps = {
     type: 'request',
     setType: vi.fn() as (value: CardType) => void,
-    category: CARD_CATEGORIES[0].value,
+    category: '',
     setCategory: vi.fn() as (value: CardCategory | '') => void,
     prompt: '',
     setPrompt: vi.fn() as (value: string) => void,
@@ -40,6 +43,7 @@ function buildDefaults(overrides: Partial<FormProps> = {}): FormProps {
     setIcon: vi.fn() as (value: CardIconType | '') => void,
     errors: undefined,
     hasSuggestion: false,
+    hasGenerated: false,
     onGenerate: vi.fn() as () => void,
     onSubmit: vi.fn() as () => void,
     isGenerating: false,
@@ -52,6 +56,18 @@ function renderForm(overrides: Partial<FormProps> = {}) {
   const props = buildDefaults(overrides)
   render(<CreateCardForm {...props} />)
   return props
+}
+
+// El hook usa useNavigate y mutaciones de TanStack, así que necesita ambos providers.
+function hookWrapper({ children }: { children: ReactNode }) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+  })
+  return (
+    <QueryClientProvider client={client}>
+      <MemoryRouter>{children}</MemoryRouter>
+    </QueryClientProvider>
+  )
 }
 
 defineFeature(feature, (test) => {
@@ -68,6 +84,8 @@ defineFeature(feature, (test) => {
         title: 'Necesito que alguien riegue mis plantas 5 días',
         description: 'Me voy de viaje y necesito ayuda con las plantas.',
         hours: 2,
+        hasSuggestion: true,
+        hasGenerated: true,
         onSubmit,
       })
     })
@@ -101,52 +119,85 @@ defineFeature(feature, (test) => {
     and('la tarjeta aparece en el calendario ocupando ese rango de fechas', () => {})
   })
 
-  test('Intentar publicar sin categoría', ({ given, when, and, then }) => {
-    const onSubmit = vi.fn() as () => void
-
+  test('No puedo publicar antes de generar la propuesta', ({ given, when, then, and }) => {
     given('que estoy en "Crear tarjeta" en modo "Busco"', () => {
       renderForm({
         type: 'request',
-        title: 'Necesito ayuda con las plantas',
-        description: 'Me voy de viaje.',
-        errors: { category: 'La categoría es obligatoria' },
-        onSubmit,
+        category: 'petcare',
+        prompt: 'me voy de viaje y necesito que rieguen mis plantas',
+        hasGenerated: false,
       })
     })
 
-    when('dejo el campo de categoría vacío', () => {})
+    // No pulsar "Generar con IA" es la condición del escenario: no hay acción
+    // que disparar, el estado de partida ya la refleja.
+    when('escribo el texto en bruto pero no pulso "Generar con IA"', () => {})
 
-    and('pulso "Publicar tarjeta"', () => {
-      fireEvent.click(screen.getByRole('button', { name: /publicar tarjeta/i }))
+    then('el botón "Publicar tarjeta" está deshabilitado', () => {
+      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeDisabled()
     })
 
-    then('la tarjeta no se guarda', () => {
-      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeInTheDocument()
+    and('veo un aviso de que tengo que generar la propuesta para poder publicar', () => {
+      expect(
+        screen.getByText(/genera la propuesta con ia para poder publicar/i)
+      ).toBeInTheDocument()
+    })
+  })
+
+  test('Intentar publicar sin categoría', ({ given, when, and, then }) => {
+    let hook!: RenderHookResult<ReturnType<typeof useCreateCardForm>, unknown>
+
+    given('que estoy en "Crear tarjeta" en modo "Busco"', () => {
+      hook = renderHook(() => useCreateCardForm(), { wrapper: hookWrapper })
+    })
+
+    when('dejo el campo de categoría sin seleccionar', () => {
+      act(() => {
+        hook.result.current.setPrompt('necesito que alguien riegue mis plantas')
+      })
+      expect(hook.result.current.category).toBe('')
+    })
+
+    and('pulso "Generar con IA"', async () => {
+      await act(async () => {
+        await hook.result.current.onGenerate()
+      })
+    })
+
+    then('no se genera ninguna propuesta', () => {
+      expect(hook.result.current.hasGenerated).toBe(false)
+      expect(hook.result.current.title).toBe('')
     })
 
     and('veo un mensaje indicando que la categoría es obligatoria', () => {
-      expect(screen.getByText('La categoría es obligatoria')).toBeInTheDocument()
+      expect(hook.result.current.errors.category).toBe('La categoría es obligatoria')
     })
   })
 
   test('Intentar publicar sin descripción', ({ given, when, and, then }) => {
-    given('que estoy en "Crear tarjeta" en modo "Busco" con la categoría "Cuidados" seleccionada', () => {
+    const onSubmit = vi.fn() as () => void
+
+    given('que he generado una propuesta con IA', () => {
       renderForm({
         type: 'request',
-        title: '',
+        category: 'petcare',
+        title: 'Riego de plantas durante cinco días',
         description: '',
+        hasSuggestion: true,
+        hasGenerated: true,
         errors: { description: 'La descripción es obligatoria' },
+        onSubmit,
       })
     })
 
-    when('dejo el campo de descripción vacío', () => {})
+    when('borro el texto de la descripción', () => {})
 
     and('pulso "Publicar tarjeta"', () => {
       fireEvent.click(screen.getByRole('button', { name: /publicar tarjeta/i }))
     })
 
     then('la tarjeta no se guarda', () => {
-      expect(screen.getByRole('button', { name: /publicar tarjeta/i })).toBeInTheDocument()
+      expect(screen.getByRole('alert')).toBeInTheDocument()
     })
 
     and('veo un mensaje indicando que la descripción es obligatoria', () => {
