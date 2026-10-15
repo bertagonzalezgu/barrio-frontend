@@ -1,6 +1,5 @@
 import { useCards } from '../hooks/useCards'
 import CardItem from './CardItem'
-import CardItemDesktop from './CardItemDesktop'
 import type { CardFilters } from '../types/card.types'
 
 export default function CardList({ filters }: { filters?: CardFilters }) {
@@ -17,20 +16,10 @@ export default function CardList({ filters }: { filters?: CardFilters }) {
   )
 
   return (
-    <>
-      {/* Mobile */}
-      <div className="flex flex-col gap-3 md:hidden">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]">        
         {cards.map(card => (
-          <CardItem key={card.id} card={card} />
+        <CardItem key={card.id} card={card} />
         ))}
       </div>
-
-      {/* Desktop */}
-      <div className="hidden md:grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]">
-        {cards.map(card => (
-          <CardItemDesktop key={card.id} card={card} />
-        ))}
-      </div>
-    </>
   )
 }
