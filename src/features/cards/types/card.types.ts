@@ -124,3 +124,13 @@ export interface GenerateCardResult {
   description: string
   icon: CardIconType
 }
+
+export interface UpdateCardInput {
+  title?: string
+  description?: string
+  category?: CardCategory
+  hours?: number
+  icon?: CardIconType
+  startDate?: string
+  durationDays?: number
+}

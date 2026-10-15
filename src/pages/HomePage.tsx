@@ -27,7 +27,7 @@ export default function HomePage() {
   const { data: cards = [], isLoading } = useCards(filters)
 
   return (
-    <main className="flex flex-col gap-6 px-4 pt-6 pb-24">
+    <main className="flex flex-col gap-6 px-4 pt-6">
 
       <section>
         <h1 className="text-2xl font-display font-bold text-ink">

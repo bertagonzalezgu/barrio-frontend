@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Card } from '../types/card.types'
+import { formatCardDate } from '../../../utils/formatCardDate'
 
 export default function CardDetailMeta({ card }: { card: Card }) {
   return (
@@ -18,8 +19,8 @@ export default function CardDetailMeta({ card }: { card: Card }) {
         <div className="flex items-center justify-between">
           <span className="text-xs font-body text-ink/40">Disponibilidad</span>
           <span className="text-xs font-body text-ink">
-            {new Date(card.startDate).toLocaleDateString('es-ES')}
-            {card.endDate && ` → ${new Date(card.endDate).toLocaleDateString('es-ES')}`}
+            {formatCardDate(card.startDate)}
+            {card.endDate && ` → ${formatCardDate(card.endDate)}`}
           </span>
         </div>
       )}

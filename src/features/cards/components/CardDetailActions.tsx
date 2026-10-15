@@ -7,9 +7,10 @@ import ModalConfirm from '../../../components/ui/ModalConfirm'
 interface Props {
   card: Card
   isOwner: boolean
+  onEdit: () => void
 }
 
-export default function CardDetailActions({ card, isOwner }: Props) {
+export default function CardDetailActions({ card, isOwner, onEdit }: Props) {
   const navigate = useNavigate()
   const { mutate: deleteCard, isPending } = useDeleteCard()
   const [isOpen, setIsOpen] = useState(false)
@@ -24,7 +25,7 @@ export default function CardDetailActions({ card, isOwner }: Props) {
       <>
         <div className="flex flex-col gap-3 mt-auto">
           <button
-            onClick={() => navigate(`/cards/${card.id}/editar`)}
+            onClick={onEdit}
             className="w-full py-3 rounded-2xl bg-teal text-paper font-body font-medium text-sm"
           >
             Editar tarjeta

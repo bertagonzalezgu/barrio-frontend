@@ -1,9 +1,9 @@
 import type { Card } from '../types/card.types'
-import { CARD_CATEGORIES } from '../types/card.types'
 import CardIcon from './CardIcon'
+import { getCategoryLabel } from '../utils/getCategoryLabel'
 
 export default function CardDetailHeader({ card }: { card: Card }) {
-  const categoryLabel = CARD_CATEGORIES.find(c => c.value === card.category)?.label ?? card.category
+  const categoryLabel = getCategoryLabel(card.category)
   const isRequest = card.type === 'request'
 
   return (

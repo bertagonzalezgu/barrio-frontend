@@ -1,5 +1,6 @@
 import { apiClient } from '../../../services/apiClient'
 import type { CreateCardInput, Card, CardFilters, CardCategory, GenerateCardInput, GenerateCardResult } from '../types/card.types'
+import type { UpdateCardInput } from '../types/card.types'
 
 function toBackendCategory(category: CardCategory): string {
   return category.replace(/-/g, '_')
@@ -34,4 +35,12 @@ export async function getCard(id: string): Promise<Card> {
 
 export async function deleteCard(id: string): Promise<void> {
   await apiClient.delete(`/api/cards/${id}`)
+}
+
+export async function updateCard(id: string, data: UpdateCardInput): Promise<Card> {
+  const response = await apiClient.patch(`/api/cards/${id}`, {
+    ...data,
+    ...(data.category && { category: toBackendCategory(data.category) }),
+  })
+  return response.data
 }
