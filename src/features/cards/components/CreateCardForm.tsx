@@ -95,8 +95,12 @@ export default function CreateCardForm({
           id="hours"
           type="number"
           min={1}
-          value={hours}
-          onChange={(e) => setHours(Number(e.target.value))}
+          max={99}
+          defaultValue={hours}
+          onChange={(e) => {
+            if (e.target.value.length > 2) e.target.value = e.target.value.slice(0, 2)
+            setHours(Number(e.target.value))
+          }}
           aria-invalid={Boolean(errors?.hours)}
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper w-24"
         />
