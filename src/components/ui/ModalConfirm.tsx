@@ -11,7 +11,7 @@ export default function ModalConfirm({ isOpen, title, message, confirmLabel = 'C
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-ink/40 backdrop-blur-sm" onClick={onCancel} />
       <div className="relative bg-paper rounded-3xl p-6 w-full max-w-sm flex flex-col gap-4 shadow-xl">
         <div className="flex flex-col gap-1">
