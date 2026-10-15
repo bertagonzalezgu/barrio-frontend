@@ -1,5 +1,7 @@
+import axios from 'axios'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import ModerationBanner from '../../../components/ModerationBanner'
 import type { Card, CardCategory } from '../types/card.types'
 import { CARD_CATEGORIES } from '../types/card.types'
 import type { CardIconType } from '../types/card-icon.types'
@@ -21,6 +23,7 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
   const [hours, setHours] = useState(String(card.hours))
   const [icon, setIcon] = useState<CardIconType | ''>(card.icon)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [moderationError, setModerationError] = useState<string | null>(null)
 
   function validate() {
     const next: Record<string, string> = {}
@@ -34,6 +37,7 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (!validate()) return
+    setModerationError(null)
     update(
       {
         id: card.id,
@@ -45,7 +49,15 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
           icon: icon as CardIconType,
         },
       },
-      { onSuccess: onSaved }
+      { onSuccess: onSaved,
+        onError: (error) => {
+          if (axios.isAxiosError(error) && error.response?.status === 422) {
+            setModerationError(
+              error.response.data?.message ?? 'Este contenido no cumple las normas de la comunidad. Revísalo antes de guardar.'
+            )
+          }
+        },
+      }
     )
   }
 
@@ -106,6 +118,8 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
           className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper w-24"
         />
       </div>
+
+      {moderationError && <ModerationBanner message={moderationError} />}
 
       {Object.keys(errors).length > 0 && (
         <div role="alert" className="flex flex-col gap-1">
