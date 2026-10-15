@@ -1,5 +1,6 @@
 import axios from "axios";
 import { auth } from "./firebase";
+import { categoryToBackend, categoryToFrontend } from "./interceptors/categoryCase";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 
@@ -15,3 +16,5 @@ apiClient.interceptors.request.use(async (config) => {
     return config
 })
 
+apiClient.interceptors.request.use(categoryToBackend)
+apiClient.interceptors.response.use(categoryToFrontend)
