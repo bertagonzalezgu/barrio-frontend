@@ -74,6 +74,8 @@ export default function useCreateCardForm() {
             setModerationError(
               error.response.data?.message ?? 'Este contenido no cumple las normas de la comunidad. Intenta describir lo que ofreces de otra forma.'
             )
+          } else {
+            setModerationError('No se ha podido generar la propuesta. Prueba a describirlo con otras palabras.')
           }
         },
       }
