@@ -88,6 +88,8 @@ function renderChat() {
 
 const feature = loadFeature('./docs/chat.feature')
 const MESSAGE_TEXT = '¿Quedamos el sábado a las 10?'
+const LEAKED_EMAIL = 'lucia@barrio.local'
+const LEAKED_PHONE = '+34 600 123 456'
 
 defineFeature(feature, (test) => {
   test('Enviar y recibir mensajes dentro del chat de un intercambio', ({ given, when, and, then }) => {
@@ -121,12 +123,36 @@ defineFeature(feature, (test) => {
 })
 
   test('El teléfono no se comparte por defecto', ({ given, when, then }) => {
-    given('que estoy chateando con otro usuario dentro de la app', () => {
-      throw 'pendiente: escenario 2'
+  given('que estoy chateando con otro usuario dentro de la app', () => {
+    mockChatApi()
+    stored.push({
+      id: 'message-1',
+      text: 'Hola, ¿quedamos?',
+      sentAt: new Date().toISOString(),
+      sender: 'B',
     })
-    when('reviso la conversación y el perfil del otro usuario', () => {})
-    then('mi número de teléfono no es visible para él en ningún momento del flujo', () => {})
+    // Aunque el backend filtrase datos de contacto por error, la pantalla no debe mostrarlos.
+    server.use(
+      http.get(`${API}/exchanges/${EXCHANGE_ID}`, () =>
+        HttpResponse.json({
+          ...chatDetail,
+          other: { ...chatDetail.other, email: LEAKED_EMAIL, phone: LEAKED_PHONE },
+        })
+      )
+    )
   })
+
+  when('reviso la conversación y el perfil del otro usuario', async () => {
+    renderChat()
+    expect(await screen.findByText('Hola, ¿quedamos?')).toBeInTheDocument()
+  })
+
+  then('mi número de teléfono no es visible para él en ningún momento del flujo', () => {
+    expect(document.body).not.toHaveTextContent(LEAKED_PHONE)
+    expect(document.body).not.toHaveTextContent(LEAKED_EMAIL)
+    expect(document.querySelector('a[href^="tel:"], a[href^="mailto:"]')).toBeNull()
+  })
+})
 
   test('Denunciar una conversación', ({ given, when, then, and }) => {
     given('que estoy en un chat con otro usuario', () => {
