@@ -27,10 +27,10 @@ export default function HomePage() {
   const { data: cards = [], isLoading } = useCards(filters)
 
   return (
-    <main className="flex flex-col gap-6 px-4 pt-6">
+    <main className="flex flex-col gap-6 px-4 pt-2">
 
       <section>
-        <h1 className="text-2xl font-display font-bold text-ink">
+        <h1 className="text-3xl font-display font-bold text-ink">
           Hola, {userName}
         </h1>
         <p className="text-base font-body text-ink/80 mt-1">

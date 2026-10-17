@@ -9,39 +9,27 @@ export default function CardItem({ card }: { card: Card }) {
 
   return (
     <Link to={`/cards/${card.id}`} className="block">
-      <div className="flex items-stretch bg-paper rounded-2xl overflow-hidden border border-ink/10 md:hover:shadow-lg md:hover:-translate-y-0.5 transition-all min-h-32 md:min-h-44 w-full">
-        <div className={`w-1.5 shrink-0 ${isRequest ? 'bg-teal' : 'bg-gold'}`} />
-        <div className="flex flex-1 gap-3 p-4 md:gap-4 md:p-5">
+      <div className="flex rounded-2xl overflow-hidden transition-all w-full md:hover:-translate-y-0.5 md:hover:shadow-md bg-white">
+        <div className="flex flex-1 gap-4 px-4 py-5 min-h-40">
 
-          {/* Texto izquierda */}
-          <div className="flex flex-col flex-1 gap-2 justify-between">
-            <span
-              className={`self-start text-[9px] font-body font-medium tracking-widest uppercase rounded-md px-2 py-0.5 ${
-                isRequest ? 'bg-teal-soft text-teal' : 'bg-gold-soft text-ink'
-              }`}
-            >
+          <div className="flex flex-col flex-1 justify-start gap-3">
+            <span className={`self-start text-[9px] font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
+              isRequest ? 'bg-teal text-paper' : 'bg-gold text-ink'
+            }`}>
               {isRequest ? 'Busco' : 'Ofrezco'}
             </span>
-            <h3 className="font-display font-bold text-ink text-base leading-snug line-clamp-2 md:line-clamp-3">
+            <h3 className="font-body font-bold text-ink text-lg leading-snug line-clamp-2 min-h-8">
               {card.title}
             </h3>
-            <div className="pt-2 border-t border-ink/10">
-              <span className="text-xs font-body text-ink/50 uppercase">{categoryLabel}</span>
-            </div>
+            <span className="text-[11px] font-body font-normal text-ink uppercase tracking-widest">
+              {card.hours}h · {categoryLabel}
+            </span>
           </div>
 
-          {/* Icono arriba + horas abajo */}
-          <div className="flex flex-col items-end justify-between shrink-0">
-            <div
-              className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center p-2 ${
-                isRequest ? 'bg-teal-soft' : 'bg-gold-soft'
-              }`}
-            >
-              {card.icon && <CardIcon name={card.icon} />}
+          <div className="flex items-center justify-center shrink-0 w-16">
+            <div className="w-16 h-16 drop-shadow-sm">
+              {card.icon && <CardIcon name={card.icon} className="w-full h-full object-contain" />}
             </div>
-            <span className={`font-data text-base font-bold ${isRequest ? 'text-teal' : 'text-ink'}`}>
-              {card.hours}h
-            </span>
           </div>
 
         </div>

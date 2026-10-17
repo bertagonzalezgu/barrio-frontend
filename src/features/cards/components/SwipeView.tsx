@@ -9,7 +9,7 @@ export default function SwipeView({ cards }: { cards: Card[] }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="relative w-full max-w-sm h-120">
+      <div className="relative w-80 max-w-sm h-110">
         <SwipeStack
           cards={cards}
           currentIndex={passed.length}
