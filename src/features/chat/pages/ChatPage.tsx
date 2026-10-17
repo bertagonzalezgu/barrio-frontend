@@ -8,6 +8,8 @@ import MessageList from '../components/MessageList'
 import MessageForm from '../components/MessageForm'
 import ConfirmExchange from '../components/ConfirmExchange'
 import ChatActions from '../components/ChatActions'
+import { isChatWritable } from '../utils/isChatWritable'
+
 
 export default function ChatPage() {
   const { exchangeId = '' } = useParams()
@@ -28,7 +30,13 @@ export default function ChatPage() {
       ) : (
         <MessageList messages={messages.data ?? []} otherName={chat.other.name} />
       )}
-      <MessageForm exchangeId={exchangeId} />
+      {isChatWritable(chat.status) ? (
+        <MessageForm exchangeId={exchangeId} />
+        ) : (
+        <p role="status">
+            Este chat está cerrado. Puedes leer la conversación, pero ya no se pueden enviar mensajes.
+        </p>
+        )}
     </main>
   )
 }

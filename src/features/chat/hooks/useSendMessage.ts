@@ -9,5 +9,8 @@ export function useSendMessage(exchangeId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['chat-messages', exchangeId] })
     },
+    onError: () => {
+    queryClient.invalidateQueries({ queryKey: ['chat', exchangeId] })
+    },
   })
 }
