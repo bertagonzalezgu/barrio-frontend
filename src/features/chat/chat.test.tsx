@@ -13,11 +13,13 @@ const API = 'http://localhost:3001/api'
 const EXCHANGE_ID = 'exchange-1'
 
 const server = setupServer()
+const reports = vi.fn()
 
 beforeAll(() => server.listen())
 afterEach(() => {
     server.resetHandlers()
     sentMessages.mockClear()
+    reports.mockClear()
 })
 afterAll(() => server.close())
 
@@ -90,6 +92,8 @@ const feature = loadFeature('./docs/chat.feature')
 const MESSAGE_TEXT = '¿Quedamos el sábado a las 10?'
 const LEAKED_EMAIL = 'lucia@barrio.local'
 const LEAKED_PHONE = '+34 600 123 456'
+const REPORT_REASON = 'Me pide el teléfono para quedar fuera de la app'
+
 
 defineFeature(feature, (test) => {
   test('Enviar y recibir mensajes dentro del chat de un intercambio', ({ given, when, and, then }) => {
@@ -131,7 +135,7 @@ defineFeature(feature, (test) => {
       sentAt: new Date().toISOString(),
       sender: 'B',
     })
-    // Aunque el backend filtrase datos de contacto por error, la pantalla no debe mostrarlos.
+   
     server.use(
       http.get(`${API}/exchanges/${EXCHANGE_ID}`, () =>
         HttpResponse.json({
@@ -155,13 +159,43 @@ defineFeature(feature, (test) => {
 })
 
   test('Denunciar una conversación', ({ given, when, then, and }) => {
-    given('que estoy en un chat con otro usuario', () => {
-      throw 'pendiente: escenario 3'
+  given('que estoy en un chat con otro usuario', async () => {
+    mockChatApi()
+    stored.push({
+      id: 'message-1',
+      text: 'Pásame tu teléfono y hablamos fuera',
+      sentAt: new Date().toISOString(),
+      sender: 'B',
     })
-    when('pulso el botón "Denunciar"', () => {})
-    then('se registra una denuncia asociada a esa conversación', () => {})
-    and('el chat sigue siendo accesible para que el equipo de revisión pueda consultarlo', () => {})
+    server.use(
+      http.post(`${API}/exchanges/${EXCHANGE_ID}/report`, async ({ request }) => {
+        reports(await request.json())
+        return HttpResponse.json({ id: 'report-1', createdAt: new Date().toISOString() }, { status: 201 })
+      })
+    )
+    renderChat()
+    expect(await screen.findByRole('log')).toBeInTheDocument()
   })
+
+  when('pulso el botón "Denunciar"', () => {
+    fireEvent.click(screen.getByRole('button', { name: 'Denunciar' }))
+    fireEvent.change(screen.getByRole('textbox', { name: /motivo de la denuncia/i }), {
+      target: { value: REPORT_REASON },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Enviar denuncia' }))
+  })
+
+  then('se registra una denuncia asociada a esa conversación', async () => {
+    await waitFor(() => expect(reports).toHaveBeenCalledWith({ reason: REPORT_REASON }))
+    expect(await screen.findByRole('status')).toHaveTextContent(/denuncia enviada/i)
+  })
+
+  and('el chat sigue siendo accesible para que el equipo de revisión pueda consultarlo', () => {
+    expect(screen.getByRole('log')).toBeInTheDocument()
+    expect(screen.getByText('Pásame tu teléfono y hablamos fuera')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Denunciar' })).toBeInTheDocument()
+  })
+})
 
   test('El chat solo es visible para las dos personas implicadas', ({ given, when, then }) => {
     given('que existe un chat entre el usuario A y el usuario B', () => {
