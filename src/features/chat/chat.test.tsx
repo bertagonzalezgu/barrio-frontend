@@ -1,5 +1,5 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
@@ -15,8 +15,61 @@ const EXCHANGE_ID = 'exchange-1'
 const server = setupServer()
 
 beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+    server.resetHandlers()
+    sentMessages.mockClear()
+})
 afterAll(() => server.close())
+
+interface StoredMessage {
+  id: string
+  text: string
+  sentAt: string
+  sender: 'A' | 'B'
+}
+
+let stored: StoredMessage[] = []
+let viewer: 'A' | 'B' = 'A'
+const sentMessages = vi.fn()
+
+const chatDetail = {
+  id: EXCHANGE_ID,
+  status: 'proposed',
+  hours: 2,
+  card: { id: 'card-1', title: 'Ayuda con una mudanza', type: 'request' },
+  other: { id: 'user-b', name: 'Lucía', avatar: '' },
+  myConfirmed: false,
+  otherConfirmed: false,
+  actions: ['cancel'],
+}
+
+function mockChatApi() {
+  stored = []
+  viewer = 'A'
+  server.use(
+    http.get(`${API}/exchanges/${EXCHANGE_ID}`, () => HttpResponse.json(chatDetail)),
+    http.get(`${API}/exchanges/${EXCHANGE_ID}/messages`, () =>
+      HttpResponse.json(
+        stored.map(({ id, text, sentAt, sender }) => ({ id, text, sentAt, mine: sender === viewer }))
+      )
+    ),
+    http.post(`${API}/exchanges/${EXCHANGE_ID}/messages`, async ({ request }) => {
+      const { text } = (await request.json()) as { text: string }
+      sentMessages({ text })
+      const message: StoredMessage = {
+        id: `message-${stored.length + 1}`,
+        text,
+        sentAt: new Date().toISOString(),
+        sender: viewer,
+      }
+      stored.push(message)
+      return HttpResponse.json(
+        { id: message.id, text, sentAt: message.sentAt, mine: true },
+        { status: 201 }
+      )
+    })
+  )
+}
 
 function renderChat() {
   const client = new QueryClient({
@@ -34,17 +87,38 @@ function renderChat() {
 }
 
 const feature = loadFeature('./docs/chat.feature')
+const MESSAGE_TEXT = '¿Quedamos el sábado a las 10?'
 
 defineFeature(feature, (test) => {
   test('Enviar y recibir mensajes dentro del chat de un intercambio', ({ given, when, and, then }) => {
-    given('que tengo un intercambio propuesto con otro usuario', () => {
-      throw 'pendiente: escenario 1'
-    })
-    when('abro el chat asociado a esa propuesta', () => {})
-    and('escribo un mensaje proponiendo fecha y hora', () => {})
-    then('el mensaje se guarda', () => {})
-    and('el otro usuario puede verlo al abrir el mismo chat', () => {})
+  given('que tengo un intercambio propuesto con otro usuario', () => {
+    mockChatApi()
   })
+
+  when('abro el chat asociado a esa propuesta', async () => {
+    renderChat()
+    expect(await screen.findByRole('log')).toBeInTheDocument()
+  })
+
+  and('escribo un mensaje proponiendo fecha y hora', () => {
+    fireEvent.change(screen.getByRole('textbox', { name: /mensaje/i }), {
+      target: { value: MESSAGE_TEXT },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /enviar/i }))
+  })
+
+  then('el mensaje se guarda', async () => {
+    await waitFor(() => expect(sentMessages).toHaveBeenCalledWith({ text: MESSAGE_TEXT }))
+    expect(await screen.findByText(MESSAGE_TEXT)).toBeInTheDocument()
+  })
+
+  and('el otro usuario puede verlo al abrir el mismo chat', async () => {
+    cleanup()
+    viewer = 'B'
+    renderChat()
+    expect(await screen.findByText(MESSAGE_TEXT)).toBeInTheDocument()
+  })
+})
 
   test('El teléfono no se comparte por defecto', ({ given, when, then }) => {
     given('que estoy chateando con otro usuario dentro de la app', () => {
@@ -65,7 +139,6 @@ defineFeature(feature, (test) => {
 
   test('El chat solo es visible para las dos personas implicadas', ({ given, when, then }) => {
     given('que existe un chat entre el usuario A y el usuario B', () => {
-      // Quien consulta es una tercera persona: para ella el backend responde igual que si no existiera.
       server.use(
         http.get(`${API}/exchanges/${EXCHANGE_ID}`, () =>
           HttpResponse.json({ error: 'Exchange not found' }, { status: 404 })
