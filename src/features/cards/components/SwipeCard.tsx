@@ -31,7 +31,7 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
     }
   }
 
-    function handleClick() {
+  function handleClick() {
     if (Math.abs(x.get()) > 5) return
     onOpen()
   }
@@ -43,46 +43,41 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
       dragConstraints={{ left: 0, right: 0 }}
       onDragEnd={handleDragEnd}
       onClick={handleClick}
-      className={`absolute inset-0 rounded-3xl border shadow-sm cursor-grab active:cursor-grabbing select-none flex flex-col p-6 ${
-        isRequest ? 'bg-teal-soft border-teal/20' : 'bg-gold-soft border-gold/30'
-      }`}
+      className="absolute inset-0 rounded-3xl cursor-grab active:cursor-grabbing select-none shadow-xl flex flex-col p-6 bg-white"
     >
-      {/* Categoría arriba */}
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-body font-medium tracking-wide uppercase text-ink/70 bg-paper px-2 py-1 rounded-full">
+        <span className="text-[9px] font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full bg-ink/10 text-ink/70">
           {categoryLabel}
         </span>
-        <span
-          className={`text-[10px] font-body font-medium tracking-wide uppercase px-2 py-1 rounded-full ${
-            isRequest ? 'bg-teal text-paper' : 'bg-gold text-ink'
-          }`}
-        >
+        <span className={`text-[9px] font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full ${
+          isRequest ? 'bg-teal text-paper' : 'bg-gold text-ink'
+        }`}>
           {isRequest ? 'Busco' : 'Ofrezco'}
         </span>
       </div>
 
-      {/* Icono central */}
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-40 h-40 rounded-full bg-paper flex items-center justify-center p-8">
-          {card.icon && <CardIcon name={card.icon} />}
+        <div className="w-30 h-30 drop-shadow-lg shadow-black">
+          {card.icon && <CardIcon name={card.icon} className="w-full h-35 object-contain" />}
         </div>
       </div>
 
-      {/* Título + descripción + horas abajo */}
-      <div className="flex flex-col gap-2">
-        <h2 className="font-display font-bold text-ink text-2xl leading-tight">{card.title}</h2>
-        <p className="font-body text-ink/60 text-sm leading-relaxed line-clamp-3">{card.description}</p>
-        <div className="flex items-center justify-between mt-2 pt-3">
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); onOpen() }}
-            className="text-xs font-body text-ink/50 underline underline-offset-2"
-          >
-            Ver detalle
-          </button>
-          <span className={`font-data font-bold text-xl ${isRequest ? 'text-teal' : 'text-ink'}`}>
-            {card.hours}h
-          </span>
+      <div className='w-full text-center pb-5'>
+        <h2 className="font-body font-bold text-ink text-2xl leading-tight mb-4">
+        {card.title}
+        </h2>
+      </div>
+      
+      <div className="border-t border-ink/10 pt-3 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onOpen() }}
+          className="text-xs font-body text-ink/70"
+        >
+          Ver detalle
+        </button>
+        <div className="w-11 h-11 rounded-full bg-ink flex items-center justify-center">
+          <span className="font-data font-bold text-paper text-sm">{card.hours}h</span>
         </div>
       </div>
     </motion.div>
