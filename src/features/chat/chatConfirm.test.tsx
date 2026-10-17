@@ -1,33 +1,18 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { describe, it, expect, vi, beforeAll, afterEach, afterAll } from 'vitest'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MemoryRouter, Routes, Route } from 'react-router-dom'
-import ChatPage from './pages/ChatPage'
+import { API, EXCHANGE_ID, baseChat } from './test/chatFixtures'
+import { renderChat } from './test/renderChat'
 
 vi.mock('../../services/firebase', () => ({ auth: {} }))
 
-const API = 'http://localhost:3001/api'
-const EXCHANGE_ID = 'exchange-1'
 const CONFIRM_BUTTON = { name: 'Confirmar intercambio' }
-
-const baseChat = {
-  id: EXCHANGE_ID,
-  status: 'accepted',
-  hours: 2,
-  card: { id: 'card-1', title: 'Ayuda con una mudanza', type: 'request' },
-  other: { id: 'user-b', name: 'Lucía', avatar: '' },
-  myConfirmed: false,
-  otherConfirmed: false,
-  actions: ['cancel', 'confirm'],
-}
 
 const server = setupServer()
 const confirmCalls = vi.fn()
 const detailCalls = vi.fn()
 
-// Lo que devuelve el "servidor" en cada momento: el PATCH de confirmar lo actualiza.
 let currentChat: object = baseChat
 
 beforeAll(() => server.listen())
@@ -56,21 +41,6 @@ function mockConfirm(next: object) {
       currentChat = next
       return HttpResponse.json(next)
     })
-  )
-}
-
-function renderChat() {
-  const client = new QueryClient({
-    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
-  })
-  render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={[`/chat/${EXCHANGE_ID}`]}>
-        <Routes>
-          <Route path="/chat/:exchangeId" element={<ChatPage />} />
-        </Routes>
-      </MemoryRouter>
-    </QueryClientProvider>
   )
 }
 

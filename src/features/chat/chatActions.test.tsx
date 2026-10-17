@@ -1,34 +1,21 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { describe, it, expect, vi, beforeAll, afterEach, afterAll } from 'vitest'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MemoryRouter, Routes, Route } from 'react-router-dom'
-import ChatPage from './pages/ChatPage'
+import { API, EXCHANGE_ID, baseChat } from './test/chatFixtures'
+import { renderChat } from './test/renderChat'
 
 vi.mock('../../services/firebase', () => ({ auth: {} }))
 
-const API = 'http://localhost:3001/api'
-const EXCHANGE_ID = 'exchange-1'
 const ACCEPT_BUTTON = { name: 'Aceptar propuesta' }
 const REJECT_BUTTON = { name: 'Rechazar propuesta' }
 const CONFIRM_BUTTON = { name: 'Confirmar intercambio' }
 
-const proposedChat = {
-  id: EXCHANGE_ID,
-  status: 'proposed',
-  hours: 2,
-  card: { id: 'card-1', title: 'Ayuda con una mudanza', type: 'request' },
-  other: { id: 'user-b', name: 'Lucía', avatar: '' },
-  myConfirmed: false,
-  otherConfirmed: false,
-  actions: ['accept', 'reject', 'cancel'],
-}
+const proposedChat = { ...baseChat, status: 'proposed', actions: ['accept', 'reject', 'cancel'] }
 
 const server = setupServer()
 const transitionCalls = vi.fn()
 
-// Lo que devuelve el "servidor" en cada momento: el PATCH lo actualiza.
 let currentChat: object = proposedChat
 
 beforeAll(() => server.listen())
@@ -62,21 +49,6 @@ function mockTransitionError(action: 'accept' | 'reject', code: string, chatAfte
       currentChat = chatAfter
       return HttpResponse.json({ error: code }, { status: 409 })
     })
-  )
-}
-
-function renderChat() {
-  const client = new QueryClient({
-    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
-  })
-  render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={[`/chat/${EXCHANGE_ID}`]}>
-        <Routes>
-          <Route path="/chat/:exchangeId" element={<ChatPage />} />
-        </Routes>
-      </MemoryRouter>
-    </QueryClientProvider>
   )
 }
 
