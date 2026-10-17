@@ -8,6 +8,7 @@ import RegisterPage from './features/auth/pages/RegisterPage'
 import HomePage from './pages/HomePage'
 import CreateCardPage from './features/cards/pages/CreateCardPage'
 import CardDetailPage from './features/cards/pages/CardDetailPage'
+import ChatPage from './features/chat/pages/ChatPage'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/cards/crear" element={<CreateCardPage />} />
         <Route path="/cards/:id" element={<CardDetailPage />} />
+        <Route path="/chat/:exchangeId" element={<ChatPage />} />
       </Route>
     </Routes>
   )
