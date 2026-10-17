@@ -1,5 +1,5 @@
 import { apiClient } from '../../../services/apiClient'
-import type { ChatDetail, ChatMessage } from '../types/chat.types'
+import type { ChatDetail, ChatMessage, TransitionAction } from '../types/chat.types'
 
 export async function getChatDetail(exchangeId: string): Promise<ChatDetail> {
   const response = await apiClient.get(`/api/exchanges/${exchangeId}`)
@@ -23,4 +23,8 @@ export async function reportExchange(exchangeId: string, reason: string): Promis
 export async function confirmExchange(exchangeId: string): Promise<ChatDetail> {
   const response = await apiClient.patch(`/api/exchanges/${exchangeId}/confirm`)
   return response.data
+}
+
+export async function transitionExchange(exchangeId: string, action: TransitionAction): Promise<void> {
+  await apiClient.patch(`/api/exchanges/${exchangeId}/${action}`)
 }

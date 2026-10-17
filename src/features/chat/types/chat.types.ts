@@ -33,3 +33,5 @@ export interface ChatMessage {
 }
 
 export type ConfirmViewState = 'can-confirm' | 'waiting-other' | 'confirmed' | 'hidden'
+
+export type TransitionAction = Exclude<ChatAction, 'confirm'>
