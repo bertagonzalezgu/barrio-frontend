@@ -31,3 +31,5 @@ export interface ChatMessage {
   sentAt: string
   mine: boolean
 }
+
+export type ConfirmViewState = 'can-confirm' | 'waiting-other' | 'confirmed' | 'hidden'

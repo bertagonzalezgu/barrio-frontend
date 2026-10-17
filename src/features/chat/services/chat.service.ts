@@ -19,3 +19,8 @@ export async function sendMessage(exchangeId: string, text: string): Promise<Cha
 export async function reportExchange(exchangeId: string, reason: string): Promise<void> {
   await apiClient.post(`/api/exchanges/${exchangeId}/report`, { reason })
 }
+
+export async function confirmExchange(exchangeId: string): Promise<ChatDetail> {
+  const response = await apiClient.patch(`/api/exchanges/${exchangeId}/confirm`)
+  return response.data
+}
