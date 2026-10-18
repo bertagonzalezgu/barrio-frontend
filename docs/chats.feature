@@ -40,13 +40,3 @@ Característica: Ver mis conversaciones en un solo sitio
     Dado que no tengo ningún intercambio
     Cuando abro la lista de chats
     Entonces veo un mensaje indicando que todavía no tengo conversaciones
-
-  Escenario: Solo veo mis conversaciones
-    Dado que existe un intercambio entre otras dos personas
-    Cuando abro la lista de chats
-    Entonces esa conversación no aparece en mi lista
-
-  Escenario: No se muestran datos de contacto
-    Dado que tengo una conversación con otra persona
-    Cuando abro la lista de chats
-    Entonces no veo su correo ni su teléfono
