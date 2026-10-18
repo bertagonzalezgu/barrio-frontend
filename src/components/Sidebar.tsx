@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Map, Calendar, BarChart2, User } from 'lucide-react'
+import { Home, Map, Calendar, BarChart2, MessageCircle, User } from 'lucide-react'
 
 const links = [
   { to: '/home', label: 'Inicio', icon: Home },
   { to: '/mapa', label: 'Mapa', icon: Map },
   { to: '/calendario', label: 'Calendario', icon: Calendar },
   { to: '/actividad', label: 'Actividad', icon: BarChart2 },
+  { to: '/chats', label: 'Chats', icon: MessageCircle },
   { to: '/perfil', label: 'Perfil', icon: User },
 ]
 

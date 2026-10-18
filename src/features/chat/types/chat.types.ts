@@ -31,6 +31,16 @@ export interface ChatMessage {
   sentAt: string
   mine: boolean
 }
+export interface ChatSummary {
+  id: string
+  status: ExchangeStatus
+  hours: number
+  proposedAt: string
+  card: ChatCard
+  other: ChatParticipant
+  lastMessage: Omit<ChatMessage, 'id'> | null
+  lastActivityAt: string
+}
 
 export type ConfirmViewState = 'can-confirm' | 'waiting-other' | 'confirmed' | 'hidden'
 
