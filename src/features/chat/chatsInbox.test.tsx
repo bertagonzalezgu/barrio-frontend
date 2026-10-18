@@ -14,7 +14,7 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-const feature = loadFeature('./docs/chats.feature')
+const feature = loadFeature('./docs/chatsInbox.feature')
 const LAST_MESSAGE = 'El sábado me va bien'
 const LAST_MESSAGE_AT = '2026-10-18T09:00:00.000Z'
 
