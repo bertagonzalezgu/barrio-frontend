@@ -1,9 +1,9 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
-import { screen, within } from '@testing-library/react'
+import { screen, within, fireEvent } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
-import { API } from './test/chatFixtures'
+import { API, EXCHANGE_ID } from './test/chatFixtures'
 import { baseSummary } from './test/chatsInboxFixtures'
 import { renderChatList } from './test/renderChatList'
 
@@ -108,11 +108,21 @@ defineFeature(feature, (test) => {
     and('al abrirla puedo aceptar o rechazar la propuesta', () => {})
   })
 
-  test.skip('Abrir una conversación desde la lista', ({ given, when, then }) => {
-    given('que veo una conversación en la lista', () => {})
-    when('pulso sobre ella', () => {})
-    then('se abre el chat de ese intercambio', () => {})
+  test('Abrir una conversación desde la lista', ({ given, when, then }) => {
+  given('que veo una conversación en la lista', async () => {
+    server.use(http.get(`${API}/exchanges`, () => HttpResponse.json([baseSummary])))
+    renderChatList()
+    expect(await screen.findByText('Lucía')).toBeInTheDocument()
   })
+
+  when('pulso sobre ella', () => {
+    fireEvent.click(screen.getByRole('link', { name: /Lucía/ }))
+  })
+
+  then('se abre el chat de ese intercambio', () => {
+    expect(screen.getByText(`Chat abierto: ${EXCHANGE_ID}`)).toBeInTheDocument()
+  })
+})
 
   test.skip('Todavía no tengo conversaciones', ({ given, when, then }) => {
     given('que no tengo ningún intercambio', () => {})
