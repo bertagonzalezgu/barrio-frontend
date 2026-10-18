@@ -3,9 +3,10 @@ import { screen, within, fireEvent } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
-import { API, EXCHANGE_ID } from './test/chatFixtures'
+import { API, EXCHANGE_ID, baseChat } from './test/chatFixtures'
 import { baseSummary } from './test/chatsInboxFixtures'
 import { renderChatList } from './test/renderChatList'
+import ChatPage from './pages/ChatPage'
 
 vi.mock('../../services/firebase', () => ({ auth: {} }))
 
@@ -101,12 +102,31 @@ defineFeature(feature, (test) => {
   })
 })
 
-  test.skip('Llegar a una propuesta recibida', ({ given, when, then, and }) => {
-    given('que otra persona ha propuesto un intercambio sobre una tarjeta mía', () => {})
-    when('abro la lista de chats', () => {})
-    then('veo esa conversación con el estado "Propuesta"', () => {})
-    and('al abrirla puedo aceptar o rechazar la propuesta', () => {})
+  test('Llegar a una propuesta recibida', ({ given, when, then, and }) => {
+  given('que otra persona ha propuesto un intercambio sobre una tarjeta mía', () => {
+    server.use(
+      http.get(`${API}/exchanges`, () => HttpResponse.json([{ ...baseSummary, status: 'proposed' }])),
+      http.get(`${API}/exchanges/${EXCHANGE_ID}`, () =>
+        HttpResponse.json({ ...baseChat, status: 'proposed', actions: ['accept', 'reject', 'cancel'] })
+      ),
+      http.get(`${API}/exchanges/${EXCHANGE_ID}/messages`, () => HttpResponse.json([]))
+    )
   })
+
+  when('abro la lista de chats', () => {
+    renderChatList(<ChatPage />)
+  })
+
+  then('veo esa conversación con el estado "Propuesta"', async () => {
+    expect(await screen.findByText('Propuesta')).toBeInTheDocument()
+  })
+
+  and('al abrirla puedo aceptar o rechazar la propuesta', async () => {
+    fireEvent.click(screen.getByRole('link', { name: /Lucía/ }))
+    expect(await screen.findByRole('button', { name: 'Aceptar propuesta' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Rechazar propuesta' })).toBeInTheDocument()
+  })
+})
 
   test('Abrir una conversación desde la lista', ({ given, when, then }) => {
   given('que veo una conversación en la lista', async () => {
