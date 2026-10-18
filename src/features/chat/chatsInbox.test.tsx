@@ -15,9 +15,11 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 const feature = loadFeature('./docs/chats.feature')
+const LAST_MESSAGE = 'El sábado me va bien'
+const LAST_MESSAGE_AT = '2026-10-18T09:00:00.000Z'
 
 defineFeature(feature, (test) => {
-  test.skip('Acceder a la lista desde la navegación', ({ given, when, then }) => {
+  test('Acceder a la lista desde la navegación', ({ given, when, then }) => {
     given('que he iniciado sesión', () => {})
     when('pulso "Chats" en la navegación', () => {})
     then('veo la pantalla con la lista de mis conversaciones', () => {})
@@ -43,11 +45,26 @@ defineFeature(feature, (test) => {
     )
   })
 
-  test.skip('Ver el último mensaje de cada conversación', ({ given, when, then }) => {
-    given('que tengo una conversación con mensajes', () => {})
-    when('abro la lista de chats', () => {})
-    then('veo un adelanto del último mensaje y su hora', () => {})
+  test('Ver el último mensaje de cada conversación', ({ given, when, then }) => {
+  given('que tengo una conversación con mensajes', () => {
+    server.use(
+      http.get(`${API}/exchanges`, () =>
+        HttpResponse.json([
+          { ...baseSummary, lastMessage: { text: LAST_MESSAGE, sentAt: LAST_MESSAGE_AT, mine: false } },
+        ])
+      )
+    )
   })
+
+  when('abro la lista de chats', () => {
+    renderChatList()
+  })
+
+  then('veo un adelanto del último mensaje y su hora', async () => {
+    expect(await screen.findByText(LAST_MESSAGE)).toBeInTheDocument()
+    expect(document.querySelector('time')).toHaveAttribute('datetime', LAST_MESSAGE_AT)
+  })
+})
 
   test.skip('Las conversaciones en curso aparecen antes que las cerradas', ({ given, when, then, and }) => {
     given('que tengo un intercambio aceptado y otro ya confirmado', () => {})
