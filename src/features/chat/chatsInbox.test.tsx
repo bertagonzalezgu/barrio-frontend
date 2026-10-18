@@ -7,6 +7,8 @@ import { API, EXCHANGE_ID, baseChat } from './test/chatFixtures'
 import { baseSummary } from './test/chatsInboxFixtures'
 import { renderChatList } from './test/renderChatList'
 import ChatPage from './pages/ChatPage'
+import Navbar from '../../components/Navbar'
+import { renderChatsNavigation } from './test/renderChatsNavigation'
 
 vi.mock('../../services/firebase', () => ({ auth: {} }))
 
@@ -21,10 +23,19 @@ const LAST_MESSAGE_AT = '2026-10-18T09:00:00.000Z'
 
 defineFeature(feature, (test) => {
   test('Acceder a la lista desde la navegación', ({ given, when, then }) => {
-    given('que he iniciado sesión', () => {})
-    when('pulso "Chats" en la navegación', () => {})
-    then('veo la pantalla con la lista de mis conversaciones', () => {})
+  given('que he iniciado sesión', () => {
+    server.use(http.get(`${API}/exchanges`, () => HttpResponse.json([])))
   })
+
+  when('pulso "Chats" en la navegación', () => {
+    renderChatsNavigation(<Navbar />)
+    fireEvent.click(screen.getByRole('link', { name: 'Chats' }))
+  })
+
+  then('veo la pantalla con la lista de mis conversaciones', async () => {
+    expect(await screen.findByRole('heading', { name: 'Chats' })).toBeInTheDocument()
+  })
+})
 
   test('Ver los datos de cada conversación', ({ given, when, then }) => {
     given('que tengo un intercambio con otra persona sobre una tarjeta', () => {
