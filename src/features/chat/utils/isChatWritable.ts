@@ -1,7 +1,6 @@
 import type { ExchangeStatus } from '../../exchanges/types/exchange.types'
-
-const WRITABLE_STATUSES: ExchangeStatus[] = ['proposed', 'accepted', 'done']
+import { OPEN_STATUSES } from './constants'
 
 export function isChatWritable(status: ExchangeStatus): boolean {
-  return WRITABLE_STATUSES.includes(status)
+  return OPEN_STATUSES.includes(status)
 }
