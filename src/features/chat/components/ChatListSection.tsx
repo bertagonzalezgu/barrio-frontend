@@ -11,9 +11,11 @@ export default function ChatListSection({ title, chats }: ChatListSectionProps) 
   const headingId = useId()
 
   return (
-    <section aria-labelledby={headingId}>
-      <h2 id={headingId}>{title}</h2>
-      <ul>
+    <section aria-labelledby={headingId} className="flex flex-col gap-2">
+      <h2 id={headingId} className="font-body text-xs font-medium uppercase tracking-widest text-ink/70">
+        {title}
+      </h2>
+      <ul className="flex flex-col gap-2">
         {chats.map((chat) => (
           <ChatListItem key={chat.id} chat={chat} />
         ))}
