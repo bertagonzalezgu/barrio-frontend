@@ -1,5 +1,5 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
@@ -66,12 +66,40 @@ defineFeature(feature, (test) => {
   })
 })
 
-  test.skip('Las conversaciones en curso aparecen antes que las cerradas', ({ given, when, then, and }) => {
-    given('que tengo un intercambio aceptado y otro ya confirmado', () => {})
-    when('abro la lista de chats', () => {})
-    then('el intercambio aceptado aparece en "En curso"', () => {})
-    and('el intercambio confirmado aparece en "Cerrados"', () => {})
+  test('Las conversaciones en curso aparecen antes que las cerradas', ({ given, when, then, and }) => {
+  given('que tengo un intercambio aceptado y otro ya confirmado', () => {
+    server.use(
+      http.get(`${API}/exchanges`, () =>
+        HttpResponse.json([
+          { ...baseSummary, id: 'exchange-open', status: 'accepted' },
+          {
+            ...baseSummary,
+            id: 'exchange-closed',
+            status: 'confirmed',
+            other: { id: 'user-c', name: 'Marta', avatar: '' },
+          },
+        ])
+      )
+    )
   })
+
+  when('abro la lista de chats', () => {
+    renderChatList()
+  })
+
+  then('el intercambio aceptado aparece en "En curso"', async () => {
+    const openGroup = await screen.findByRole('region', { name: 'En curso' })
+    expect(within(openGroup).getByText('Lucía')).toBeInTheDocument()
+  })
+
+  and('el intercambio confirmado aparece en "Cerrados"', () => {
+    const openGroup = screen.getByRole('region', { name: 'En curso' })
+    const closedGroup = screen.getByRole('region', { name: 'Cerrados' })
+    expect(within(closedGroup).getByText('Marta')).toBeInTheDocument()
+    expect(within(closedGroup).queryByText('Lucía')).not.toBeInTheDocument()
+    expect(openGroup.compareDocumentPosition(closedGroup) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+})
 
   test.skip('Llegar a una propuesta recibida', ({ given, when, then, and }) => {
     given('que otra persona ha propuesto un intercambio sobre una tarjeta mía', () => {})

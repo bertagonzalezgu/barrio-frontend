@@ -1,5 +1,6 @@
 import { useChats } from '../hooks/useChats'
-import ChatListItem from '../components/ChatListItem'
+import ChatListSection from '../components/ChatListSection'
+import { groupChatsByStatus } from '../utils/groupChatsByStatus'
 
 export default function ChatListPage() {
   const { data: chats, isPending, isError } = useChats()
@@ -7,14 +8,13 @@ export default function ChatListPage() {
   if (isPending) return <p>Cargando conversaciones…</p>
   if (isError) return <p role="alert">No se han podido cargar tus conversaciones.</p>
 
+  const { open, closed } = groupChatsByStatus(chats)
+
   return (
     <section>
       <h1>Chats</h1>
-      <ul>
-        {chats.map((chat) => (
-          <ChatListItem key={chat.id} chat={chat} />
-        ))}
-      </ul>
+      {open.length > 0 && <ChatListSection title="En curso" chats={open} />}
+      {closed.length > 0 && <ChatListSection title="Cerrados" chats={closed} />}
     </section>
   )
 }
