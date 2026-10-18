@@ -8,6 +8,7 @@ interface ChatListItemProps {
 
 export default function ChatListItem({ chat }: ChatListItemProps) {
   const { lastMessage } = chat
+  const previewDate = lastMessage?.sentAt ?? chat.proposedAt
 
   return (
     <li>
@@ -15,12 +16,8 @@ export default function ChatListItem({ chat }: ChatListItemProps) {
       <p>{chat.card.title}</p>
       <p>{chat.hours}h</p>
       <p>{getExchangeStatusLabel(chat.status)}</p>
-      {lastMessage && (
-        <>
-          <p>{lastMessage.text}</p>
-          <time dateTime={lastMessage.sentAt}>{formatChatTime(lastMessage.sentAt)}</time>
-        </>
-      )}
+      {lastMessage && <p>{lastMessage.text}</p>}
+      <time dateTime={previewDate}>{formatChatTime(previewDate)}</time>
     </li>
   )
 }
