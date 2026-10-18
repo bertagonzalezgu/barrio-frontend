@@ -21,8 +21,8 @@ Listado plano de rutas, derivado de los User Flows (`USER-FLOW-JOURNEY.md`). Cad
 | `/cards/crear` | Crear tarjeta | `?tipo=busco\|ofrezco` | Incluye el paso de "Generar con IA" dentro de la misma pantalla |
 | `/cards/:id` | Detalle de tarjeta | | Botón "Proponer intercambio" visible solo si `autorId !== usuarioActual.id` |
 | `/cards/:id/editar` | Editar tarjeta | | Solo accesible por el autor; es la ruta que usan las ediciones lanzadas desde Mapa/Calendario |
-| `/chat/:exchangeId` | Chat de un intercambio | | Incluye el botón "Denunciar" y "Confirmar intercambio" |
-| `/perfil` | Mi perfil | | Wallet, historial de transacciones, editar nombre/avatar |
+| `/chats` | Mis conversaciones | | Bandeja con todos mis intercambios: "En curso" arriba y "Cerrados" abajo. Cada fila abre `/chat/:exchangeId` |
+| `/chat/:exchangeId` | Chat de un intercambio | | Cada chat. Se llega desde `/chats` o al proponer un intercambio. Incluye el botón "Denunciar" y "Confirmar intercambio" || `/perfil` | Mi perfil | | Wallet, historial de transacciones, editar nombre/avatar |
 | `/perfil/editar` | Editar perfil | | |
 | `/perfil/:userId` | Perfil público de otra persona | | Visible desde el detalle de una tarjeta o desde el chat |
 | `/verificacion` | Verificación de identidad | | Se llega aquí desde el aviso al intentar publicar/aceptar en categoría Cuidados sin verificar |
