@@ -13,6 +13,7 @@ export default function ChatListPage() {
   return (
     <section>
       <h1>Chats</h1>
+      {chats.length === 0 && <p>Todavía no tienes conversaciones.</p>}
       {open.length > 0 && <ChatListSection title="En curso" chats={open} />}
       {closed.length > 0 && <ChatListSection title="Cerrados" chats={closed} />}
     </section>

@@ -124,9 +124,19 @@ defineFeature(feature, (test) => {
   })
 })
 
-  test.skip('Todavía no tengo conversaciones', ({ given, when, then }) => {
-    given('que no tengo ningún intercambio', () => {})
-    when('abro la lista de chats', () => {})
-    then('veo un mensaje indicando que todavía no tengo conversaciones', () => {})
+  test('Todavía no tengo conversaciones', ({ given, when, then }) => {
+  given('que no tengo ningún intercambio', () => {
+    server.use(http.get(`${API}/exchanges`, () => HttpResponse.json([])))
   })
+
+  when('abro la lista de chats', () => {
+    renderChatList()
+  })
+
+  then('veo un mensaje indicando que todavía no tengo conversaciones', async () => {
+    expect(await screen.findByText(/todavía no tienes conversaciones/i)).toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'En curso' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Cerrados' })).not.toBeInTheDocument()
+  })
+})
 })
