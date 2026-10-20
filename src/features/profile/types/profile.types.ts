@@ -6,4 +6,5 @@ export interface PublicProfile {
   ratingAverage: number | null
   ratingCount: number
   exchangeCount: number
+  createdAt: string
 }

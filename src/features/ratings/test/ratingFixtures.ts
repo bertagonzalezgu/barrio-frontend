@@ -18,4 +18,5 @@ export const publicProfile = {
   ratingAverage: 4.5,
   ratingCount: 2,
   exchangeCount: 7,
+  createdAt: '2026-04-20T12:00:00.000Z',
 }
