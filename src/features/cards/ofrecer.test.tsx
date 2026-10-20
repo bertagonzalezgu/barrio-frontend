@@ -132,7 +132,8 @@ defineFeature(feature, (test) => {
     const guitarCard: Card = {
       id: '10',
       authorId: 'u1',
-      author: { id: 'u1', name: 'Vecina', email: 'v@barrio.com', firebaseUid: 'firebase-uid-1' },
+      author: { id: 'u1', name: 'Vecina', avatar: '' },
+      isMine: false,      
       type: 'offer',
       category: 'events',
       title: 'Clases de guitarra',

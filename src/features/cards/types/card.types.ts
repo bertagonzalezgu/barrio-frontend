@@ -42,14 +42,14 @@ export const CARD_CATEGORIES: { value: CardCategory; label: string }[] = [
 export interface CardAuthor {
   id: string
   name: string
-  email: string
-  firebaseUid: string
+  avatar: string
 }
 
 export interface Card {
   id: string
   authorId: string
   author: CardAuthor
+  isMine: boolean
   type: CardType
   title: string
   description: string

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCard } from '../hooks/useCard'
-import { useAuth } from '../../../hooks/useAuth'
 import { useExchangeState } from '../../exchanges/hooks/useExchangeState'
 import { getProposeViewState } from '../../exchanges/utils/getProposeViewState'
 import CardDetailHeader from '../components/CardDetailHeader'
@@ -13,10 +12,9 @@ export default function CardDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { data: card, isLoading, isError } = useCard(id!)
-  const { currentUser } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
-  const isOwner = !!card && currentUser?.uid === card.author.firebaseUid
+  const isOwner = !!card?.isMine
   const { data: exchangeState } = useExchangeState(id!, !!card && !isOwner)
 
   if (isLoading) return <p className="text-xs font-body text-ink/40 text-center mt-8">Cargando...</p>

@@ -8,23 +8,15 @@ import { MemoryRouter, Routes, Route, useParams } from 'react-router-dom'
 import CardDetailPage from '../cards/pages/CardDetailPage'
 import type { Card } from '../cards/types/card.types'
 
-// La persona que está viendo la pantalla. Cada escenario decide si es la autora o una visitante.
-const session = vi.hoisted(() => ({ uid: 'uid-visitante' }))
-
-vi.mock('../../hooks/useAuth', () => ({
-  useAuth: () => ({ currentUser: { uid: session.uid } }),
-}))
-
 vi.mock('../../services/firebase', () => ({ auth: {} }))
 
 const API = 'http://localhost:3001/api'
-const AUTHOR_UID = 'uid-autora'
-const VISITOR_UID = 'uid-visitante'
 
 const card: Card = {
   id: 'card-1',
   authorId: 'user-autora',
-  author: { id: 'user-autora', name: 'Marta', email: 'marta@barrio.local', firebaseUid: AUTHOR_UID },
+  author: { id: 'user-autora', name: 'Marta', avatar: '' },
+  isMine: false,
   type: 'request',
   title: 'Ayuda con una mudanza',
   description: 'Necesito ayuda para subir unas cajas a un tercer piso.',
@@ -55,15 +47,14 @@ afterEach(() => {
 })
 afterAll(() => server.close())
 
-function mockCard() {
-  server.use(http.get(`${API}/cards/${card.id}`, () => HttpResponse.json(card)))
+function mockCard(isMine = false) {
+  server.use(http.get(`${API}/cards/${card.id}`, () => HttpResponse.json({ ...card, isMine })))
 }
 
 function mockExchangeState(state: ExchangeState) {
   server.use(http.get(`${API}/exchanges/card/${card.id}`, () => HttpResponse.json(state)))
 }
 
-// El POST registra el body para poder comprobar que se creó (o que NO se creó) la propuesta.
 function mockPropose() {
   server.use(
     http.post(`${API}/exchanges`, async ({ request }) => {
@@ -73,7 +64,6 @@ function mockPropose() {
   )
 }
 
-// Sustituye a la pantalla de chat real (tarjeta 13): solo comprobamos a qué ruta se redirige.
 function ChatStub() {
   const { exchangeId } = useParams()
   return <p>{`Chat del intercambio ${exchangeId}`}</p>
@@ -102,7 +92,6 @@ const feature = loadFeature('./docs/match.feature')
 defineFeature(feature, (test) => {
   test('Proponer intercambio desde el detalle de una tarjeta de "busco"', ({ given, when, then, and }) => {
     given('que veo el detalle de una tarjeta de tipo "busco" publicada por otra persona', async () => {
-      session.uid = VISITOR_UID
       mockCard()
       mockExchangeState({ mine: null, cardAvailable: true })
       mockPropose()
@@ -125,8 +114,7 @@ defineFeature(feature, (test) => {
 
   test('No se puede proponer intercambio a la propia tarjeta', ({ given, when, then }) => {
     given('que soy el autor de una tarjeta de "busco"', () => {
-      session.uid = AUTHOR_UID
-      mockCard()
+      mockCard(true)
       mockExchangeState({ mine: null, cardAvailable: true })
     })
 
@@ -135,7 +123,6 @@ defineFeature(feature, (test) => {
     })
 
     then('no veo el botón "Proponer intercambio"', async () => {
-      // Esperar al botón de la autora garantiza que la pantalla ya ha cargado antes de comprobar la ausencia.
       expect(await screen.findByRole('button', { name: /editar tarjeta/i })).toBeInTheDocument()
       expect(screen.queryByRole('button', PROPOSE_BUTTON)).not.toBeInTheDocument()
     })
@@ -143,12 +130,10 @@ defineFeature(feature, (test) => {
 
   test('Ver el estado de una propuesta enviada', ({ given, and, when, then }) => {
     given('que he propuesto un intercambio sobre una tarjeta', () => {
-      session.uid = VISITOR_UID
       mockCard()
       mockExchangeState({ mine: { id: 'exchange-1', status: 'proposed' }, cardAvailable: true })
     })
 
-    // Una propuesta en estado "proposed" es, por definición, una propuesta sin respuesta.
     and('la otra persona todavía no ha respondido', () => {})
 
     when('vuelvo a abrir el detalle de esa tarjeta', () => {
@@ -163,7 +148,6 @@ defineFeature(feature, (test) => {
 
   test('No se puede proponer un segundo intercambio sobre la misma tarjeta ya aceptada', ({ given, when, then, and }) => {
     given('que una tarjeta ya tiene un intercambio aceptado con otra persona', () => {
-      session.uid = VISITOR_UID
       mockCard()
       mockExchangeState({ mine: null, cardAvailable: false })
       mockPropose()
@@ -171,7 +155,6 @@ defineFeature(feature, (test) => {
 
     when('intento pulsar "Proponer intercambio" sobre esa misma tarjeta', async () => {
       renderCardDetail()
-      // Esperamos al aviso para saber que el estado ya se ha resuelto, y solo entonces intentamos pulsar.
       await screen.findByText(/ya no está disponible/i)
       const button = screen.queryByRole('button', PROPOSE_BUTTON)
       if (button) fireEvent.click(button)

@@ -29,16 +29,11 @@ vi.mock('../features/cards/components/CardIcon', () => ({
   default: () => null,
 }))
 
-const mockAuthor = {
-  id: 'u1',
-  name: 'Vecina',
-  email: 'v@barrio.com',
-  firebaseUid: 'firebase-uid-1',
-}
+const mockAuthor = { id: 'u1', name: 'Vecina', avatar: '' }
 
 const mockCards: Card[] = [
   {
-    id: '1', authorId: 'u1', author: mockAuthor,
+    id: '1', authorId: 'u1', author: mockAuthor, isMine: false,
     type: 'offer', category: 'peoplecare',
     title: 'Cuido personas mayores', description: '',
     hours: 1, icon: 'cleaning-broom',
@@ -46,7 +41,7 @@ const mockCards: Card[] = [
     status: 'active', createdAt: '', updatedAt: '',
   },
   {
-    id: '2', authorId: 'u1', author: mockAuthor,
+    id: '2', authorId: 'u1', author: mockAuthor, isMine: false,
     type: 'offer', category: 'home-repairs',
     title: 'Arreglo grifos', description: '',
     hours: 2, icon: 'digital-pc',
@@ -54,7 +49,7 @@ const mockCards: Card[] = [
     status: 'active', createdAt: '', updatedAt: '',
   },
   {
-    id: '3', authorId: 'u2', author: mockAuthor,
+    id: '3', authorId: 'u2', author: mockAuthor, isMine: false,
     type: 'request', category: 'digital',
     title: 'Necesito web', description: '',
     hours: 3, icon: 'digital-camera',
