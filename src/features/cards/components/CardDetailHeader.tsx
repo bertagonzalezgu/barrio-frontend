@@ -2,25 +2,27 @@ import type { Card } from '../types/card.types'
 import CardIcon from './CardIcon'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 
+const CHIP = 'rounded-md bg-paper/15 px-2 py-0.5 font-data text-[10px] uppercase tracking-widest text-paper'
+
 export default function CardDetailHeader({ card }: { card: Card }) {
   const categoryLabel = getCategoryLabel(card.category)
   const isRequest = card.type === 'request'
 
   return (
-    <div className="flex flex-col items-center gap-4 text-center">
-      <div className={`w-24 h-24 rounded-3xl flex items-center justify-center p-5 ${isRequest ? 'bg-teal-soft' : 'bg-gold-soft'}`}>
-        <CardIcon name={card.icon} />
+    <header className="flex flex-col gap-4 rounded-2xl bg-teal p-5 text-paper">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          <span className={CHIP}>{isRequest ? 'Busco' : 'Ofrezco'}</span>
+          <span className={CHIP}>{categoryLabel}</span>
+        </div>
+        <p className="font-data text-xl font-bold">{card.hours}h</p>
       </div>
-      <div className="flex gap-2">
-        <span className={`text-[9px] font-body font-medium tracking-widest uppercase rounded-md px-2 py-0.5 ${isRequest ? 'bg-teal-soft text-teal' : 'bg-gold-soft text-ink'}`}>
-          {isRequest ? 'Busco' : 'Ofrezco'}
-        </span>
-        <span className="text-[9px] font-body font-medium tracking-widest uppercase rounded-md px-2 py-0.5 bg-ink/5 text-ink/40">
-          {categoryLabel}
-        </span>
+      <div className="flex items-center gap-3">
+        <div className={`size-14 shrink-0 rounded-2xl p-3 ${isRequest ? 'bg-teal-soft' : 'bg-gold-soft'}`}>
+          <CardIcon name={card.icon} />
+        </div>
+        <h1 className="font-display text-2xl font-bold leading-snug">{card.title}</h1>
       </div>
-      <h1 className="font-display font-bold text-ink text-2xl leading-snug">{card.title}</h1>
-      <p className="font-body text-ink/60 text-sm leading-relaxed">{card.description}</p>
-    </div>
+    </header>
   )
 }

@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useCard } from '../hooks/useCard'
 import { useExchangeState } from '../../exchanges/hooks/useExchangeState'
 import { getProposeViewState } from '../../exchanges/utils/getProposeViewState'
+import BackButton from '../../../components/ui/BackButton'
+import AuthorSummary from '../../profile/components/AuthorSummary'
 import CardDetailHeader from '../components/CardDetailHeader'
-import CardDetailMeta from '../components/CardDetailMeta'
+import CardDetailAbout from '../components/CardDetailAbout'
+import CardDetailAvailability from '../components/CardDetailAvailability'
 import CardDetailActions from '../components/CardDetailActions'
 import CardDetailEdit from '../components/CardDetailEdit'
-import BackButton from '../../../components/ui/BackButton'
 
 export default function CardDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -23,12 +25,7 @@ export default function CardDetailPage() {
 
   return (
     <main className="flex flex-col min-h-[calc(100dvh-4rem)] px-4 pt-6 pb-8 max-w-lg mx-auto gap-6">
-      <button
-        onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))}
-        className="self-start text-xs font-body text-ink/40 hover:text-ink transition-colors"
-      >
-        <BackButton onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))} />
-      </button>
+      <BackButton onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))} />
 
       {isEditing ? (
         <CardDetailEdit
@@ -39,7 +36,9 @@ export default function CardDetailPage() {
       ) : (
         <>
           <CardDetailHeader card={card} />
-          <CardDetailMeta card={card} />
+          <AuthorSummary author={card.author} />
+          <CardDetailAbout description={card.description} />
+          <CardDetailAvailability card={card} />
           <CardDetailActions
             card={card}
             isOwner={isOwner}

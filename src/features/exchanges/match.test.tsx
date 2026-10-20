@@ -48,7 +48,21 @@ afterEach(() => {
 afterAll(() => server.close())
 
 function mockCard(isMine = false) {
-  server.use(http.get(`${API}/cards/${card.id}`, () => HttpResponse.json({ ...card, isMine })))
+  server.use(
+    http.get(`${API}/cards/${card.id}`, () => HttpResponse.json({ ...card, isMine })),
+    http.get(`${API}/users/${card.author.id}`, () =>
+      HttpResponse.json({
+        id: card.author.id,
+        name: card.author.name,
+        avatar: '',
+        verified: false,
+        ratingAverage: null,
+        ratingCount: 0,
+        exchangeCount: 0,
+        createdAt: '2026-04-20T12:00:00.000Z',
+      })
+    )
+  )
 }
 
 function mockExchangeState(state: ExchangeState) {
