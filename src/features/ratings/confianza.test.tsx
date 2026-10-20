@@ -94,8 +94,8 @@ defineFeature(feature, (test) => {
     })
 
     then('veo su valoración media actualizada y el número total de intercambios', async () => {
-      expect(await screen.findByText('4.5 de 5')).toBeInTheDocument()
-      expect(screen.getByText('7')).toBeInTheDocument()
+      expect(await screen.findByText('4.5')).toBeInTheDocument()
+      expect(screen.getByText('7 intercambios')).toBeInTheDocument()
     })
   })
 

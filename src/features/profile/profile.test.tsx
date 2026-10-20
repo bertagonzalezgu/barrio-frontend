@@ -54,6 +54,6 @@ describe('Enlace desde el chat', () => {
 
     fireEvent.click(await screen.findByRole('link', { name: 'Lucía' }))
 
-    expect(await screen.findByText('4.5 de 5')).toBeInTheDocument()
+    expect(await screen.findByText('4.5')).toBeInTheDocument()
   })
 })
