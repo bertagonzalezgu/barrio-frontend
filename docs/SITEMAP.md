@@ -8,7 +8,7 @@ Listado plano de rutas, derivado de los User Flows (`USER-FLOW-JOURNEY.md`). Cad
 |---|---|---|
 | `/` | Onboarding | Si ya hay sesión iniciada, redirige a `/home` |
 | `/login` | Iniciar sesión | |
-| `/registro` | Registro | Al completarse, crea el usuario con 2h de regalo y redirige a `/home` |
+| `/register` | Registro | Al completarse, crea el usuario con 2h de regalo y redirige a `/home` |
 
 ## Rutas protegidas (requieren sesión — redirigen a `/login` si no la hay)
 
@@ -22,11 +22,12 @@ Listado plano de rutas, derivado de los User Flows (`USER-FLOW-JOURNEY.md`). Cad
 | `/cards/:id` | Detalle de tarjeta | | Botón "Proponer intercambio" visible solo si `autorId !== usuarioActual.id` |
 | `/cards/:id/editar` | Editar tarjeta | | Solo accesible por el autor; es la ruta que usan las ediciones lanzadas desde Mapa/Calendario |
 | `/chats` | Mis conversaciones | | Bandeja con todos mis intercambios: "En curso" arriba y "Cerrados" abajo. Cada fila abre `/chat/:exchangeId` |
-| `/chat/:exchangeId` | Chat de un intercambio | | Cada chat. Se llega desde `/chats` o al proponer un intercambio. Incluye el botón "Denunciar" y "Confirmar intercambio" || `/perfil` | Mi perfil | | Wallet, historial de transacciones, editar nombre/avatar |
+| `/chat/:exchangeId` | Chat de un intercambio | | Cada chat. Se llega desde `/chats` o al proponer un intercambio. Incluye el botón "Denunciar" y "Confirmar intercambio" |
+| `/perfil` | Mi perfil | | Wallet, historial de transacciones, editar nombre/avatar |
 | `/perfil/editar` | Editar perfil | | |
-| `/perfil/:userId` | Perfil público de otra persona | | Visible desde el detalle de una tarjeta o desde el chat |
+| `/perfil/:userId` | Perfil público de otra persona | | Nombre, avatar, insignia, valoración media y nº de intercambios; nunca email. Se llega desde el nombre en el chat |
 | `/verificacion` | Verificación de identidad | | Se llega aquí desde el aviso al intentar publicar/aceptar en categoría Cuidados sin verificar |
-| `/valorar/:transactionId` | Valorar tras un intercambio | | Se abre tras confirmar el intercambio en `/chat/:conversationId` |
+| `/valorar/:exchangeId` | Valorar tras un intercambio | | Se llega desde el chat cuando el intercambio está confirmado y aún no he valorado (acción `rate`). Si ya valoré, muestra mi valoración |
 | `/ajustes` | Ajustes | | Tema claro/oscuro, cerrar sesión |
 
 ## Rutas del panel de administración
