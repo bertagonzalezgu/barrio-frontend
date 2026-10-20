@@ -53,7 +53,7 @@ function mockRating(next: object) {
 const feature = loadFeature('./docs/confianza.feature')
 
 defineFeature(feature, (test) => {
-  test.skip('Valorar tras confirmar un intercambio', ({ given, when, then, and }) => {
+  test('Valorar tras confirmar un intercambio', ({ given, when, then, and }) => {
     given('que un intercambio ha sido confirmado por ambas partes', () => {
       mockChat({ ...baseChat, status: 'done', otherConfirmed: true, actions: ['confirm'] })
       mockConfirm(confirmedChat)
