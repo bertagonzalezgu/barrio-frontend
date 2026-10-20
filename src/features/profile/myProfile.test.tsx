@@ -23,7 +23,10 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
-beforeEach(() => mockBalance({ balance: 2, reserved: 0, available: 2 }))
+beforeEach(() => {
+  mockBalance({ balance: 2, reserved: 0, available: 2 })
+  mockTransactions([])
+})
 
 function mockMe(profile: object) {
   server.use(http.get(`${API}/users/me`, () => HttpResponse.json(profile)))
@@ -31,6 +34,10 @@ function mockMe(profile: object) {
 
 function mockBalance(balance: object) {
   server.use(http.get(`${API}/wallet/balance`, () => HttpResponse.json(balance)))
+}
+
+function mockTransactions(items: object[]) {
+  server.use(http.get(`${API}/wallet/transactions`, () => HttpResponse.json({ items })))
 }
 
 describe('Mi perfil', () => {
@@ -93,5 +100,18 @@ describe('Mi perfil', () => {
 
   expect(await screen.findByText('2 horas')).toBeInTheDocument()
   expect(screen.getByText('1 hora')).toBeInTheDocument()
+})
+
+it('muestra mi historial de horas', async () => {
+  mockMe(myProfile)
+  mockTransactions([
+    {
+      id: 't1', kind: 'welcome', direction: 'in', hours: 2,
+      date: '2026-04-20T12:00:00.000Z', exchangeId: null, card: null, other: null,
+    },
+  ])
+  renderMyProfile()
+
+  expect(await screen.findByText('Regalo de bienvenida')).toBeInTheDocument()
 })
 })

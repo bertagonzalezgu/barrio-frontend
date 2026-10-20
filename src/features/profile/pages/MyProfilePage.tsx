@@ -3,6 +3,7 @@ import { useLogout } from '../../auth/hooks/useLogout'
 import { useMyProfile } from '../hooks/useMyProfile'
 import ProfileSummary from '../components/ProfileSummary'
 import WalletSummary from '../../wallet/components/WalletSummary'
+import TransactionList from '../../wallet/components/TransactionList'
 
 export default function MyProfilePage() {
   const { data: profile, isPending, isError, error, refetch } = useMyProfile()
@@ -30,6 +31,7 @@ export default function MyProfilePage() {
         <>
             <ProfileSummary profile={profile} />
             <WalletSummary />
+            <TransactionList />
         </>
         )}
       <button
