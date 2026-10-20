@@ -1,8 +1,8 @@
-import { screen } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { describe, it, expect, vi, beforeAll, afterEach, afterAll } from 'vitest'
-import { API } from '../chat/test/chatFixtures'
+import { API, baseChat, EXCHANGE_ID } from '../chat/test/chatFixtures'
 import { publicProfile } from '../ratings/test/ratingFixtures'
 import { renderRatings } from '../ratings/test/renderRatings'
 
@@ -40,5 +40,20 @@ describe('Perfil público', () => {
     renderRatings(`/perfil/${publicProfile.id}`)
 
     expect(await screen.findByRole('alert')).toHaveTextContent(/no se ha podido cargar/i)
+  })
+})
+
+describe('Enlace desde el chat', () => {
+  it('el nombre de la otra persona lleva a su perfil', async () => {
+    server.use(
+      http.get(`${API}/exchanges/${EXCHANGE_ID}`, () => HttpResponse.json(baseChat)),
+      http.get(`${API}/exchanges/${EXCHANGE_ID}/messages`, () => HttpResponse.json([])),
+      http.get(`${API}/users/${publicProfile.id}`, () => HttpResponse.json(publicProfile))
+    )
+    renderRatings(`/chat/${EXCHANGE_ID}`)
+
+    fireEvent.click(await screen.findByRole('link', { name: 'Lucía' }))
+
+    expect(await screen.findByText('4.5 de 5')).toBeInTheDocument()
   })
 })
