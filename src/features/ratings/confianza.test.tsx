@@ -84,7 +84,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test.skip('La valoración es visible en el perfil público', ({ given, when, then }) => {
+  test('La valoración es visible en el perfil público', ({ given, when, then }) => {
     given('que he valorado a otra persona tras un intercambio', () => {
       server.use(http.get(`${API}/users/${publicProfile.id}`, () => HttpResponse.json(publicProfile)))
     })

@@ -11,6 +11,7 @@ import CardDetailPage from './features/cards/pages/CardDetailPage'
 import ChatPage from './features/chat/pages/ChatPage'
 import ChatListPage from './features/chat/pages/ChatListPage'
 import RatePage from './features/ratings/pages/RatePage'
+import PublicProfilePage from './features/profile/pages/PublicProfilePage'
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/chats" element={<ChatListPage />} />
         <Route path="/chat/:exchangeId" element={<ChatPage />} />
         <Route path="/valorar/:exchangeId" element={<RatePage />} />
+        <Route path="/perfil/:userId" element={<PublicProfilePage />} />
       </Route>
     </Routes>
   )
