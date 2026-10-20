@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import ChatAvatar from '../../chat/components/ChatAvatar'
+import Avatar from '../../../components/ui/Avatar'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { formatMemberSince } from '../utils/formatMemberSince'
 import type { PublicProfile } from '../types/profile.types'
@@ -17,7 +17,7 @@ export default function AuthorSummary({ author }: AuthorSummaryProps) {
       aria-label="Publicado por"
       className="flex items-center gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3"
     >
-      <ChatAvatar name={author.name} avatar={author.avatar} />
+      <Avatar name={author.name} avatar={author.avatar} />
       <div className="flex min-w-0 flex-col gap-1">
         <div className="flex flex-wrap items-center gap-2">
           <Link

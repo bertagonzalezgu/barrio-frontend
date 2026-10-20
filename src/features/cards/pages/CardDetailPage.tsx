@@ -7,6 +7,7 @@ import CardDetailHeader from '../components/CardDetailHeader'
 import CardDetailMeta from '../components/CardDetailMeta'
 import CardDetailActions from '../components/CardDetailActions'
 import CardDetailEdit from '../components/CardDetailEdit'
+import BackButton from '../../../components/ui/BackButton'
 
 export default function CardDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -26,7 +27,7 @@ export default function CardDetailPage() {
         onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))}
         className="self-start text-xs font-body text-ink/40 hover:text-ink transition-colors"
       >
-        ← Volver
+        <BackButton onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))} />
       </button>
 
       {isEditing ? (

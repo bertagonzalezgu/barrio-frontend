@@ -1,5 +1,5 @@
 import { BadgeCheck } from 'lucide-react'
-import ChatAvatar from '../../chat/components/ChatAvatar'
+import Avatar from '../../../components/ui/Avatar'
 import type { PublicProfile } from '../types/profile.types'
 
 interface ProfileSummaryProps {
@@ -9,7 +9,7 @@ interface ProfileSummaryProps {
 export default function ProfileSummary({ profile }: ProfileSummaryProps) {
   return (
     <section className="flex flex-col items-center gap-3">
-      <ChatAvatar name={profile.name} avatar={profile.avatar} />
+      <Avatar name={profile.name} avatar={profile.avatar} />
       <h1 className="font-display font-bold text-ink text-xl">{profile.name}</h1>
       {profile.verified && (
         <p className="flex items-center gap-1 font-body text-sm text-teal">
