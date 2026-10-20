@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from '../../../services/firebase'
 import { apiClient } from '../../../services/apiClient'
 
@@ -15,3 +15,6 @@ async function syncUserWithBackend(name?: string) {
     await apiClient.post('/api/users/me', { name })
 }
 
+export async function logout() {
+  await signOut(auth)
+}

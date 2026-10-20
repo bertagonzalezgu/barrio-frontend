@@ -16,7 +16,7 @@ const INITIAL_STYLE = {
   lg: 'bg-gold text-ink text-4xl',
 }
 
-export function Avatar({ name, avatar, size = 'md' }: AvatarProps) {
+export default function Avatar({ name, avatar, size = 'md' }: AvatarProps) {
   if (avatar && Object.hasOwn(avatarImages, avatar)) {
     return (
       <img
