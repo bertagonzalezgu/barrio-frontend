@@ -9,6 +9,8 @@ import MessageList from '../components/MessageList'
 import MessageForm from '../components/MessageForm'
 import ConfirmExchange from '../components/ConfirmExchange'
 import ChatActions from '../components/ChatActions'
+import RatePrompt from '../components/RatePrompt'
+
 
 export default function ChatPage() {
   const { exchangeId = '' } = useParams()
@@ -29,6 +31,7 @@ export default function ChatPage() {
       <ChatHeader chat={chat} />
       <ReportExchange exchangeId={exchangeId} />
       <ConfirmExchange chat={chat} />
+      <RatePrompt chat={chat} />
       <ChatActions chat={chat} />
       {messages.isPending ? (
         <p className="flex-1 text-xs font-body text-ink/40 text-center">Cargando mensajes...</p>
