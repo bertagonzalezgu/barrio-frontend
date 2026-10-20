@@ -1,6 +1,6 @@
 import type { ExchangeStatus } from '../../exchanges/types/exchange.types'
 
-export type ChatAction = 'accept' | 'reject' | 'cancel' | 'confirm'
+export type ChatAction = 'accept' | 'reject' | 'cancel' | 'confirm' | 'rate'
 
 export interface ChatCard {
   id: string
@@ -14,6 +14,10 @@ export interface ChatParticipant {
   avatar: string
 }
 
+export interface ChatRating {
+  score: number
+  comment: string | null
+}
 export interface ChatDetail {
   id: string
   status: ExchangeStatus
@@ -23,6 +27,7 @@ export interface ChatDetail {
   myConfirmed: boolean
   otherConfirmed: boolean
   actions: ChatAction[]
+  myRating: ChatRating | null
 }
 
 export interface ChatMessage {
@@ -44,4 +49,4 @@ export interface ChatSummary {
 
 export type ConfirmViewState = 'can-confirm' | 'waiting-other' | 'confirmed' | 'hidden'
 
-export type TransitionAction = Exclude<ChatAction, 'confirm'>
+export type TransitionAction = Exclude<ChatAction, 'confirm' | 'rate'>

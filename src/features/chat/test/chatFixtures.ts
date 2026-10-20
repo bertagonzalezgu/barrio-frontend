@@ -10,4 +10,5 @@ export const baseChat = {
   myConfirmed: false,
   otherConfirmed: false,
   actions: ['cancel', 'confirm'],
+  myRating: null,
 }
