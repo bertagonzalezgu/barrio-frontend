@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
-import { describe, it, expect, vi, beforeAll, afterEach, afterAll } from 'vitest'
+import { describe, it, expect, vi, beforeAll, afterEach, afterAll, beforeEach } from 'vitest'
 import { API } from '../chat/test/chatFixtures'
 import { publicProfile } from '../ratings/test/ratingFixtures'
 import { logout } from '../auth/services/auth.service'
@@ -23,9 +23,14 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
+beforeEach(() => mockBalance({ balance: 2, reserved: 0, available: 2 }))
 
 function mockMe(profile: object) {
   server.use(http.get(`${API}/users/me`, () => HttpResponse.json(profile)))
+}
+
+function mockBalance(balance: object) {
+  server.use(http.get(`${API}/wallet/balance`, () => HttpResponse.json(balance)))
 }
 
 describe('Mi perfil', () => {
@@ -80,4 +85,13 @@ describe('Mi perfil', () => {
     expect(client.getQueryData(['profile', 'me'])).toBeUndefined()
     expect(useUserStore.getState().name).toBe('')
   })
+
+  it('muestra mi saldo disponible y reservado', async () => {
+  mockMe(myProfile)
+  mockBalance({ balance: 3, reserved: 1, available: 2 })
+  renderMyProfile()
+
+  expect(await screen.findByText('2 horas')).toBeInTheDocument()
+  expect(screen.getByText('1 hora')).toBeInTheDocument()
+})
 })

@@ -2,6 +2,7 @@ import { isAxiosError } from 'axios'
 import { useLogout } from '../../auth/hooks/useLogout'
 import { useMyProfile } from '../hooks/useMyProfile'
 import ProfileSummary from '../components/ProfileSummary'
+import WalletSummary from '../../wallet/components/WalletSummary'
 
 export default function MyProfilePage() {
   const { data: profile, isPending, isError, error, refetch } = useMyProfile()
@@ -25,7 +26,12 @@ export default function MyProfilePage() {
           )}
         </div>
       )}
-      {profile && <ProfileSummary profile={profile} />}
+      {profile && (
+        <>
+            <ProfileSummary profile={profile} />
+            <WalletSummary />
+        </>
+        )}
       <button
         type="button"
         onClick={logout}
