@@ -12,8 +12,8 @@ const SIZE = {
 }
 
 const INITIAL_STYLE = {
-  md: 'bg-teal-soft text-teal',
-  lg: 'bg-gold text-ink text-4xl',
+  md: 'bg-primary-tint text-primary',
+  lg: 'bg-hours text-on-hours text-4xl',
 }
 
 export default function Avatar({ name, avatar, size = 'md' }: AvatarProps) {

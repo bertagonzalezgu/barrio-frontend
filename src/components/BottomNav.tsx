@@ -11,14 +11,14 @@ const links = [
 
 export default function BottomNav() {
   return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-paper border-t border-teal-soft flex justify-around py-2 z-50">
+        <nav className="fixed bottom-0 left-0 right-0 bg-canvas border-t border-line flex justify-around py-2 z-50">
           {links.map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
           to={to}
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 text-xs px-3 py-1 transition-colors ${
-            isActive ? 'text-teal' : 'text-ink/40'
+            `flex min-h-12 min-w-12 flex-col items-center justify-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
+            isActive ? 'font-semibold text-primary' : 'text-ink-muted'
             }`
           }
         >
