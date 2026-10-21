@@ -12,7 +12,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-onboarding flex flex-col justify-center items-center px-6 pb-12 gap-4">
+    <div className="min-h-screen flex flex-col justify-center items-center px-6 pb-12 gap-4">
 
       <div className="max-w-2xl flex flex-col justify-center p-6 pb-12 gap-4">
 

@@ -4,7 +4,7 @@ import BenefitsList from "../../../components/BenefitsList"
 
 export default function RegisterPage() {
   return (
-    <main className="min-h-screen bg-canvas flex flex-col px-6 pt-16 pb-10 items-center">
+    <main className="min-h-screen flex flex-col px-6 pt-16 pb-10 items-center">
       <div className="max-w-2xl flex flex-col justify-center p-6 pb-12 gap-4">
         <h1 className="font-display font-bold text-h1 text-ink mb-2">barrio.</h1>
         <p className="font-body font-medium text-ink text-lg mb-8">

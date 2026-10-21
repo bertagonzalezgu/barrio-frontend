@@ -17,7 +17,7 @@ export default function MessageForm({ exchangeId }: MessageFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="sticky bottom-18 md:bottom-0 flex flex-col gap-2 bg-canvas pt-2">
+    <form onSubmit={handleSubmit} className="sticky bottom-18 md:bottom-0 flex flex-col gap-2 bg-canvas/90 backdrop-blur-md pt-2">
       <div className="flex items-end gap-2">
         <label htmlFor="message-text" className="sr-only">
           Mensaje
