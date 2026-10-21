@@ -1,6 +1,6 @@
 import type { Card } from '../types/card.types'
 import CardIcon from './CardIcon'
-import CardTypeChip from '../../chat/components/CardTypeChip'
+import CardTypeChip from '../../../components/ui/CardTypeChip'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 
 const CATEGORY_CHIP = 'rounded-full bg-surface-2 px-2.5 py-1 font-body text-xs font-medium uppercase tracking-widest text-ink-muted'

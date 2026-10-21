@@ -1,5 +1,5 @@
 import type { ChatDetail } from '../types/chat.types'
-import CardTypeChip from './CardTypeChip'
+import CardTypeChip from '../../../components/ui/CardTypeChip'
 import { Link } from 'react-router-dom'
 interface ChatHeaderProps {
   chat: ChatDetail

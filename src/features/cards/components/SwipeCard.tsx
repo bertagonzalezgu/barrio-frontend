@@ -3,7 +3,7 @@ import type { Card } from '../types/card.types'
 import type { SwipeDirection } from '../hooks/useSwipe'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 import CardIcon from './CardIcon'
-import CardTypeChip from '../../chat/components/CardTypeChip'
+import CardTypeChip from '../../../components/ui/CardTypeChip'
 
 interface Props {
   card: Card

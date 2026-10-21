@@ -1,8 +1,8 @@
 import { HandHeart, Search } from 'lucide-react'
-import type { ChatCard } from '../types/chat.types'
+import type { CardType } from '../../features/cards/types/card.types'
 
 interface CardTypeChipProps {
-  type: ChatCard['type']
+  type: CardType
 }
 
 export default function CardTypeChip({ type }: CardTypeChipProps) {

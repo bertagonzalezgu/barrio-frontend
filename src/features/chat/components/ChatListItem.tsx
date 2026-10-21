@@ -3,7 +3,7 @@ import type { ChatSummary } from '../types/chat.types'
 import { getExchangeStatusLabel } from '../utils/getExchangeStatusLabel'
 import { formatChatTime } from '../utils/formatChatTime'
 import Avatar from '../../../components/ui/Avatar'
-import CardTypeChip from './CardTypeChip'
+import CardTypeChip from '../../../components/ui/CardTypeChip'
 
 interface ChatListItemProps {
   chat: ChatSummary
