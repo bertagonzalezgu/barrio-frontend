@@ -20,8 +20,8 @@ export default function TransactionItem({ transaction }: TransactionItemProps) {
         <p className="font-body text-xs text-ink-muted">{subtitle}</p>
       </div>
       <span className="sr-only">{`${incoming ? 'Ingreso' : 'Gasto'} de ${formatHours(hours)}`}</span>
-      <span aria-hidden="true" className={`shrink-0 font-display tabular-nums text-sm ${incoming ? 'text-success-ink' : 'text-danger-ink'}`}>
-        {`${incoming ? '+' : '-'}${hours} h`}
+      <span aria-hidden="true" className={`shrink-0 font-display tabular-nums text-sm ${incoming ? 'text-success-ink' : 'text-ink'}`}>
+        {`${incoming ? '+' : '−'}${hours} h`}
       </span>
     </li>
   )
