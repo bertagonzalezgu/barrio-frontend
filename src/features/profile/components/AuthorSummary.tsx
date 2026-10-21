@@ -15,29 +15,29 @@ export default function AuthorSummary({ author }: AuthorSummaryProps) {
   return (
     <section
       aria-label="Publicado por"
-      className="flex items-center gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3"
+      className="flex items-center gap-3 rounded-card border border-line bg-surface px-4 py-3 shadow-soft"
     >
       <Avatar name={author.name} avatar={author.avatar} />
       <div className="flex min-w-0 flex-col gap-1">
         <div className="flex flex-wrap items-center gap-2">
           <Link
             to={`/perfil/${author.id}`}
-            className="font-display font-bold text-ink hover:underline focus-visible:outline-2 focus-visible:outline-teal"
+            className="font-display font-bold text-ink hover:underline focus-visible:outline-2 focus-visible:outline-primary"
           >
             {author.name}
           </Link>
           {profile?.verified && (
-            <span className="rounded-md border border-teal px-1.5 py-0.5 font-body text-[10px] font-medium uppercase tracking-widest text-teal">
+            <span className="rounded-full border border-primary px-2 py-0.5 font-body text-xs font-medium uppercase tracking-widest text-primary-ink">
               Identidad verificada
             </span>
           )}
         </div>
         {profile && (
           <>
-            <p className="font-data text-xs text-ink/70">
+            <p className="font-display tabular-nums text-xs text-ink-muted">
               <RatingAverage average={profile.ratingAverage} />
             </p>
-            <p className="font-body text-xs text-ink/70">
+            <p className="font-body text-xs text-ink-muted">
               {`En la plataforma ${formatMemberSince(profile.createdAt)} · ${profile.exchangeCount} ${
                 profile.exchangeCount === 1 ? 'intercambio' : 'intercambios'
               }`}

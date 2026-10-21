@@ -15,7 +15,7 @@ export default function SwipeStack({ cards, currentIndex, onSwipe, onOpen }: Pro
   if (!visible.length) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="font-body text-ink/40 text-sm">No hay más tarjetas por ahora</p>
+        <p className="font-body text-ink-muted text-sm">No hay más tarjetas por ahora</p>
       </div>
     )
   }
@@ -31,7 +31,7 @@ export default function SwipeStack({ cards, currentIndex, onSwipe, onOpen }: Pro
           {i === visible.length - 1 ? (
             <SwipeCard card={card} onSwipe={onSwipe} onOpen={() => onOpen(card.id)} />
           ) : (
-            <div className="absolute inset-0 bg-paper rounded-3xl" />
+            <div className="absolute inset-0 border border-line bg-surface-2 rounded-card" />
           )}
         </div>
       ))}

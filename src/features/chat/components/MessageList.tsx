@@ -13,7 +13,7 @@ export default function MessageList({ messages, otherName }: MessageListProps) {
   return (
     <div role="log" aria-live="polite" aria-label="Mensajes" className="flex-1">
       {messages.length === 0 ? (
-        <p className="py-10 text-center font-body text-sm text-ink/70">Todavía no hay mensajes.</p>
+        <p className="py-10 text-center font-body text-sm text-ink-muted">Todavía no hay mensajes.</p>
       ) : (
         <ul className="flex flex-col gap-2">
           {messages.map((message) => (
@@ -21,13 +21,13 @@ export default function MessageList({ messages, otherName }: MessageListProps) {
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                   message.mine
-                    ? 'rounded-br-md bg-teal text-paper'
-                    : 'rounded-bl-md border border-ink/10 bg-white text-ink'
+                    ? 'rounded-br-md bg-primary text-on-primary'
+                    : 'rounded-bl-md border border-line bg-surface text-ink'
                 }`}
               >
                 <span className="sr-only">{message.mine ? 'Tú' : otherName}:</span>
                 <p className="font-body text-sm leading-relaxed whitespace-pre-wrap wrap-break-word">{message.text}</p>
-                <time dateTime={message.sentAt} className="mt-1 block font-data text-[10px] opacity-70">
+                <time dateTime={message.sentAt} className="mt-1 block font-display text-xs tabular-nums opacity-90">
                   {formatTime(message.sentAt)}
                 </time>
               </div>

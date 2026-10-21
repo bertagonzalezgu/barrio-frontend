@@ -6,13 +6,13 @@ export default function CardList({ filters }: { filters?: CardFilters }) {
   const { data: cards, isLoading, isError } = useCards(filters)
 
   if (isLoading) return (
-    <p className="text-xs font-body text-ink/40 text-center">Cargando tarjetas...</p>
+    <p className="text-xs font-body text-ink-muted text-center">Cargando tarjetas...</p>
   )
   if (isError) return (
-    <p className="text-xs font-body text-coral text-center">Error al cargar las tarjetas</p>
+    <p className="text-xs font-body text-danger-ink text-center">Error al cargar las tarjetas</p>
   )
   if (!cards?.length) return (
-    <p className="text-xs font-body text-ink/40 text-center">Todavía no hay tarjetas</p>
+    <p className="text-xs font-body text-ink-muted text-center">Todavía no hay tarjetas</p>
   )
 
   return (

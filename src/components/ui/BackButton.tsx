@@ -7,7 +7,7 @@ interface BackButtonProps {
 }
 
 const STYLES =
-  'self-start font-data text-xs lowercase text-ink/60 hover:text-ink transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-teal'
+  'self-start inline-flex min-h-12 items-center font-body text-sm lowercase text-ink-muted hover:text-ink transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary'
 
 export default function BackButton({ to, onClick, label = 'Volver' }: BackButtonProps) {
   const content = (

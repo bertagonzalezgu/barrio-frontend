@@ -29,14 +29,14 @@ export default function CardDetailActions({ card, isOwner, exchangeViewState, on
         <div className="flex flex-col gap-3 mt-auto">
           <button
             onClick={onEdit}
-            className="w-full py-3 rounded-2xl bg-teal text-paper font-body font-medium text-sm cursor-pointer"
+            className="btn-primary w-full"
           >
             Editar tarjeta
           </button>
           <button
             onClick={() => setIsOpen(true)}
             disabled={isPending}
-            className="w-full py-3 rounded-2xl border border-coral/30 text-coral font-body font-medium text-sm hover:bg-coral/5 transition-colors disabled:opacity-50"
+            className="btn-danger-outline w-full"
           >
             {isPending ? 'Eliminando...' : 'Eliminar tarjeta'}
           </button>
@@ -58,7 +58,7 @@ export default function CardDetailActions({ card, isOwner, exchangeViewState, on
       <ProposeExchangeAction cardId={card.id} viewState={exchangeViewState} />
       <button
         onClick={() => navigate(`/denuncia?cardId=${card.id}`)}
-        className="w-full py-3 rounded-2xl border border-coral text-coral font-body font-medium text-sm hover:bg-coral-soft cursor-pointer transition-colors"
+        className="btn-danger-outline w-full"
       >
         Denunciar
       </button>

@@ -30,7 +30,7 @@ export default function HomePage() {
     <main className="flex flex-col gap-6 px-4 pt-2">
 
       <section>
-        <h1 className="text-3xl font-display font-bold text-ink">
+        <h1 className="text-h2 font-display font-bold text-ink">
           Hola, {userName}
         </h1>
         <p className="text-base font-body text-ink/80 mt-1">
@@ -47,10 +47,10 @@ export default function HomePage() {
             type="button"
             aria-pressed={activeType === value}
             onClick={() => setType(value)}
-            className={`px-4 py-2 rounded-full text-sm font-body font-medium border transition-colors ${
+            className={`min-h-12 px-4 py-2 rounded-full text-sm font-body font-medium border transition-colors ${
               activeType === value
-                ? 'bg-teal text-paper border-teal'
-                : 'border-teal/30 text-teal'
+                ? 'bg-primary text-on-primary border-primary shadow-primary'
+                : 'border-primary/30 text-primary-ink'
             }`}
           >
             {label}
@@ -63,18 +63,18 @@ export default function HomePage() {
         <button
           type="button"
           onClick={() => navigate('/cards/crear')}
-          className="bg-ink text-paper font-body font-medium px-4 py-2 rounded-full text-sm cursor-pointer"
+          className="btn-primary"
         >
           + Crear tarjeta
         </button>
 
-        <div role="group" aria-label="Cambiar vista" className="flex bg-ink/5 rounded-full p-1 gap-1">
+        <div role="group" aria-label="Cambiar vista" className="flex border border-line bg-surface-2 rounded-full p-1 gap-1">
           <button
             type="button"
             aria-pressed={activeView === 'swipe'}
             onClick={() => setView('swipe')}
-            className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-              activeView === 'swipe' ? 'bg-ink text-paper' : 'text-ink/50'
+            className={`min-h-12 px-4 py-1 rounded-full text-xs font-body font-medium transition-colors ${
+              activeView === 'swipe' ? 'bg-ink text-canvas' : 'text-ink-muted'
             }`}
           >
             Swipe
@@ -83,8 +83,8 @@ export default function HomePage() {
             type="button"
             aria-pressed={activeView === 'list'}
             onClick={() => setView('list')}
-            className={`px-3 py-1 rounded-full text-xs font-body font-medium transition-colors ${
-              activeView === 'list' ? 'bg-ink text-paper' : 'text-ink/50'
+            className={`min-h-12 px-4 py-1 rounded-full text-xs font-body font-medium transition-colors ${
+              activeView === 'list' ? 'bg-ink text-canvas' : 'text-ink-muted'
             }`}
           >
             Lista
@@ -94,7 +94,7 @@ export default function HomePage() {
 
       {activeView === 'swipe' &&
         (isLoading ? (
-          <p className="text-xs font-body text-ink/40 text-center mt-8">Cargando...</p>
+          <p className="text-xs font-body text-ink-muted text-center mt-8">Cargando...</p>
         ) : (
           <SwipeView key={`${activeType}-${activeCategory ?? 'all'}`} cards={cards} />
         ))}

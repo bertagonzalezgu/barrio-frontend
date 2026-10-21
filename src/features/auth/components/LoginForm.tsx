@@ -47,7 +47,7 @@ export default function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="hola@vecina.com"
-          className="w-full border border-teal-soft rounded-xl px-4 py-3 bg-white text-ink placeholder:text-ink/30 focus:outline-none focus:ring-2 focus:ring-teal font-body text-sm"
+          className="field w-full"
         />
       </div>
 
@@ -63,13 +63,13 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••••••"
-            className="w-full border border-teal-soft rounded-xl px-4 py-3 pr-12 bg-white text-ink placeholder:text-ink/30 focus:outline-none focus:ring-2 focus:ring-teal font-body text-sm"
+            className="field w-full pr-12"
           />
           <button
             type="button"
             aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
             onClick={() => setPasswordVisible((v) => !v)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-ink/40 hover:text-ink transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 flex size-12 items-center justify-center rounded-full text-ink-muted hover:text-ink transition-colors"
           >
             {passwordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
@@ -77,14 +77,14 @@ export default function LoginForm() {
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-coral font-body">
+        <p role="alert" className="text-sm text-danger-ink font-body">
           {error}
         </p>
       )}
 
       <button
         type="submit"
-        className="w-full bg-ink text-paper font-body font-medium py-4 rounded-xl mt-2 hover:bg-ink/90 transition-colors"
+        className="btn-primary w-full mt-2 py-4 text-base"
       >
         Iniciar sesión
       </button>

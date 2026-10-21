@@ -69,7 +69,7 @@ describe('Historial de horas', () => {
     renderList()
 
     expect(await screen.findByText('Arreglo de bici')).toBeInTheDocument()
-    expect(screen.getByText('-2 h')).toBeInTheDocument()
+    expect(screen.getByText('−2 h')).toBeInTheDocument()
     expect(screen.getByText('Gasto de 2 horas')).toBeInTheDocument()
   })
 

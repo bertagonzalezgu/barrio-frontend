@@ -11,9 +11,9 @@ export default function PublicProfilePage() {
   return (
     <main className="mx-auto flex max-w-lg flex-col gap-6 px-4 pt-6 pb-8">
       <BackButton onClick={() => navigate(-1)} />
-      {isPending && <p className="text-center font-body text-xs text-ink/40">Cargando perfil...</p>}
+      {isPending && <p className="text-center font-body text-xs text-ink-muted">Cargando perfil...</p>}
       {isError && (
-        <p role="alert" className="text-center font-body text-xs text-coral">
+        <p role="alert" className="text-center font-body text-xs text-danger-ink">
           No se ha podido cargar este perfil.
         </p>
       )}

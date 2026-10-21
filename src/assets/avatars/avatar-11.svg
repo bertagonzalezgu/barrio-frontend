@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-<rect width="192" height="192" fill="#275C55"/>
-<circle cx="56" cy="56" r="12" fill="#E0A83E"/>
-<circle cx="96" cy="56" r="12" fill="#DCEAE7"/>
-<circle cx="136" cy="56" r="12" fill="#E85B4F"/>
-<circle cx="56" cy="96" r="12" fill="#DCEAE7"/>
-<circle cx="96" cy="96" r="20" fill="#E0A83E"/>
-<circle cx="136" cy="96" r="12" fill="#DCEAE7"/>
-<circle cx="56" cy="136" r="12" fill="#E85B4F"/>
-<circle cx="96" cy="136" r="12" fill="#DCEAE7"/>
-<circle cx="136" cy="136" r="12" fill="#E0A83E"/>
+<rect width="192" height="192" fill="#2B50FF"/>
+<circle cx="56" cy="56" r="12" fill="#FFB547"/>
+<circle cx="96" cy="56" r="12" fill="#E6EBFF"/>
+<circle cx="136" cy="56" r="12" fill="#FF6B4A"/>
+<circle cx="56" cy="96" r="12" fill="#E6EBFF"/>
+<circle cx="96" cy="96" r="20" fill="#FFB547"/>
+<circle cx="136" cy="96" r="12" fill="#E6EBFF"/>
+<circle cx="56" cy="136" r="12" fill="#FF6B4A"/>
+<circle cx="96" cy="136" r="12" fill="#E6EBFF"/>
+<circle cx="136" cy="136" r="12" fill="#FFB547"/>
 </svg>
