@@ -26,7 +26,7 @@ export default function WalletSummary() {
         <dt className="font-body text-xs uppercase tracking-wider">Disponible</dt>
         <dd className="font-display text-h4 font-bold tabular-nums">{formatHours(balance.available)}</dd>
       </div>
-      <div className="flex flex-col gap-1 rounded-card bg-hours-tint p-4 text-ink">
+      <div className="flex flex-col gap-1 rounded-card border border-hours/40 bg-hours-tint p-4 text-ink">
         <dt className="font-body text-xs uppercase tracking-wider">Reservado</dt>
         <dd className="font-display text-h4 font-bold tabular-nums">{formatHours(balance.reserved)}</dd>
       </div>

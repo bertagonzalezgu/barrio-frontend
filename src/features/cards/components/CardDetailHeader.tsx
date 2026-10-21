@@ -3,7 +3,7 @@ import CardIcon from './CardIcon'
 import CardTypeChip from '../../../components/ui/CardTypeChip'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 
-const CATEGORY_CHIP = 'rounded-full bg-surface px-2.5 py-1 font-body text-xs font-medium uppercase tracking-widest text-ink-muted'
+const CATEGORY_CHIP = 'rounded-full border border-line bg-surface px-2.5 py-1 font-body text-xs font-medium uppercase tracking-widest text-ink-muted'
 
 export default function CardDetailHeader({ card }: { card: Card }) {
   const categoryLabel = getCategoryLabel(card.category)
@@ -23,7 +23,7 @@ export default function CardDetailHeader({ card }: { card: Card }) {
         <p className="shrink-0 rounded-full bg-hours px-3 py-1 font-display text-h4 font-bold tabular-nums text-on-hours">{card.hours}h</p>
       </div>
       <div className="flex items-center gap-4">
-        <div className="size-20 shrink-0 rounded-2xl bg-surface p-3 shadow-soft">
+        <div className="size-20 shrink-0 rounded-2xl border border-line bg-surface p-3 shadow-soft">
           <CardIcon name={card.icon} />
         </div>
         <h1 className="font-display text-h3 font-bold leading-snug text-ink">{card.title}</h1>

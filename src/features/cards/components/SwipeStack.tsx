@@ -31,7 +31,7 @@ export default function SwipeStack({ cards, currentIndex, onSwipe, onOpen }: Pro
           {i === visible.length - 1 ? (
             <SwipeCard card={card} onSwipe={onSwipe} onOpen={() => onOpen(card.id)} />
           ) : (
-            <div className="absolute inset-0 bg-surface-2 rounded-card" />
+            <div className="absolute inset-0 border border-line bg-surface-2 rounded-card" />
           )}
         </div>
       ))}

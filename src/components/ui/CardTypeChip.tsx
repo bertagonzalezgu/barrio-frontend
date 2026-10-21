@@ -10,11 +10,12 @@ interface CardTypeChipProps {
 export default function CardTypeChip({ type, tone = 'tint' }: CardTypeChipProps) {
   const isRequest = type === 'request'
   const Icon = isRequest ? Search : HandHeart
-  const background = tone === 'surface' ? 'bg-surface' : isRequest ? 'bg-busco-tint' : 'bg-primary-tint'
+  const background =
+    tone === 'surface' ? 'border-line bg-surface' : isRequest ? 'border-busco/25 bg-busco-tint' : 'border-primary/20 bg-primary-tint'
 
   return (
     <span
-      className={`inline-flex shrink-0 self-start items-center gap-1 text-xs font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${background} ${
+      className={`inline-flex shrink-0 self-start items-center gap-1 text-xs font-body font-medium tracking-widest uppercase rounded-full border px-2.5 py-1 ${background} ${
         isRequest ? 'text-busco-ink' : 'text-primary-ink'
       }`}
     >

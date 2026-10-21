@@ -68,7 +68,7 @@ export default function HomePage() {
           + Crear tarjeta
         </button>
 
-        <div role="group" aria-label="Cambiar vista" className="flex bg-surface-2 rounded-full p-1 gap-1">
+        <div role="group" aria-label="Cambiar vista" className="flex border border-line bg-surface-2 rounded-full p-1 gap-1">
           <button
             type="button"
             aria-pressed={activeView === 'swipe'}

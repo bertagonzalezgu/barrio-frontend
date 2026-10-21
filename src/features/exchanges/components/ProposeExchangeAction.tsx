@@ -22,7 +22,7 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
     return (
       <p
         role="status"
-        className="w-full min-h-12 py-3 rounded-full bg-primary-tint text-primary-ink text-center font-body font-medium text-sm"
+        className="w-full min-h-12 py-3 rounded-full border border-primary/20 bg-primary-tint text-primary-ink text-center font-body font-medium text-sm"
       >
         Propuesta enviada
       </p>
@@ -33,7 +33,7 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
     return (
       <p
         role="status"
-        className="w-full min-h-12 py-3 rounded-full bg-surface-2 text-ink-muted text-center font-body font-medium text-sm"
+        className="w-full min-h-12 py-3 rounded-full border border-line bg-surface-2 text-ink-muted text-center font-body font-medium text-sm"
       >
         Esta tarjeta ya no está disponible
       </p>

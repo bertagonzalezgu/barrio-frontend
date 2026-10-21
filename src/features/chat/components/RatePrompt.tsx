@@ -12,7 +12,7 @@ export default function RatePrompt({ chat }: RatePromptProps) {
   return (
     <Link
       to={`/valorar/${chat.id}`}
-      className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-hours-tint px-5 py-3 font-body text-sm font-medium text-ink focus-visible:outline-2 focus-visible:outline-primary"
+      className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-hours/40 bg-hours-tint px-5 py-3 font-body text-sm font-medium text-ink focus-visible:outline-2 focus-visible:outline-primary"
     >
       <Star size={16} aria-hidden="true" />
       Valorar a {chat.other.name}

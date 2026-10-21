@@ -33,7 +33,7 @@ export default function RatePage() {
       {viewState === 'can-rate' && <RatingForm chat={chat} />}
       {viewState === 'already-rated' && chat.myRating && <RatingSummary rating={chat.myRating} />}
       {viewState === 'not-available' && (
-        <p role="status" className="rounded-2xl bg-surface-2 px-4 py-3 font-body text-sm text-ink-muted">
+        <p role="status" className="rounded-2xl border border-line bg-surface-2 px-4 py-3 font-body text-sm text-ink-muted">
           Todavía no se puede valorar este intercambio.
         </p>
       )}

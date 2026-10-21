@@ -16,7 +16,7 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
       <div
         role="dialog"
         aria-label="Filtrar por categoría"
-        className="bg-surface w-full sm:max-w-md max-h-[80vh] rounded-t-card sm:rounded-card overflow-y-auto p-5 flex flex-col gap-4"
+        className="border border-line bg-surface w-full sm:max-w-md max-h-[80vh] rounded-t-card sm:rounded-card overflow-y-auto p-5 flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">

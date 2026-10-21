@@ -20,7 +20,7 @@ export default function ProfileSummary({ profile }: ProfileSummaryProps) {
         <span>{exchanges}</span>
       </p>
       {profile.verified && (
-        <p className="flex items-center gap-1 rounded-full bg-primary-tint px-3 py-1 font-body text-xs text-primary-ink">
+        <p className="flex items-center gap-1 rounded-full border border-primary/20 bg-primary-tint px-3 py-1 font-body text-xs text-primary-ink">
           <BadgeCheck size={14} aria-hidden="true" />
           Identidad verificada
         </p>

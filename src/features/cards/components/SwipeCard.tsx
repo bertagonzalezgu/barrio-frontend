@@ -46,7 +46,7 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
       className="absolute inset-0 rounded-card border border-line cursor-grab active:cursor-grabbing select-none shadow-soft flex flex-col p-6 bg-surface"
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full bg-surface-2 text-ink-muted">
+        <span className="text-xs font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full border border-line bg-surface-2 text-ink-muted">
           {categoryLabel}
         </span>
         <CardTypeChip type={card.type} />

@@ -16,7 +16,7 @@ export default function ReportForm({ id, isPending, errorMessage, onSubmit }: Re
   }
 
   return (
-    <form id={id} onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-card bg-danger-tint/40 p-4">
+    <form id={id} onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-card border border-danger/20 bg-danger-tint/40 p-4">
       <label htmlFor="report-reason" className="font-body text-sm font-medium text-ink">
         Motivo de la denuncia
       </label>

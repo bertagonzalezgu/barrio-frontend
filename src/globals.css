@@ -16,7 +16,7 @@
   --ink: #15171A;
   /* #6B6F76 daba 4.10:1 sobre surface-2; #5F636A, 4.05:1 sobre el pico del brillo cobalto */
   --ink-muted: #565A60;
-  --line: rgba(21, 23, 26, 0.10);
+  --line: rgba(21, 23, 26, 0.14);
   --scrim: rgba(21, 23, 26, 0.40);
   --icon-shadow: rgba(21, 23, 26, 0.15);
   /* Pico de cada brillo: los *-ink de texto están ajustados para pasar 4.5:1 sobre él */
@@ -69,7 +69,7 @@
   --surface-2: #20242A;
   --ink: #F2F0EB;
   --ink-muted: #A0A4AB;
-  --line: rgba(242, 240, 235, 0.12);
+  --line: rgba(242, 240, 235, 0.16);
   --scrim: rgba(0, 0, 0, 0.60);
   --icon-shadow: rgba(255, 255, 255, 0.35);
   --bg-mesh:
@@ -232,5 +232,5 @@
 }
 
 @utility alert-error {
-  @apply rounded-2xl border-l-4 border-danger bg-danger-tint px-4 py-3 font-body text-sm text-ink;
+  @apply rounded-2xl border border-danger/20 border-l-4 border-l-danger bg-danger-tint px-4 py-3 font-body text-sm text-ink;
 }

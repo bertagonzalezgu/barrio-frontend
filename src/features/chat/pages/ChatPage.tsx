@@ -41,7 +41,7 @@ export default function ChatPage() {
       {isChatWritable(chat.status) ? (
         <MessageForm exchangeId={exchangeId} />
       ) : (
-        <p role="status" className="rounded-2xl bg-surface-2 px-4 py-3 text-center font-body text-sm text-ink-muted">
+        <p role="status" className="rounded-2xl border border-line bg-surface-2 px-4 py-3 text-center font-body text-sm text-ink-muted">
           Este chat está cerrado. Puedes leer la conversación, pero ya no se pueden enviar mensajes.
         </p>
       )}
