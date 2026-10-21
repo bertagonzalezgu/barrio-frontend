@@ -18,18 +18,20 @@
   --ink-muted: #5F636A;
   --line: rgba(21, 23, 26, 0.10);
   --scrim: rgba(21, 23, 26, 0.40);
-  /* Brillo máximo limitado por AA: con más de .05 / .075, success-ink baja de 4.5:1 en el pico */
+  /* Pico de cada brillo: los *-ink de texto están ajustados para pasar 4.5:1 sobre él */
   --bg-mesh:
-    radial-gradient(60% 50% at 0% 0%, rgba(43, 80, 255, 0.05), transparent 70%),
-    radial-gradient(55% 50% at 100% 35%, rgba(255, 107, 74, 0.07), transparent 70%);
+    radial-gradient(60% 50% at 0% 0%, rgba(43, 80, 255, 0.10), transparent 70%),
+    radial-gradient(55% 50% at 100% 35%, rgba(255, 107, 74, 0.11), transparent 70%);
 
   --primary: #2B50FF;
   --primary-tint: #E6EBFF;
+  /* cobalto como TEXTO; #2B50FF daba 4.46:1 sobre el brillo cobalto */
+  --primary-ink: #2549F0;
   --on-primary: #FFFFFF;
 
   --busco: #FF6B4A;
   --busco-tint: #FFE9E3;
-  --busco-ink: #B93A1F;
+  --busco-ink: #B0361D;
   --on-busco: #15171A;
 
   --hours: #FFB547;
@@ -39,12 +41,12 @@
   --on-hours: #15171A;
 
   --success: #1FA971;
-  --success-ink: #137A50;
+  --success-ink: #10704A;
   --warning: #F5A524;
 
   --danger: #E5484D;
   --danger-tint: #FDE8E9;
-  --danger-ink: #C22A30;
+  --danger-ink: #B8282E;
   /* blanco sobre danger daba 3.91:1 */
   --on-danger: #15171A;
 
@@ -74,6 +76,7 @@
 
   --primary: #7B93FF;
   --primary-tint: #1C2550;
+  --primary-ink: #7B93FF;
   /* blanco sobre #7B93FF daba 2.82:1 */
   --on-primary: #0E1013;
 
@@ -117,6 +120,7 @@
 
   --color-primary: var(--primary);
   --color-primary-tint: var(--primary-tint);
+  --color-primary-ink: var(--primary-ink);
   --color-on-primary: var(--on-primary);
 
   --color-busco: var(--busco);

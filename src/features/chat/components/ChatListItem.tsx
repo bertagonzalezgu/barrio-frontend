@@ -35,7 +35,7 @@ export default function ChatListItem({ chat }: ChatListItemProps) {
           <div className="flex items-center gap-2 font-body text-xs text-ink-muted">
             <span className="font-display tabular-nums">{chat.hours}h</span>
             <span aria-hidden="true">·</span>
-            <span className="font-medium text-primary">{getExchangeStatusLabel(chat.status)}</span>
+            <span className="font-medium text-primary-ink">{getExchangeStatusLabel(chat.status)}</span>
           </div>
         </div>
       </Link>

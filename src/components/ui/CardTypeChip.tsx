@@ -12,7 +12,7 @@ export default function CardTypeChip({ type }: CardTypeChipProps) {
   return (
     <span
       className={`inline-flex shrink-0 self-start items-center gap-1 text-xs font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
-        isRequest ? 'bg-busco-tint text-busco-ink' : 'bg-primary-tint text-primary'
+        isRequest ? 'bg-busco-tint text-busco-ink' : 'bg-primary-tint text-primary-ink'
       }`}
     >
       <Icon size={12} aria-hidden="true" />

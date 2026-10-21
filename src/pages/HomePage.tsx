@@ -50,7 +50,7 @@ export default function HomePage() {
             className={`min-h-12 px-4 py-2 rounded-full text-sm font-body font-medium border transition-colors ${
               activeType === value
                 ? 'bg-primary text-on-primary border-primary shadow-primary'
-                : 'border-primary/30 text-primary'
+                : 'border-primary/30 text-primary-ink'
             }`}
           >
             {label}

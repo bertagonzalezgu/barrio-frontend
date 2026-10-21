@@ -16,7 +16,7 @@ export default function ConfirmExchange({ chat }: ConfirmExchangeProps) {
 
   if (viewState === 'confirmed') {
     return (
-      <p role="status" className="flex items-center gap-2 rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary">
+      <p role="status" className="flex items-center gap-2 rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary-ink">
         <Check size={16} aria-hidden="true" />
         Intercambio confirmado. Las horas ya se han transferido.
       </p>
@@ -25,7 +25,7 @@ export default function ConfirmExchange({ chat }: ConfirmExchangeProps) {
 
   if (viewState === 'waiting-other') {
     return (
-      <p role="status" className="flex items-center gap-2 rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary">
+      <p role="status" className="flex items-center gap-2 rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary-ink">
         <Clock size={16} aria-hidden="true" />
         Esperando a que {chat.other.name} confirme el intercambio.
       </p>

@@ -22,7 +22,7 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
     return (
       <p
         role="status"
-        className="w-full min-h-12 py-3 rounded-full bg-primary-tint text-primary text-center font-body font-medium text-sm"
+        className="w-full min-h-12 py-3 rounded-full bg-primary-tint text-primary-ink text-center font-body font-medium text-sm"
       >
         Propuesta enviada
       </p>

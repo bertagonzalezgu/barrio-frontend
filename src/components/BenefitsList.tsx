@@ -18,7 +18,7 @@ export default function BenefitsList() {
     <ul className="space-y-3 mb-8">
       {benefits.map((benefit) => (
         <li key={benefit.title} className="flex items-start gap-3">
-          <span className="text-primary font-bold mt-0.5">✓</span>
+          <span className="text-primary-ink font-bold mt-0.5">✓</span>
           <div>
             <p className="font-body font-medium text-ink text-sm">{benefit.title}</p>
             <p className="font-body text-ink-muted text-sm">{benefit.description}</p>

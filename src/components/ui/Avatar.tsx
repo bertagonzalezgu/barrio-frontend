@@ -12,7 +12,7 @@ const SIZE = {
 }
 
 const INITIAL_STYLE = {
-  md: 'bg-primary-tint text-primary',
+  md: 'bg-primary-tint text-primary-ink',
   lg: 'bg-hours text-on-hours text-4xl',
 }
 

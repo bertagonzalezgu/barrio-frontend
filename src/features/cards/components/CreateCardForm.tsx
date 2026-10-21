@@ -182,7 +182,7 @@ export default function CreateCardForm({
         className={`w-full disabled:opacity-50 ${
           hasGenerated
             ? 'btn-primary'
-            : 'btn-secondary border-primary text-primary'
+            : 'btn-secondary border-primary text-primary-ink'
         }`}
       >
         {isSubmitting ? 'Publicando...' : 'Publicar tarjeta'}

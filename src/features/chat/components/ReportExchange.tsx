@@ -44,7 +44,7 @@ export default function ReportExchange({ exchangeId }: ReportExchangeProps) {
         Denunciar
       </button>
       {wasSent && (
-        <p role="status" className="rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary">
+        <p role="status" className="rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary-ink">
           Denuncia enviada. Gracias por avisar.
         </p>
       )}

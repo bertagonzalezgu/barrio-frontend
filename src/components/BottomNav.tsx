@@ -18,7 +18,7 @@ export default function BottomNav() {
           to={to}
           className={({ isActive }) =>
             `flex min-h-12 min-w-12 flex-col items-center justify-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
-            isActive ? 'font-semibold text-primary' : 'text-ink-muted'
+            isActive ? 'font-semibold text-primary-ink' : 'text-ink-muted'
             }`
           }
         >

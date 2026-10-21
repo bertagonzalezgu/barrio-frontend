@@ -27,7 +27,7 @@ export default function AuthorSummary({ author }: AuthorSummaryProps) {
             {author.name}
           </Link>
           {profile?.verified && (
-            <span className="rounded-full border border-primary px-2 py-0.5 font-body text-xs font-medium uppercase tracking-widest text-primary">
+            <span className="rounded-full border border-primary px-2 py-0.5 font-body text-xs font-medium uppercase tracking-widest text-primary-ink">
               Identidad verificada
             </span>
           )}

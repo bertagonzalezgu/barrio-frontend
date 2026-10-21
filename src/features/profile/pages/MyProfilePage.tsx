@@ -33,7 +33,7 @@ export default function MyProfilePage() {
             <ProfileSummary profile={profile} />
             <Link
               to="/perfil/editar"
-              className="self-center font-body text-sm text-primary underline focus-visible:outline-2 focus-visible:outline-primary"
+              className="self-center font-body text-sm text-primary-ink underline focus-visible:outline-2 focus-visible:outline-primary"
             >
               Ajustes de cuenta
             </Link>

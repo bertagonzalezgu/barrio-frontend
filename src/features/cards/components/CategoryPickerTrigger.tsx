@@ -20,12 +20,12 @@ export default function CategoryPickerTrigger({ value, onChange }: Props) {
         aria-label={`Filtrar por categoría: ${value ? getCategoryLabel(value) : 'todas'}`}
         className={`self-start flex min-h-12 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-body font-medium border transition-colors ${
           value
-            ? 'bg-primary-tint border-primary text-primary'
-            : 'border-primary/30 text-primary'
+            ? 'bg-primary-tint border-primary text-primary-ink'
+            : 'border-primary/30 text-primary-ink'
         }`}
       >
         {value ? getCategoryLabel(value) : 'Categoría'}
-        <ChevronDown aria-hidden="true" className="text-primary w-4"/>
+        <ChevronDown aria-hidden="true" className="text-primary-ink w-4"/>
       </button>
 
       {isOpen && (

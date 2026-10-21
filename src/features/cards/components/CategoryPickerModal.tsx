@@ -38,7 +38,7 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
             onClick={() => { onSelect(undefined); onClose() }}
             className={`min-h-12 rounded-full px-4 py-2.5 text-sm font-body font-medium transition-all ${
               value === undefined
-                ? 'bg-primary-tint ring-2 ring-primary text-primary'
+                ? 'bg-primary-tint ring-2 ring-primary text-primary-ink'
                 : 'bg-surface-2 hover:bg-primary-tint text-ink'
             }`}
           >
@@ -53,7 +53,7 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
               onClick={() => { onSelect(cat); onClose() }}
               className={`min-h-12 rounded-full px-4 py-2.5 text-sm font-body font-medium transition-all ${
                 value === cat
-                  ? 'bg-primary-tint ring-2 ring-primary text-primary'
+                  ? 'bg-primary-tint ring-2 ring-primary text-primary-ink'
                   : 'bg-surface-2 hover:bg-primary-tint text-ink'
               }`}
             >
