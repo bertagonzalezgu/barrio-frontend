@@ -22,7 +22,7 @@ export default function Avatar({ name, avatar, size = 'md' }: AvatarProps) {
       <img
         src={avatarImages[avatar]}
         alt=""
-        className={`${SIZE[size]} shrink-0 rounded-full object-cover`}
+        className={`${SIZE[size]} shrink-0 rounded-full border border-line object-cover`}
       />
     )
   }
@@ -30,7 +30,7 @@ export default function Avatar({ name, avatar, size = 'md' }: AvatarProps) {
   return (
     <span
       aria-hidden="true"
-      className={`${SIZE[size]} ${INITIAL_STYLE[size]} flex shrink-0 items-center justify-center rounded-full font-display font-bold`}
+      className={`${SIZE[size]} ${INITIAL_STYLE[size]} flex shrink-0 items-center justify-center rounded-full border border-line font-display font-bold`}
     >
       {name.charAt(0).toUpperCase()}
     </span>
