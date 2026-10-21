@@ -30,6 +30,8 @@
 
   --hours: #FFB547;
   --hours-tint: #FFF1DA;
+  /* contorno de iconos sobre relleno hours: #FFB547 solo daba 1.76:1 sobre surface */
+  --hours-ink: #9A5B00;
   --on-hours: #15171A;
 
   --success: #1FA971;
@@ -75,6 +77,7 @@
 
   --hours: #FFC46B;
   --hours-tint: #3A2C14;
+  --hours-ink: #E59A2E;
   --on-hours: #15171A;
 
   --success: #3DD598;
@@ -116,6 +119,7 @@
 
   --color-hours: var(--hours);
   --color-hours-tint: var(--hours-tint);
+  --color-hours-ink: var(--hours-ink);
   --color-on-hours: var(--on-hours);
 
   --color-success: var(--success);
