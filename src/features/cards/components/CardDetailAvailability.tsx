@@ -6,8 +6,8 @@ export default function CardDetailAvailability({ card }: { card: Card }) {
 
   return (
     <section className="flex flex-col gap-2">
-      <h2 className="font-display text-lg font-bold text-ink">Disponibilidad</h2>
-      <p className="self-start rounded-full border border-ink/10 bg-white px-3 py-1 font-data text-xs text-ink">
+      <h2 className="font-display text-h4 font-bold text-ink">Disponibilidad</h2>
+      <p className="self-start rounded-full border border-line bg-surface px-3 py-1 font-display text-xs tabular-nums text-ink">
         {formatCardDate(card.startDate)}
         {card.endDate && ` → ${formatCardDate(card.endDate)}`}
       </p>

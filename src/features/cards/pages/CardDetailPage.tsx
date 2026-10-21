@@ -20,8 +20,8 @@ export default function CardDetailPage() {
   const isOwner = !!card?.isMine
   const { data: exchangeState } = useExchangeState(id!, !!card && !isOwner)
 
-  if (isLoading) return <p className="text-xs font-body text-ink/40 text-center mt-8">Cargando...</p>
-  if (isError || !card) return <p className="text-xs font-body text-coral text-center mt-8">No se ha encontrado la tarjeta.</p>
+  if (isLoading) return <p className="text-xs font-body text-ink-muted text-center mt-8">Cargando...</p>
+  if (isError || !card) return <p className="text-xs font-body text-danger-ink text-center mt-8">No se ha encontrado la tarjeta.</p>
 
   return (
     <main className="flex flex-col min-h-[calc(100dvh-4rem)] px-4 pt-6 pb-8 max-w-lg mx-auto gap-6">

@@ -10,22 +10,22 @@ interface Props {
 export default function CategoryPickerModal({ value, onSelect, onClose }: Props) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-ink/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-scrim backdrop-blur-sm"
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-label="Filtrar por categoría"
-        className="bg-paper w-full sm:max-w-md max-h-[80vh] rounded-t-2xl sm:rounded-2xl overflow-y-auto p-5 flex flex-col gap-4"
+        className="bg-surface w-full sm:max-w-md max-h-[80vh] rounded-t-card sm:rounded-card overflow-y-auto p-5 flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h2 className="font-display font-bold text-ink text-lg">Filtrar por categoría</h2>
+          <h2 className="font-display font-bold text-ink text-h4">Filtrar por categoría</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="text-ink/40 hover:text-ink transition-colors text-xl leading-none"
+            className="flex size-12 items-center justify-center rounded-full text-ink-muted hover:bg-surface-2 hover:text-ink transition-colors text-xl leading-none"
           >
             ✕
           </button>
@@ -36,10 +36,10 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
             type="button"
             aria-pressed={value === undefined}
             onClick={() => { onSelect(undefined); onClose() }}
-            className={`rounded-xl px-3 py-2.5 text-sm font-body font-medium transition-all ${
+            className={`min-h-12 rounded-full px-4 py-2.5 text-sm font-body font-medium transition-all ${
               value === undefined
-                ? 'bg-teal-soft ring-2 ring-teal text-teal'
-                : 'bg-ink/5 hover:bg-teal-soft text-ink'
+                ? 'bg-primary-tint ring-2 ring-primary text-primary'
+                : 'bg-surface-2 hover:bg-primary-tint text-ink'
             }`}
           >
             Todas
@@ -51,10 +51,10 @@ export default function CategoryPickerModal({ value, onSelect, onClose }: Props)
               type="button"
               aria-pressed={value === cat}
               onClick={() => { onSelect(cat); onClose() }}
-              className={`rounded-xl px-3 py-2.5 text-sm font-body font-medium transition-all ${
+              className={`min-h-12 rounded-full px-4 py-2.5 text-sm font-body font-medium transition-all ${
                 value === cat
-                  ? 'bg-teal-soft ring-2 ring-teal text-teal'
-                  : 'bg-ink/5 hover:bg-teal-soft text-ink'
+                  ? 'bg-primary-tint ring-2 ring-primary text-primary'
+                  : 'bg-surface-2 hover:bg-primary-tint text-ink'
               }`}
             >
               {label}

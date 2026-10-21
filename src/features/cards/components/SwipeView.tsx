@@ -23,7 +23,7 @@ export default function SwipeView({ cards }: { cards: Card[] }) {
           type="button"
           onClick={() => swipe('left')}
           disabled={!hasMore}
-          className="px-5 py-2 rounded-full border border-ink/20 text-sm font-body text-ink/60 disabled:opacity-40"
+          className="btn-secondary disabled:opacity-40"
         >
           Paso
         </button>
@@ -31,7 +31,7 @@ export default function SwipeView({ cards }: { cards: Card[] }) {
           type="button"
           onClick={() => swipe('right')}
           disabled={!hasMore}
-          className="px-5 py-2 rounded-full bg-teal text-paper text-sm font-body font-medium disabled:opacity-40"
+          className="btn-primary disabled:opacity-40"
         >
           Me interesa
         </button>

@@ -30,10 +30,10 @@ export default function CreateCardForm({
           type="button"
           aria-pressed={type === 'request'}
           onClick={() => setType('request')}
-          className={`flex-1 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
+          className={`flex-1 min-h-12 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
             type === 'request'
-              ? 'bg-teal text-paper'
-              : 'bg-paper text-ink/60 border border-ink/20'
+              ? 'bg-busco text-on-busco'
+              : 'bg-surface text-ink-muted border border-line'
           }`}
         >
           Busco
@@ -42,10 +42,10 @@ export default function CreateCardForm({
           type="button"
           aria-pressed={type === 'offer'}
           onClick={() => setType('offer')}
-          className={`flex-1 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
+          className={`flex-1 min-h-12 rounded-full py-2 font-body font-medium cursor-pointer transition-colors ${
             type === 'offer'
-              ? 'bg-teal text-paper'
-              : 'bg-paper text-ink/60 border border-ink/20'
+              ? 'bg-primary text-on-primary'
+              : 'bg-surface text-ink-muted border border-line'
           }`}
         >
           Ofrezco
@@ -53,7 +53,7 @@ export default function CreateCardForm({
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="category" className="text-sm font-body text-ink/60">
+        <label htmlFor="category" className="text-sm font-body text-ink-muted">
           Categoría
         </label>
         <select
@@ -61,7 +61,7 @@ export default function CreateCardForm({
           value={category}
           onChange={(e) => setCategory(e.target.value as typeof category)}
           aria-invalid={Boolean(errors?.category)}
-          className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper"
+          className="field"
         >
           <option value="">Selecciona una categoría</option>
           {CARD_CATEGORIES.map(({ value, label }) => (
@@ -69,12 +69,12 @@ export default function CreateCardForm({
           ))}
         </select>
         {errors?.category && (
-          <p className="text-sm text-coral">{errors.category}</p>
+          <p className="text-sm text-danger-ink">{errors.category}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="prompt" className="text-sm font-body text-ink/60">
+        <label htmlFor="prompt" className="text-sm font-body text-ink-muted">
           Cuéntalo con tus palabras
         </label>
         <textarea
@@ -83,12 +83,12 @@ export default function CreateCardForm({
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="tengo un gato y me voy 4 días..."
           rows={4}
-          className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper resize-none"
+          className="field resize-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="hours" className="text-sm font-body text-ink/60">
+        <label htmlFor="hours" className="text-sm font-body text-ink-muted">
           Horas estimadas
         </label>
         <input
@@ -102,10 +102,10 @@ export default function CreateCardForm({
             setHours(Number(e.target.value))
           }}
           aria-invalid={Boolean(errors?.hours)}
-          className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper w-24"
+          className="field w-24"
         />
         {errors?.hours && (
-          <p className="text-sm text-coral">{errors.hours}</p>
+          <p className="text-sm text-danger-ink">{errors.hours}</p>
         )}
       </div>
 
@@ -115,21 +115,21 @@ export default function CreateCardForm({
         type="button"
         onClick={onGenerate}
         disabled={isGenerating || prompt.trim() === ''}
-        className="w-full bg-teal text-paper rounded-xl py-3 font-body font-medium disabled:opacity-50"
+        className="btn-primary w-full"
       >
         {isGenerating ? 'Generando...' : '✨ Generar con IA'}
       </button>
 
       {hasSuggestion && (
-        <div className="border border-ink/10 rounded-xl p-4 flex flex-col gap-3 bg-paper">
-          <p className="text-xs font-body text-ink/40">Sugerido por IA</p>
+        <div className="border border-line rounded-card p-4 flex flex-col gap-3 bg-surface">
+          <p className="text-xs font-body text-ink-muted">Sugerido por IA</p>
 
           <div className="flex items-center gap-2">
               <div className="w-10 h-10 shrink-0 flex items-center justify-center p-1.5">
                 <IconPickerTrigger value={icon} onChange={setIcon} />
               </div>
             <div className="flex flex-col gap-1 flex-1">
-              <label htmlFor="title" className="text-xs font-body text-ink/50">
+              <label htmlFor="title" className="text-xs font-body text-ink-muted">
                 Título
               </label>
               <input
@@ -143,7 +143,7 @@ export default function CreateCardForm({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="description" className="text-xs font-body text-ink/50">
+            <label htmlFor="description" className="text-xs font-body text-ink-muted">
               Descripción
             </label>
             <textarea
@@ -152,7 +152,7 @@ export default function CreateCardForm({
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
               aria-invalid={Boolean(errors?.description)}
-              className="text-sm font-body text-ink/70 bg-transparent border border-ink/10 rounded px-2 py-1 resize-none"
+              className="field resize-none"
             />
           </div>
         </div>
@@ -161,16 +161,16 @@ export default function CreateCardForm({
       {(errors?.title || errors?.description) && (
         <div role="alert" className="flex flex-col gap-1">
           {errors?.title && (
-            <p className="text-sm text-coral">{errors.title}</p>
+            <p className="text-sm text-danger-ink">{errors.title}</p>
           )}
           {errors?.description && (
-            <p className="text-sm text-coral">{errors.description}</p>
+            <p className="text-sm text-danger-ink">{errors.description}</p>
           )}
         </div>
       )}
 
       {!hasGenerated && (
-        <p id="publish-hint" className="text-xs font-body text-ink/50 text-center">
+        <p id="publish-hint" className="text-xs font-body text-ink-muted text-center">
           Genera la propuesta con IA para poder publicar
         </p>
       )}
@@ -179,10 +179,10 @@ export default function CreateCardForm({
         type="submit"
         disabled={!hasGenerated || isSubmitting}
         aria-describedby={!hasGenerated ? 'publish-hint' : undefined}
-        className={`w-full rounded-xl py-3 font-body font-medium transition-colors disabled:opacity-50 ${
+        className={`w-full disabled:opacity-50 ${
           hasGenerated
-            ? 'bg-teal text-paper'
-            : 'bg-paper text-teal border border-teal'
+            ? 'btn-primary'
+            : 'btn-secondary border-primary text-primary'
         }`}
       >
         {isSubmitting ? 'Publicando...' : 'Publicar tarjeta'}

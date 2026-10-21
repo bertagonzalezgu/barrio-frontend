@@ -22,7 +22,7 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
     return (
       <p
         role="status"
-        className="w-full py-3 rounded-2xl bg-teal/10 text-teal text-center font-body font-medium text-sm"
+        className="w-full min-h-12 py-3 rounded-full bg-primary-tint text-primary text-center font-body font-medium text-sm"
       >
         Propuesta enviada
       </p>
@@ -33,7 +33,7 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
     return (
       <p
         role="status"
-        className="w-full py-3 rounded-2xl bg-ink/5 text-ink/60 text-center font-body font-medium text-sm"
+        className="w-full min-h-12 py-3 rounded-full bg-surface-2 text-ink-muted text-center font-body font-medium text-sm"
       >
         Esta tarjeta ya no está disponible
       </p>
@@ -45,12 +45,12 @@ export default function ProposeExchangeAction({ cardId, viewState }: Props) {
       <button
         onClick={handlePropose}
         disabled={isPending}
-        className="w-full py-3 rounded-2xl bg-teal text-paper font-body font-medium text-sm disabled:opacity-50 cursor-pointer"
+        className="btn-primary w-full"
       >
         {isPending ? 'Enviando...' : 'Proponer intercambio'}
       </button>
       {error && (
-        <p role="alert" className="text-xs font-body text-coral text-center">
+        <p role="alert" className="text-xs font-body text-danger-ink text-center">
           {getProposeErrorMessage(error)}
         </p>
       )}

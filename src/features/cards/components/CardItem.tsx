@@ -9,19 +9,19 @@ export default function CardItem({ card }: { card: Card }) {
 
   return (
     <Link to={`/cards/${card.id}`} className="block">
-      <div className="flex rounded-2xl overflow-hidden transition-all w-full md:hover:-translate-y-0.5 md:hover:shadow-md bg-white">
+      <div className="flex rounded-card border border-line overflow-hidden transition-all w-full md:hover:-translate-y-0.5 md:hover:shadow-soft bg-surface">
         <div className="flex flex-1 gap-4 px-4 py-5 min-h-40">
 
           <div className="flex flex-col flex-1 justify-start gap-3">
-            <span className={`self-start text-[9px] font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
-              isRequest ? 'bg-teal text-paper' : 'bg-gold text-ink'
+            <span className={`self-start text-xs font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
+              isRequest ? 'bg-busco text-on-busco' : 'bg-primary text-on-primary'
             }`}>
               {isRequest ? 'Busco' : 'Ofrezco'}
             </span>
-            <h3 className="font-body font-bold text-ink text-lg leading-snug line-clamp-2 min-h-8">
+            <h3 className="font-display font-bold text-ink text-h4 leading-snug line-clamp-2 min-h-8">
               {card.title}
             </h3>
-            <span className="text-[11px] font-body font-normal text-ink uppercase tracking-widest">
+            <span className="text-xs font-body font-normal text-ink uppercase tracking-widest">
               {card.hours}h · {categoryLabel}
             </span>
           </div>

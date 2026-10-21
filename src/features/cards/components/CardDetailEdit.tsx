@@ -68,36 +68,36 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
           <IconPickerTrigger value={icon} onChange={setIcon} />
         </div>
         <div className="flex flex-col gap-1 flex-1">
-          <label htmlFor="edit-title" className="text-xs font-body text-ink/50">Título</label>
+          <label htmlFor="edit-title" className="text-xs font-body text-ink-muted">Título</label>
           <input
             id="edit-title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             aria-invalid={Boolean(errors.title)}
-            className="font-display font-bold text-ink text-lg bg-transparent border-b border-ink/20 focus:outline-none"
+            className="font-display font-bold text-ink text-h4 bg-transparent border-b border-line focus:outline-none"
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="edit-description" className="text-xs font-body text-ink/50">Descripción</label>
+        <label htmlFor="edit-description" className="text-xs font-body text-ink-muted">Descripción</label>
         <textarea
           id="edit-description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
           aria-invalid={Boolean(errors.description)}
-          className="text-sm font-body text-ink/70 bg-paper border border-ink/10 rounded-xl px-3 py-2 resize-none"
+          className="field resize-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="edit-category" className="text-xs font-body text-ink/50">Categoría</label>
+        <label htmlFor="edit-category" className="text-xs font-body text-ink-muted">Categoría</label>
         <select
           id="edit-category"
           value={category}
           onChange={(e) => setCategory(e.target.value as CardCategory)}
-          className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper"
+          className="field"
         >
           {CARD_CATEGORIES.map(({ value, label }) => (
             <option key={value} value={value}>{label}</option>
@@ -106,7 +106,7 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="edit-hours" className="text-xs font-body text-ink/50">Horas</label>
+        <label htmlFor="edit-hours" className="text-xs font-body text-ink-muted">Horas</label>
         <input
           id="edit-hours"
           type="number"
@@ -115,7 +115,7 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
           value={hours}
           onChange={(e) => setHours(e.target.value)}
           aria-invalid={Boolean(errors.hours)}
-          className="border border-ink/20 rounded-xl px-3 py-2 text-ink bg-paper w-24"
+          className="field w-24"
         />
       </div>
 
@@ -124,7 +124,7 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
       {Object.keys(errors).length > 0 && (
         <div role="alert" className="flex flex-col gap-1">
           {Object.values(errors).map((message) => (
-            <p key={message} className="text-sm text-coral">{message}</p>
+            <p key={message} className="text-sm text-danger-ink">{message}</p>
           ))}
         </div>
       )}
@@ -133,14 +133,14 @@ export default function CardDetailEdit({ card, onCancel, onSaved }: Props) {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full py-3 rounded-2xl bg-teal text-paper font-body font-medium text-sm disabled:opacity-50"
+          className="btn-primary w-full"
         >
           {isPending ? 'Guardando...' : 'Guardar cambios'}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="w-full py-3 rounded-2xl border border-ink/10 text-ink/60 font-body font-medium text-sm hover:bg-ink/5 transition-colors"
+          className="btn-secondary w-full"
         >
           Cancelar
         </button>
