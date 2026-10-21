@@ -63,7 +63,7 @@ export default function HomePage() {
         <button
           type="button"
           onClick={() => navigate('/cards/crear')}
-          className="min-h-12 bg-ink text-canvas font-body font-medium px-5 py-2 rounded-full text-sm cursor-pointer hover:bg-ink/90 transition-colors"
+          className="btn-primary"
         >
           + Crear tarjeta
         </button>

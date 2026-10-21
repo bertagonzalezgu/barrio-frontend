@@ -68,7 +68,7 @@ export default function EditNameForm({ currentName }: EditNameFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full min-h-12 rounded-full bg-ink py-4 font-body font-medium text-canvas transition-colors hover:bg-ink/90 disabled:opacity-60"
+        className="btn-primary w-full py-4 text-base"
       >
         {isPending ? 'Guardando...' : 'Guardar'}
       </button>

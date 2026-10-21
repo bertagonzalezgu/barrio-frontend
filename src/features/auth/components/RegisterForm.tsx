@@ -128,7 +128,7 @@ export default function RegisterForm() {
 
       <button
         type="submit"
-        className="w-full min-h-12 mt-2 rounded-full bg-ink py-4 font-body font-medium text-canvas hover:bg-ink/90 transition-colors"
+        className="btn-primary w-full mt-2 py-4 text-base"
       >
         Crear cuenta
       </button>
