@@ -24,9 +24,9 @@ export default function RatingForm({ chat }: RatingFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 rounded-2xl border border-ink/10 bg-white p-4">      <ScoreSelector value={score} onChange={setScore} />
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 rounded-card border border-line bg-surface p-4">      <ScoreSelector value={score} onChange={setScore} />
       {attempted && score === null && (
-        <p role="alert" className="rounded-xl border-l-4 border-coral bg-coral-soft px-3 py-2 font-body text-sm text-ink">
+        <p role="alert" className="alert-error">
           Elige una puntuación de 1 a 5.
         </p>
       )}
@@ -40,19 +40,19 @@ export default function RatingForm({ chat }: RatingFormProps) {
           maxLength={COMMENT_MAX_LENGTH}
           onChange={(event) => setComment(event.target.value)}
           rows={4}
-          className="w-full rounded-2xl border border-ink/20 bg-paper px-4 py-3 font-body text-sm text-ink"
+          className="field w-full"
         />
       </div>
       <button
         type="submit"
         disabled={isPending}
         aria-busy={isPending}
-        className="w-full rounded-2xl bg-teal py-3 font-body text-sm font-medium text-paper cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        className="btn-primary w-full"
       >
         Enviar valoración
       </button>
       {isError && (
-        <p role="alert" className="rounded-xl border-l-4 border-coral bg-coral-soft px-3 py-2 font-body text-sm text-ink">
+        <p role="alert" className="alert-error">
           {getRatingErrorMessage(error)}
         </p>
       )}

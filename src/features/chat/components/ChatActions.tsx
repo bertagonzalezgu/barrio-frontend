@@ -22,7 +22,7 @@ export default function ChatActions({ chat }: ChatActionsProps) {
             disabled={isPending}
             aria-busy={isPending}
             onClick={() => mutate('accept')}
-            className="flex-1 rounded-2xl bg-teal py-3 font-body text-sm font-medium text-paper cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-primary flex-1"
           >
             Aceptar propuesta
           </button>
@@ -33,14 +33,14 @@ export default function ChatActions({ chat }: ChatActionsProps) {
             disabled={isPending}
             aria-busy={isPending}
             onClick={() => mutate('reject')}
-            className="flex-1 rounded-2xl border border-coral/30 py-3 font-body text-sm font-medium text-coral cursor-pointer transition-colors hover:bg-coral/5 disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-danger-outline flex-1"
           >
             Rechazar propuesta
           </button>
         )}
       </div>
       {isError && (
-        <p role="alert" className="rounded-xl border-l-4 border-coral bg-coral-soft px-3 py-2 font-body text-sm text-ink">
+        <p role="alert" className="alert-error">
           {getChatActionErrorMessage(error)}
         </p>
       )}

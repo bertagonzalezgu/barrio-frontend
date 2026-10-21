@@ -162,18 +162,6 @@
   --text-h4--line-height: 1.3;
 }
 
-/* LEGACY: tokens antiguos mientras dura la migración; se eliminan al terminar */
-@theme {
-  --color-paper: #EEF1E7;
-  --color-teal: #275C55;
-  --color-teal-soft: #DCEAE7;
-  --color-gold: #E0A83E;
-  --color-gold-soft: #F7E9CB;
-  --color-coral: #E85B4F;
-  --color-coral-soft: #F7DAD6;
-  --font-data: ui-monospace, monospace;
-}
-
 @layer base {
   body {
     background-color: var(--color-canvas);

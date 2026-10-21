@@ -24,8 +24,8 @@ export default function ScoreSelector({ value, onChange }: ScoreSelectorProps) {
             <Star
               size={36}
               aria-hidden="true"
-              className={`peer-focus-visible:outline-2 peer-focus-visible:outline-teal ${
-                value !== null && score <= value ? 'fill-gold text-gold' : 'text-ink/30'
+              className={`peer-focus-visible:outline-2 peer-focus-visible:outline-primary ${
+                value !== null && score <= value ? 'fill-hours text-hours' : 'text-ink-muted'
               }`}
             />
             <span className="sr-only">{score} de 5</span>

@@ -30,7 +30,7 @@ export default function AvatarPicker({ name, selected, disabled = false, onSelec
               onChange={() => onSelect(value)}
               className="peer sr-only"
             />
-            <span className="flex size-12 items-center justify-center rounded-full ring-offset-2 peer-checked:ring-2 peer-checked:ring-teal peer-focus-visible:ring-2 peer-focus-visible:ring-ink">
+            <span className="flex size-12 items-center justify-center rounded-full ring-offset-2 peer-checked:ring-2 peer-checked:ring-primary peer-focus-visible:ring-2 peer-focus-visible:ring-ink">
               <Avatar name={name} avatar={value} size="md" />
             </span>
             <span className="sr-only">{label}</span>

@@ -17,13 +17,13 @@ export default function ChatListItem({ chat }: ChatListItemProps) {
     <li>
       <Link
         to={`/chat/${chat.id}`}
-        className="flex min-h-11 items-start gap-3 rounded-2xl border border-teal-soft bg-white px-3 py-3 hover:bg-teal-soft/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+        className="flex min-h-12 items-start gap-3 rounded-card border border-line bg-surface px-4 py-3 hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <Avatar name={chat.other.name} avatar={chat.other.avatar} />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <div className="flex items-baseline justify-between gap-2">
             <p className="truncate font-body text-sm font-medium text-ink">{chat.other.name}</p>
-            <time dateTime={previewDate} className="shrink-0 font-data text-xs text-ink/70">
+            <time dateTime={previewDate} className="shrink-0 font-display tabular-nums text-xs text-ink-muted">
               {formatChatTime(previewDate)}
             </time>
           </div>
@@ -31,11 +31,11 @@ export default function ChatListItem({ chat }: ChatListItemProps) {
             <CardTypeChip type={chat.card.type} />
             <p className="truncate font-body text-sm text-ink">{chat.card.title}</p>
           </div>
-          {lastMessage && <p className="truncate font-body text-sm text-ink/70">{lastMessage.text}</p>}
-          <div className="flex items-center gap-2 font-body text-xs text-ink/70">
-            <span className="font-data">{chat.hours}h</span>
+          {lastMessage && <p className="truncate font-body text-sm text-ink-muted">{lastMessage.text}</p>}
+          <div className="flex items-center gap-2 font-body text-xs text-ink-muted">
+            <span className="font-display tabular-nums">{chat.hours}h</span>
             <span aria-hidden="true">·</span>
-            <span className="font-medium text-teal">{getExchangeStatusLabel(chat.status)}</span>
+            <span className="font-medium text-primary">{getExchangeStatusLabel(chat.status)}</span>
           </div>
         </div>
       </Link>

@@ -17,10 +17,10 @@ export default function ChatPage() {
   const { data: chat, isPending, isError, error } = useChatDetail(exchangeId)
   const messages = useChatMessages(exchangeId)
 
-  if (isPending) return <p className="text-xs font-body text-ink/40 text-center mt-8">Cargando chat...</p>
+  if (isPending) return <p className="text-xs font-body text-ink-muted text-center mt-8">Cargando chat...</p>
   if (isError) {
     return (
-      <p role="alert" className="text-xs font-body text-coral text-center mt-8">
+      <p role="alert" className="text-xs font-body text-danger-ink text-center mt-8">
         {getChatErrorMessage(error)}
       </p>
     )
@@ -34,14 +34,14 @@ export default function ChatPage() {
       <RatePrompt chat={chat} />
       <ChatActions chat={chat} />
       {messages.isPending ? (
-        <p className="flex-1 text-xs font-body text-ink/40 text-center">Cargando mensajes...</p>
+        <p className="flex-1 text-xs font-body text-ink-muted text-center">Cargando mensajes...</p>
       ) : (
         <MessageList messages={messages.data ?? []} otherName={chat.other.name} />
       )}
       {isChatWritable(chat.status) ? (
         <MessageForm exchangeId={exchangeId} />
       ) : (
-        <p role="status" className="rounded-2xl bg-ink/5 px-4 py-3 text-center font-body text-sm text-ink/70">
+        <p role="status" className="rounded-2xl bg-surface-2 px-4 py-3 text-center font-body text-sm text-ink-muted">
           Este chat está cerrado. Puedes leer la conversación, pero ya no se pueden enviar mensajes.
         </p>
       )}

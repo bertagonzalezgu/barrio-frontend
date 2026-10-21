@@ -23,7 +23,7 @@ export default function EditAvatarSection({ name, currentAvatar }: EditAvatarSec
     <div className="flex flex-col gap-2">
       <AvatarPicker name={name} selected={currentAvatar} disabled={isPending} onSelect={handleSelect} />
       {error && (
-        <p role="alert" className="font-body text-sm text-coral">
+        <p role="alert" className="font-body text-sm text-danger-ink">
           {error}
         </p>
       )}

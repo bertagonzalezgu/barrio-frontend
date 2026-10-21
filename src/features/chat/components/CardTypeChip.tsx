@@ -9,8 +9,8 @@ export default function CardTypeChip({ type }: CardTypeChipProps) {
 
   return (
     <span
-      className={`shrink-0 self-start text-[9px] font-body font-medium tracking-widest uppercase rounded-md px-2 py-0.5 ${
-        isRequest ? 'bg-teal-soft text-teal' : 'bg-gold-soft text-ink'
+      className={`shrink-0 self-start text-xs font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
+        isRequest ? 'bg-busco-tint text-busco-ink' : 'bg-primary-tint text-primary'
       }`}
     >
       {isRequest ? 'Busco' : 'Ofrezco'}

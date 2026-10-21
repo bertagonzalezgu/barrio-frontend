@@ -39,12 +39,12 @@ export default function ReportExchange({ exchangeId }: ReportExchangeProps) {
         aria-expanded={isOpen}
         aria-controls={FORM_ID}
         onClick={handleToggle}
-        className="self-end rounded-2xl border border-coral px-4 py-1.5 font-body text-xs font-medium text-coral cursor-pointer transition-colors hover:bg-coral-soft"
+        className="btn-danger-outline self-end"
       >
         Denunciar
       </button>
       {wasSent && (
-        <p role="status" className="rounded-xl bg-teal-soft px-3 py-2 font-body text-sm text-teal">
+        <p role="status" className="rounded-2xl bg-primary-tint px-4 py-3 font-body text-sm text-primary">
           Denuncia enviada. Gracias por avisar.
         </p>
       )}

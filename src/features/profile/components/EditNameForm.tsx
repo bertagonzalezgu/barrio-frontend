@@ -55,12 +55,12 @@ export default function EditNameForm({ currentName }: EditNameFormProps) {
           onChange={(e) => setName(e.target.value)}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
-          className="w-full rounded-xl border border-teal-soft bg-white px-4 py-3 font-body text-sm text-ink focus:outline-none focus:ring-2 focus:ring-teal"
+          className="field w-full"
         />
       </div>
 
       {error && (
-        <p id={errorId} role="alert" className="font-body text-sm text-coral">
+        <p id={errorId} role="alert" className="font-body text-sm text-danger-ink">
           {error}
         </p>
       )}
@@ -68,7 +68,7 @@ export default function EditNameForm({ currentName }: EditNameFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-xl bg-ink py-4 font-body font-medium text-paper transition-colors hover:bg-ink/90 disabled:opacity-60"
+        className="w-full min-h-12 rounded-full bg-ink py-4 font-body font-medium text-canvas transition-colors hover:bg-ink/90 disabled:opacity-60"
       >
         {isPending ? 'Guardando...' : 'Guardar'}
       </button>

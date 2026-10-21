@@ -9,7 +9,7 @@ export default function RatingAverage({ average }: RatingAverageProps) {
 
   return (
     <span className="inline-flex items-center gap-1">
-      <Star size={14} aria-hidden="true" className="fill-gold text-gold" />
+      <Star size={14} aria-hidden="true" className="fill-hours text-hours" />
       <span>
         {average.toFixed(1)}
         <span className="sr-only"> de 5</span>
