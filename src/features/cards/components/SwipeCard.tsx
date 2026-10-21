@@ -3,6 +3,7 @@ import type { Card } from '../types/card.types'
 import type { SwipeDirection } from '../hooks/useSwipe'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 import CardIcon from './CardIcon'
+import CardTypeChip from '../../chat/components/CardTypeChip'
 
 interface Props {
   card: Card
@@ -18,7 +19,6 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
 
   const categoryLabel = getCategoryLabel(card.category)
-  const isRequest = card.type === 'request'
 
   async function handleDragEnd() {
     const xVal = x.get()
@@ -49,11 +49,7 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
         <span className="text-xs font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full bg-surface-2 text-ink-muted">
           {categoryLabel}
         </span>
-        <span className={`text-xs font-body font-medium tracking-widest uppercase px-2 py-1 rounded-full ${
-          isRequest ? 'bg-busco text-on-busco' : 'bg-primary text-on-primary'
-        }`}>
-          {isRequest ? 'Busco' : 'Ofrezco'}
-        </span>
+        <CardTypeChip type={card.type} />
       </div>
 
       <div className="flex-1 flex items-center justify-center">

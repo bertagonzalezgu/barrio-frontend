@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import type { Card } from '../types/card.types'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 import CardIcon from './CardIcon'
+import CardTypeChip from '../../chat/components/CardTypeChip'
 
 export default function CardItem({ card }: { card: Card }) {
   const categoryLabel = getCategoryLabel(card.category)
-  const isRequest = card.type === 'request'
 
   return (
     <Link to={`/cards/${card.id}`} className="block">
@@ -13,11 +13,7 @@ export default function CardItem({ card }: { card: Card }) {
         <div className="flex flex-1 gap-4 px-4 py-5 min-h-40">
 
           <div className="flex flex-col flex-1 justify-start gap-3">
-            <span className={`self-start text-xs font-body font-medium tracking-widest uppercase rounded-full px-2.5 py-1 ${
-              isRequest ? 'bg-busco text-on-busco' : 'bg-primary text-on-primary'
-            }`}>
-              {isRequest ? 'Busco' : 'Ofrezco'}
-            </span>
+            <CardTypeChip type={card.type} />
             <h3 className="font-display font-bold text-ink text-h4 leading-snug line-clamp-2 min-h-8">
               {card.title}
             </h3>
