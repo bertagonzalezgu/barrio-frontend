@@ -14,25 +14,25 @@
   --surface: #FFFFFF;
   --surface-2: #ECE7DF;
   --ink: #15171A;
-  /* #6B6F76 daba 4.10:1 sobre surface-2 */
-  --ink-muted: #5F636A;
+  /* #6B6F76 daba 4.10:1 sobre surface-2; #5F636A, 4.05:1 sobre el pico del brillo cobalto */
+  --ink-muted: #565A60;
   --line: rgba(21, 23, 26, 0.10);
   --scrim: rgba(21, 23, 26, 0.40);
   --icon-shadow: rgba(21, 23, 26, 0.15);
   /* Pico de cada brillo: los *-ink de texto están ajustados para pasar 4.5:1 sobre él */
   --bg-mesh:
-    radial-gradient(60% 50% at 0% 0%, rgba(43, 80, 255, 0.10), transparent 70%),
-    radial-gradient(55% 50% at 100% 35%, rgba(255, 107, 74, 0.11), transparent 70%);
+    radial-gradient(75% 65% at 20% 0%, rgba(43, 80, 255, 0.20), transparent 80%),
+    radial-gradient(70% 65% at 100% 55%, rgba(255, 107, 74, 0.22), transparent 80%);
 
   --primary: #2B50FF;
   --primary-tint: #E6EBFF;
-  /* cobalto como TEXTO; #2B50FF daba 4.46:1 sobre el brillo cobalto */
-  --primary-ink: #2549F0;
+  /* cobalto como TEXTO; #2B50FF no llega a 4.5:1 sobre el brillo cobalto */
+  --primary-ink: #2345E4;
   --on-primary: #FFFFFF;
 
   --busco: #FF6B4A;
   --busco-tint: #FFE9E3;
-  --busco-ink: #B0361D;
+  --busco-ink: #A4321B;
   --on-busco: #15171A;
 
   --hours: #FFB547;
@@ -42,12 +42,12 @@
   --on-hours: #15171A;
 
   --success: #1FA971;
-  --success-ink: #10704A;
+  --success-ink: #0F6744;
   --warning: #F5A524;
 
   --danger: #E5484D;
   --danger-tint: #FDE8E9;
-  --danger-ink: #B8282E;
+  --danger-ink: #AB252B;
   /* blanco sobre danger daba 3.91:1 */
   --on-danger: #15171A;
 
@@ -73,8 +73,8 @@
   --scrim: rgba(0, 0, 0, 0.60);
   --icon-shadow: rgba(255, 255, 255, 0.35);
   --bg-mesh:
-    radial-gradient(60% 50% at 0% 0%, rgba(111, 134, 255, 0.20), transparent 70%),
-    radial-gradient(55% 50% at 100% 35%, rgba(255, 138, 110, 0.12), transparent 70%);
+    radial-gradient(75% 65% at 20% 0%, rgba(111, 134, 255, 0.20), transparent 80%),
+    radial-gradient(70% 65% at 100% 55%, rgba(255, 138, 110, 0.12), transparent 80%);
 
   --primary: #7B93FF;
   --primary-tint: #1C2550;

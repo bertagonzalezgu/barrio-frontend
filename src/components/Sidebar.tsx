@@ -13,7 +13,7 @@ const links = [
 
 export default function Sidebar() {
   return (
-    <aside className="flex flex-col w-56 h-full border-r border-line bg-canvas/85 backdrop-blur-md px-4 pt-6">      
+    <aside className="flex flex-col w-56 h-full border-r border-line bg-canvas/70 backdrop-blur-md px-4 pt-6">      
     <p className="text-h4 font-display font-bold mb-2">barrio.</p>
     <span className="text-sm font-body text-ink-muted pb-6">tiempo que nos conecta, en tu barrio</span>
       <nav className="flex flex-col gap-1 flex-1">
