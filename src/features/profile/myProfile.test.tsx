@@ -114,4 +114,12 @@ it('muestra mi historial de horas', async () => {
 
   expect(await screen.findByText('Regalo de bienvenida')).toBeInTheDocument()
 })
+
+it('tiene un enlace a los ajustes de cuenta', async () => {
+  mockMe(myProfile)
+  renderMyProfile()
+
+  const link = await screen.findByRole('link', { name: 'Ajustes de cuenta' })
+  expect(link).toHaveAttribute('href', '/perfil/editar')
+})
 })

@@ -4,6 +4,7 @@ import { useMyProfile } from '../hooks/useMyProfile'
 import ProfileSummary from '../components/ProfileSummary'
 import WalletSummary from '../../wallet/components/WalletSummary'
 import TransactionList from '../../wallet/components/TransactionList'
+import { Link } from 'react-router-dom'
 
 export default function MyProfilePage() {
   const { data: profile, isPending, isError, error, refetch } = useMyProfile()
@@ -30,6 +31,12 @@ export default function MyProfilePage() {
       {profile && (
         <>
             <ProfileSummary profile={profile} />
+            <Link
+              to="/perfil/editar"
+              className="self-center font-body text-sm text-teal underline focus-visible:outline-2 focus-visible:outline-teal"
+            >
+              Ajustes de cuenta
+            </Link>
             <WalletSummary />
             <TransactionList />
         </>
