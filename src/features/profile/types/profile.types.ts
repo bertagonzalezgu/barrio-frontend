@@ -8,3 +8,8 @@ export interface PublicProfile {
   exchangeCount: number
   createdAt: string
 }
+
+export interface UpdateProfileInput {
+  name?: string
+  avatar?: string
+}
