@@ -16,33 +16,33 @@ export default function OnboardingPage() {
 
       <div className="max-w-2xl flex flex-col justify-center p-6 pb-12 gap-4">
 
-        <h1 className="font-display font-bold text-6xl text-white drop-shadow-lg">
+        <h1 className="font-display font-extrabold text-h1 text-ink">
           barrio.
         </h1>
 
-        <span className="font-body text-sm text-white/60 tracking-widest uppercase">
+        <span className="font-body text-sm text-ink-muted tracking-widest uppercase">
           tiempo que nos conecta, en tu barrio
         </span>
 
-        <p className="font-body text-base text-white/90 leading-relaxed">
+        <p className="font-body text-base text-ink leading-relaxed">
           Intercambia tiempo, habilidades y cuidados con la gente de tu calle. Sin dinero de por medio.
         </p>
 
-        <span className="font-data text-xs text-white/80 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 self-start">
+        <span className="font-display text-xs tabular-nums text-ink-muted bg-surface/70 backdrop-blur-sm border border-line rounded-full px-4 py-2 self-start">
           +500 vecinos ya han compartido 2.000h
         </span>
 
         <div className="flex flex-col gap-3 mt-2">
           <button
             onClick={onStart}
-            className="w-full bg-white text-ink font-body font-semibold py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
+            className="btn-primary w-full py-4 text-base font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
           >
             Empezar ahora
           </button>
 
           <button
             onClick={onLogin}
-            className="w-full text-white/80 font-body py-2 hover:text-white hover:underline underline-offset-4 transition-colors duration-200 cursor-pointer"
+            className="w-full min-h-12 text-ink-muted font-body py-2 hover:text-ink hover:underline underline-offset-4 transition-colors duration-200 cursor-pointer"
           >
             Ya tengo cuenta
           </button>
