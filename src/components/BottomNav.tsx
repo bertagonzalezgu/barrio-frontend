@@ -11,19 +11,29 @@ const links = [
 
 export default function BottomNav() {
   return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-canvas/75 backdrop-blur-md border-t border-line flex justify-around py-2 z-50">
-          {links.map(({ to, label, icon: Icon }) => (
+    <nav className="fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-50 flex justify-around rounded-full border border-line bg-surface/85 px-2 py-1.5 shadow-soft backdrop-blur-md">
+      {links.map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
           to={to}
           className={({ isActive }) =>
-            `flex min-h-12 min-w-12 flex-col items-center justify-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
-            isActive ? 'font-semibold text-primary-ink' : 'text-ink-muted'
+            `flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-xs transition-colors ${
+              isActive ? 'font-semibold text-primary-ink' : 'text-ink-muted hover:text-ink'
             }`
           }
         >
-          <Icon size={22} />
-          {label}
+          {({ isActive }) => (
+            <>
+              <span
+                className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
+                  isActive ? 'bg-primary-tint' : ''
+                }`}
+              >
+                <Icon size={22} aria-hidden="true" />
+              </span>
+              {label}
+            </>
+          )}
         </NavLink>
       ))}
     </nav>
