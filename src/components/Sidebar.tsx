@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Map, Calendar, BarChart2, MessageCircle, User } from 'lucide-react'
+import ThemeToggle from '../features/theme/components/ThemeToggle'
 
 const links = [
   { to: '/home', label: 'Inicio', icon: Home },
@@ -33,6 +34,9 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="pb-6">
+        <ThemeToggle />
+      </div>
     </aside>
   )
 }
