@@ -23,7 +23,7 @@ export default function CardItem({ card }: { card: Card }) {
           </div>
 
           <div className="flex items-center justify-center shrink-0 w-16">
-            <div className="w-16 h-16 drop-shadow-sm">
+            <div className="w-16 h-16 drop-shadow-icon-sm">
               {card.icon && <CardIcon name={card.icon} className="w-full h-full object-contain" />}
             </div>
           </div>

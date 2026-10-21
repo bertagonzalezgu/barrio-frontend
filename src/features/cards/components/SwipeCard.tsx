@@ -53,7 +53,7 @@ export default function SwipeCard({ card, onSwipe, onOpen }: Props) {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-30 h-30 drop-shadow-lg">
+        <div className="w-30 h-30 drop-shadow-icon-lg">
           {card.icon && <CardIcon name={card.icon} className="w-full h-35 object-contain" />}
         </div>
       </div>

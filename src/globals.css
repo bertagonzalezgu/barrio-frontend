@@ -18,6 +18,7 @@
   --ink-muted: #5F636A;
   --line: rgba(21, 23, 26, 0.10);
   --scrim: rgba(21, 23, 26, 0.40);
+  --icon-shadow: rgba(21, 23, 26, 0.15);
   /* Pico de cada brillo: los *-ink de texto están ajustados para pasar 4.5:1 sobre él */
   --bg-mesh:
     radial-gradient(60% 50% at 0% 0%, rgba(43, 80, 255, 0.10), transparent 70%),
@@ -70,6 +71,7 @@
   --ink-muted: #A0A4AB;
   --line: rgba(242, 240, 235, 0.12);
   --scrim: rgba(0, 0, 0, 0.60);
+  --icon-shadow: rgba(255, 255, 255, 0.35);
   --bg-mesh:
     radial-gradient(60% 50% at 0% 0%, rgba(111, 134, 255, 0.20), transparent 70%),
     radial-gradient(55% 50% at 100% 35%, rgba(255, 138, 110, 0.12), transparent 70%);
@@ -156,6 +158,10 @@
     0 8px 24px -12px color-mix(in oklab, var(--primary) 22%, transparent);
   --shadow-primary: 0 8px 20px -8px color-mix(in oklab, var(--primary) 55%, transparent);
   --shadow-danger: 0 8px 20px -8px color-mix(in oklab, var(--danger) 50%, transparent);
+
+  /* Sombra de los iconos de tarjeta: oscura en claro, blanca en oscuro para que se despeguen del fondo */
+  --drop-shadow-icon-sm: 0 1px 2px var(--icon-shadow);
+  --drop-shadow-icon-lg: 0 4px 6px var(--icon-shadow);
 }
 
 @theme {
