@@ -10,3 +10,5 @@ export const avatarImages: Record<string, string> = Object.fromEntries(
     url,
   ]),
 )
+
+export const avatarKeys = Object.keys(avatarImages).sort()

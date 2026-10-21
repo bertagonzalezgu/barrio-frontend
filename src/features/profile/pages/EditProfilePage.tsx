@@ -1,6 +1,7 @@
 import BackButton from '../../../components/ui/BackButton'
 import { useMyProfile } from '../hooks/useMyProfile'
 import EditNameForm from '../components/EditNameForm'
+import EditAvatarSection from '../components/EditAvatarSection'
 
 export default function EditProfilePage() {
   const { data: profile, isPending, isError } = useMyProfile()
@@ -19,7 +20,12 @@ export default function EditProfilePage() {
           No se ha podido cargar tu perfil.
         </p>
       )}
-      {profile && <EditNameForm currentName={profile.name} />}
+      {profile && (
+        <>
+            <EditAvatarSection name={profile.name} currentAvatar={profile.avatar} />
+            <EditNameForm currentName={profile.name} />
+        </>
+        )}
     </main>
   )
 }

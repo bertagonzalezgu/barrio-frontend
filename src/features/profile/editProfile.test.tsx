@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { describe, it, expect, vi, beforeAll, beforeEach, afterEach, afterAll } from 'vitest'
@@ -111,5 +111,55 @@ describe('Editar nombre', () => {
     await submitName('Berta G')
 
     expect(await screen.findByRole('alert')).toHaveTextContent(/inténtalo de nuevo/i)
+  })
+})
+
+describe('Elegir avatar', () => {
+  it('muestra "Mi inicial" y los 12 avatares, con el actual marcado', async () => {
+    current = { ...myProfile, avatar: 'avatar-03' }
+    renderEditProfile()
+
+    expect(await screen.findAllByRole('radio')).toHaveLength(13)
+    expect(screen.getByRole('radio', { name: 'Avatar 3' })).toBeChecked()
+    expect(screen.getByRole('radio', { name: 'Mi inicial' })).not.toBeChecked()
+  })
+
+  it('sin avatar elegido está marcada "Mi inicial"', async () => {
+    renderEditProfile()
+
+    expect(await screen.findByRole('radio', { name: 'Mi inicial' })).toBeChecked()
+  })
+
+  it.each(Array.from({ length: 12 }, (_, i) => i + 1))(
+    'al elegir el avatar %i guarda su clave',
+    async (n) => {
+      const key = `avatar-${String(n).padStart(2, '0')}`
+      renderEditProfile()
+
+      fireEvent.click(await screen.findByRole('radio', { name: `Avatar ${n}` }))
+
+      await waitFor(() => expect(patchBody).toEqual({ avatar: key }))
+      await waitFor(() => expect(screen.getByRole('radio', { name: `Avatar ${n}` })).toBeChecked())
+    }
+  )
+
+  it('"Mi inicial" quita el avatar enviando una cadena vacía', async () => {
+    current = { ...myProfile, avatar: 'avatar-03' }
+    renderEditProfile()
+
+    fireEvent.click(await screen.findByRole('radio', { name: 'Mi inicial' }))
+
+    await waitFor(() => expect(patchBody).toEqual({ avatar: '' }))
+    await waitFor(() => expect(screen.getByRole('radio', { name: 'Mi inicial' })).toBeChecked())
+  })
+
+  it('si falla el guardado avisa y mantiene la selección anterior', async () => {
+    server.use(http.patch(`${API}/users/me`, () => HttpResponse.json({ error: 'x' }, { status: 500 })))
+    renderEditProfile()
+
+    fireEvent.click(await screen.findByRole('radio', { name: 'Avatar 5' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('No se ha podido cambiar el avatar.')
+    expect(screen.getByRole('radio', { name: 'Mi inicial' })).toBeChecked()
   })
 })
