@@ -15,7 +15,7 @@ export default function AuthorSummary({ author }: AuthorSummaryProps) {
   return (
     <section
       aria-label="Publicado por"
-      className="flex items-center gap-3 rounded-card border border-line bg-surface px-4 py-3"
+      className="flex items-center gap-3 rounded-card border border-line bg-surface px-4 py-3 shadow-soft"
     >
       <Avatar name={author.name} avatar={author.avatar} />
       <div className="flex min-w-0 flex-col gap-1">
