@@ -24,3 +24,24 @@ export interface AvailabilityFormErrors {
   hours?: string
   date?: string
 }
+
+export interface CalendarDaysContextValue {
+  cardsByDay: Map<string, CalendarCard[]>
+  selectedDate: string | undefined
+  onSelectDate: (day: string) => void
+}
+
+export interface AvailabilityFormProps {
+  category: CardCategory | ''
+  setCategory: (value: CardCategory | '') => void
+  hours: string
+  setHours: (value: string) => void
+  date: string
+  setDate: (value: string) => void
+  minDate: string
+  errors: AvailabilityFormErrors
+  submitError: string | null
+  isSubmitting: boolean
+  onSubmit: () => void
+  onCancel: () => void
+}
