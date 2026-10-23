@@ -3,17 +3,15 @@ import type { CardType } from '../../cards/types/card.types'
 
 interface Props {
   type: CardType
-  large?: boolean
+  className?: string
 }
 
-export default function TypeIcon({ type, large = false }: Props) {
+export default function TypeIcon({ type, className = 'size-5' }: Props) {
   const { Icon, colors } = TYPE_MARKERS[type]
 
   return (
-    <span
-      className={`flex shrink-0 items-center justify-center rounded-full ${large ? 'size-6' : 'size-5'} ${colors}`}
-    >
-      <Icon size={large ? 14 : 12} aria-hidden="true" />
+    <span className={`flex shrink-0 items-center justify-center rounded-full ${className} ${colors}`}>
+      <Icon size="60%" aria-hidden="true" />
     </span>
   )
 }
