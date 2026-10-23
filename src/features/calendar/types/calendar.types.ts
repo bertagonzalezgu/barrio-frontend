@@ -19,8 +19,8 @@ export interface CalendarCard {
   updatedAt: string
 }
 
-export interface AvailabilityFormValues {
-  category: CardCategory | ''
-  hours: number
-  date: string
+export interface AvailabilityFormErrors {
+  category?: string
+  hours?: string
+  date?: string
 }
