@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import type { Card } from '../types/card.types'
+import type { CardSummary } from '../types/card.types'
 import { getCategoryLabel } from '../utils/getCategoryLabel'
 import CardIcon from './CardIcon'
 import CardTypeChip from '../../../components/ui/CardTypeChip'
 
-export default function CardItem({ card }: { card: Card }) {
+export default function CardItem({ card }: { card: CardSummary }) {
   const categoryLabel = getCategoryLabel(card.category)
 
   return (
