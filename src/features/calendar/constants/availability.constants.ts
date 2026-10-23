@@ -1,0 +1,1 @@
+export const DEFAULT_DURATION_DAYS = 1

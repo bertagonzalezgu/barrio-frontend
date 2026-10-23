@@ -1,11 +1,11 @@
 # language: es
 Característica: Ver y gestionar fechas en el calendario
   Como usuario
-  Quiero ver en un calendario las fechas de mis necesidades y disponibilidades
+  Quiero ver en un calendario las fechas de las necesidades y disponibilidades del barrio
   Para organizar mi tiempo sin revisar cada tarjeta una a una
 
   Escenario: Ver los días marcados según busco/ofrezco
-    Dado que tengo tarjetas con fechas asociadas
+    Dado que existen tarjetas con fechas asociadas
     Cuando abro la pantalla "Calendario"
     Entonces los días con una tarjeta de tipo "busco" muestran un indicador distinto al de "ofrezco"
 
@@ -16,8 +16,8 @@ Característica: Ver y gestionar fechas en el calendario
     Y el día correspondiente queda marcado en el calendario
 
   Escenario: Filtrar el calendario por categoría
-    Dado que tengo tarjetas de varias categorías con fecha
-    Cuando filtro el calendario por la categoría "Hogar"
+    Dado que existen tarjetas de varias categorías con fecha
+    Cuando filtro el calendario por la categoría "Reparaciones"
     Entonces solo se marcan los días con tarjetas de esa categoría
 
   Escenario: Seleccionar un día muestra sus tarjetas
