@@ -4,10 +4,10 @@ import TypeIcon from './TypeIcon'
 
 export default function DayMarkers({ types }: { types: ReadonlySet<CardType> }) {
   return (
-    <span className="flex h-4 gap-0.5">
+    <span className="flex h-6 -space-x-1.5 md:space-x-1">
       {CARD_TYPE_ORDER.filter((type) => types.has(type)).map((type) => (
-        <span key={type} role="img" aria-label={TYPE_MARKERS[type].label} className="flex">
-          <TypeIcon type={type} small />
+        <span key={type} role="img" aria-label={TYPE_MARKERS[type].label} className="flex rounded-full ring-2 ring-surface">
+          <TypeIcon type={type} large />
         </span>
       ))}
     </span>

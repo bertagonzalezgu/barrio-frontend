@@ -12,7 +12,7 @@ const FORMATS = { weekdayFormat: 'EEEEEE' }
 
 export default function CalendarGrid() {
   return (
-    <div className="h-[30rem]">
+    <div className="h-120">
       <Calendar
         localizer={calendarLocalizer}
         culture="es"
