@@ -65,13 +65,17 @@ export interface Card {
   updatedAt: string
 }
 
+export type CardSummary = Pick<Card, 'id' | 'type' | 'title' | 'hours' | 'category'> & {
+  icon: CardIconType | ''
+}
+
 export interface CreateCardInput {
   type: CardType
   title: string
   description: string
   category: CardCategory
   hours: number
-  icon: CardIconType
+  icon?: CardIconType
   lat?: number
   lng?: number
   startDate?: string
