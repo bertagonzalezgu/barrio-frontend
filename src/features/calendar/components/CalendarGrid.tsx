@@ -4,14 +4,15 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import '../calendar.css'
 import { calendarLocalizer } from '../utils/calendarLocalizer'
 import CalendarDayHeader from './CalendarDayHeader'
+import CalendarToolbar from './CalendarToolbar'
 
 const NO_EVENTS: Event[] = []
-const COMPONENTS = { month: { dateHeader: CalendarDayHeader } }
-const MESSAGES = { today: 'Hoy', previous: 'Anterior', next: 'Siguiente', month: 'Mes' }
+const COMPONENTS = { toolbar: CalendarToolbar, month: { dateHeader: CalendarDayHeader } }
+const FORMATS = { weekdayFormat: 'EEEEEE' }
 
 export default function CalendarGrid() {
   return (
-    <div className="h-136">
+    <div className="h-[30rem]">
       <Calendar
         localizer={calendarLocalizer}
         culture="es"
@@ -19,7 +20,7 @@ export default function CalendarGrid() {
         views={['month']}
         defaultView="month"
         components={COMPONENTS}
-        messages={MESSAGES}
+        formats={FORMATS}
       />
     </div>
   )

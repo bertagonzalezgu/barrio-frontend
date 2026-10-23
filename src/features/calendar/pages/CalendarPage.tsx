@@ -43,8 +43,10 @@ export default function CalendarPage() {
       )}
 
       <CalendarDaysProvider cards={cards} selectedDate={selectedDate} onSelectDate={setSelectedDate}>
-        <CalendarLegend />
-        <CalendarGrid />
+        <div className="flex flex-col gap-4 rounded-card border border-line bg-surface p-3 shadow-soft md:p-5">
+          <CalendarGrid />
+          <CalendarLegend />
+        </div>
         <DayCardsList />
       </CalendarDaysProvider>
     </section>
